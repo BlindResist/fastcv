@@ -16,7 +16,7 @@ export default {
 <style lang="scss">
 .app-logo {
     font-weight: 700;
-    color: $dark-blue;
+    color: $blue-dark;
     font-size: 1.5rem;
     text-transform: uppercase;
 }

@@ -1,14 +1,117 @@
 <template>
-    <div class="constructor page">
+    <div class="constructor page content">
         <aside class="constructor-aside">
-            <div class="constructor-aside__header">
+            <div class="constructor-aside__logo">
                 <app-logo />
+            </div>
+            <div class="constructor-aside__header">
+                <div class="row">
+                    <div class="col-default-4">
+                        <app-button
+                            rounded
+                            theme="yellow"
+                            @click="clearData"
+                        >Clear all</app-button>
+                    </div>
+                    <div class="col-default-4">
+                        <app-button
+                            rounded
+                            theme="yellow"
+                            @click="previewPDF"
+                        >Preview</app-button>
+                    </div>
+                    <div class="col-default-4">
+                        <app-button
+                            rounded
+                            theme="yellow"
+                            @click="createPDF"
+                        >Generate</app-button>
+                    </div>
+                </div>
             </div>
             <div class="constructor-aside__body">
                 <app-accordion initial="first">
                     <app-accordion-item id="personal-information">
                         <template v-slot:header>Personal information</template>
-                        <template v-slot:body>Personal information</template>
+                        <template v-slot:body>
+                            <div class="row">
+                                <div class="col-default-12">
+                                    <app-input-file
+                                        name="photo"
+                                        button="Upload photo"
+                                        v-model="formData.photo"
+                                    />
+                                </div>
+                                <div class="col-default-12">
+                                    <app-input
+                                        name="name"
+                                        placeholder="Name"
+                                        v-model="formData.name"
+                                    />
+                                </div>
+                                <div class="col-default-12">
+                                    <app-input
+                                        name="address"
+                                        placeholder="Address"
+                                        v-model="formData.address"
+                                    />
+                                </div>
+                                <div class="col-default-12">
+                                    <app-input
+                                        name="phone"
+                                        v-model="formData.phone"
+                                        placeholder="Phone number"
+                                    />
+                                </div>
+                                <div class="col-default-6">
+                                    <!-- <app-input
+                                        name="maritalStatus"
+                                        placeholder="Marital status"
+                                        v-model="formData.maritalStatus"
+                                    /> -->
+                                    <app-select
+                                        name="maritalStatus"
+                                        :data="[
+                                            {
+                                                'id': 'married',
+                                                'text': 'Married',
+                                                'disabled': false,
+                                                'selected': false
+                                            },
+                                            {
+                                                'id': 'single',
+                                                'text': 'Single',
+                                                'disabled': false,
+                                                'selected': false
+                                            },
+                                            {
+                                                'id': 'divorced',
+                                                'text': 'Divorced',
+                                                'disabled': false,
+                                                'selected': false
+                                            }
+                                        ]"
+                                        placeholder="Marital status"
+                                        v-model="formData.maritalStatus"
+                                    />
+                                </div>
+                                <div class="col-default-6">
+                                    <app-input
+                                        name="dateOfBirth"
+                                        placeholder="Date of birth"
+                                        v-model="formData.dateOfBirth"
+                                    />
+                                </div>
+                                <div class="col-default-12">
+                                    <app-input
+                                        name="email"
+                                        type="email"
+                                        placeholder="Email"
+                                        v-model="formData.email"
+                                    />
+                                </div>
+                            </div>
+                        </template>
                     </app-accordion-item>
                     <app-accordion-item id="objective">
                         <template v-slot:header>Objective</template>
@@ -34,6 +137,7 @@
                         <template v-slot:header>Special skills</template>
                         <template v-slot:body>Special skills</template>
                     </app-accordion-item>
+
                     <!-- <app-accordion-item id="awards">
                         <template v-slot:header>Awards</template>
                         <template v-slot:body>Awards</template>
@@ -57,15 +161,56 @@
                 </app-accordion>
             </div>
         </aside>
-        <section class="constructor-preview"></section>
+        <section class="constructor-preview">
+            <app-preview
+                ref="document"
+                :data="formData"
+            />
+        </section>
     </div>
 </template>
 
 <script>
+import jsPDF from 'jspdf'
+import 'jspdf/dist/polyfills.es.js'
+
 export default {
     name: 'constructor',
     data () {
-        return {}
+        return {
+            formData: {
+                name: '',
+                phone: '',
+                email: '',
+                photo: '',
+                address: '',
+                dateOfBirth: '',
+                maritalStatus: ''
+            }
+        }
+    },
+    methods: {
+        createPDF () {
+            // eslint-disable-next-line new-cap
+            const pdf = new jsPDF()
+            const pdfName = this.formData.name.split(' ').join('-')
+
+            pdf.text('Hello World', 10, 10)
+            pdf.save(pdfName + '.pdf')
+        },
+        previewPDF () {
+            console.log('preview!')
+        },
+        clearData () {
+            for (const key in this.formData) {
+                this.formData[key] = ''
+            }
+        },
+        addPhoto (event) {
+            const file = event.target.files[0]
+
+            this.formData.photo = URL.createObjectURL(file)
+        }
     }
 }
 </script>
@@ -77,13 +222,11 @@ export default {
 }
 
 .constructor-aside {
-    width: 30%;
+    width: 30rem;
     min-height: 100%;
-    min-width: 30rem;
-    max-width: 36rem;
-    background-color: $lite-grey;
+    background-color: $gray-lite;
 
-    &__header {
+    &__logo {
         padding: 2rem;
         position: relative;
         text-align: center;
@@ -101,9 +244,18 @@ export default {
             border: 20px solid transparent;
             border-right-color: $white;
             border-top-color: $white;
-            border-left-color: $dark-grey;
-            border-bottom-color: $dark-grey;
+            border-left-color: $gray-dark;
+            border-bottom-color: $gray-dark;
         }
     }
+
+    &__header {
+        padding: 1rem 2rem 1.5rem;
+    }
+}
+
+.constructor-preview {
+    width: calc(100% - 30rem);
+    padding: 4rem;
 }
 </style>

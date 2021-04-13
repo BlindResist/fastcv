@@ -104,6 +104,10 @@ ul {
     .row {
         margin-top: -1.875rem;
 
+        &+.row {
+            margin-top: 0;
+        }
+
         &>[class^="col"] {
             margin-top: 1.875rem;
         }

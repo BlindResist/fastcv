@@ -1,0 +1,99 @@
+.z-checkbox {
+    $parent: &;
+
+    display: flex;
+    align-items: center;
+    flex-flow: row nowrap;
+    width: 100%;
+    user-select: none;
+    cursor: pointer;
+
+    input {
+        display: none;
+    }
+
+    &__box,
+    &__text {
+        color: $token-colors-black;
+        font-size: 16px;
+        line-height: 24px;
+        font-weight: 400;
+    }
+
+    &__box {
+        position: relative;
+        display: block;
+        width: 24px;
+        height: 24px;
+        flex-shrink: 0;
+        border: 0;
+        margin-right: 16px;
+
+        &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 24px;
+            height: 24px;
+            background-color: $token-colors-white;
+            box-shadow: inset 0 0 0 1px $token-colors-cool-gray;
+            transition: box-shadow $transition, background-color $transition;
+        }
+
+        &::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 18px;
+            height: 18px;
+            background-color: $token-colors-lenta-green;
+            opacity: 0;
+            transition: background-color $transition, opacity $transition;
+        }
+    }
+
+    &:hover {
+        #{$parent}__box {
+            &::before {
+                box-shadow: inset 0 0 0 1px $token-colors-lenta-green;
+            }
+
+            &::after {
+                background-color: $token-colors-lenta-green;
+                opacity: 1;
+            }
+        }
+    }
+
+    &.is-checked {
+        #{$parent}__box {
+            &::before {
+                background-color: $token-colors-lenta-green;
+                box-shadow: inset 0 0 0 1px $token-colors-lenta-green;
+            }
+
+            &::after {
+                background-position: center;
+                background-repeat: no-repeat;
+                background-color: $token-colors-lenta-green;
+                background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTEiIHZpZXdCb3g9IjAgMCAxNCAxMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMSA1TDUgOUwxMyAxIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+);
+                opacity: 1;
+            }
+        }
+
+        &:hover {
+            #{$parent}__box {
+                &::before {
+                    background-color: $token-colors-white;
+                }
+            }
+        }
+    }
+
+    &.is-disabled {
+        opacity: .1;
+        pointer-events: none;
+    }
+}

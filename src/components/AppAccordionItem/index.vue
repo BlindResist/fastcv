@@ -4,16 +4,7 @@
             @click="toggleItem"
             class="app-accordion-item__header"
         >
-            <span :class="elementClass('app-accordion-item__button')">
-                <span
-                    v-if="state"
-                    class="app-accordion-item__button--minus"
-                >-</span>
-                <span
-                    v-if="!state"
-                    class="app-accordion-item__button--plus"
-                >+</span>
-            </span>
+            <span :class="elementClass('app-accordion-item__button')">&#62;</span>
             <slot name="header" />
         </div>
         <transition
@@ -81,7 +72,7 @@ export default {
     transition: background-color $transition;
 
     &.is-active {
-        background-color: $dark-grey;
+        background-color: $gray-dark;
     }
 
     + .app-accordion-item {
@@ -95,7 +86,7 @@ export default {
         font-size: 1rem;
         line-height: 1.4;
         font-weight: 800;
-        color: $dark-blue;
+        color: $blue-dark;
         text-decoration: none;
         transition: background-color $transition, color $transition;
         user-select: none;
@@ -103,13 +94,13 @@ export default {
 
         &:hover,
         &:focus {
-            color: $dark-blue;
-            background-color: $dark-grey;
+            color: $blue-dark;
+            background-color: $gray-dark;
         }
 
         &:active {
-            color: $dark-blue;
-            background-color: $dark-grey;
+            color: $blue-dark;
+            background-color: $gray-dark;
         }
     }
 
@@ -126,22 +117,23 @@ export default {
         right: 0;
         bottom: 0;
         z-index: 1;
-        font-size: 1.5rem;
+        font-size: 1rem;
         font-style: normal;
         border-radius: 50%;
+        transform: rotate(90deg);
         transition: transform .3s;
 
         &.is-active {
-            transform: rotate(180deg);
+            transform: rotate(270deg);
         }
     }
 
     &__body {
-        padding: 2rem;
+        padding: 1rem 2rem 2rem;
         font-size: .875rem;
         line-height: 1.4;
         font-weight: 400;
-        color: $dark-blue;
+        color: $blue-dark;
     }
 }
 </style>
