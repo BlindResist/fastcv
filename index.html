@@ -1,21 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>blank-vue</title>
+    <title>Resume Constructor</title>
     <meta charset="UTF-8" />
     <meta name="author" content="Artem Anpilov" />
     <meta name="copyright" content="All rights reserved by Artem Anpilov" />
     <meta name="robots" content="index, nofollow" />
     <meta name="format-detection" content="telephone=no" />
-    <meta name="description" content="blank-vue" />
-    <meta name="keywords" content="blank-vue" />
+    <meta name="description" content="resume constructor" />
+    <meta name="keywords" content="resume, constructor, creator, pdf" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no" />
     <link rel="preload" as="script" href="./dist/build.js" />
     <link rel="preload" as="style" href="./dist/build.css" />
     <link rel="stylesheet" type="text/css" href="./dist/build.css" />
 </head>
 <body>
-    <div id="app"></div>
+    <div
+        id="app"
+        class="page-wrapper"
+    >
+        <router-view></router-view>
+    </div>
     <script src="./dist/build.js"></script>
 </body>
 </html>

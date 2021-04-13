@@ -1,1 +1,1 @@
-# Blank Vue-project
+# Simple resume constructor with saving the result in PDF

@@ -57,9 +57,7 @@ ul {
 
 #app {
     display: flex;
-    flex-direction: column;
     flex: 1 1 100%;
-    opacity: 0;
     transition: opacity .5s 1s ease;
 
     &.loaded {
@@ -68,6 +66,15 @@ ul {
 
     @include breakpoint(v-mobile) {
         padding-top: 6rem;
+    }
+}
+
+.page {
+    width: 100%;
+
+    &-wrapper {
+        flex: 1 0 auto;
+        overflow: hidden;
     }
 }
 
@@ -110,9 +117,7 @@ ul {
     line-height: 1.5rem;
     transition: color .3s;
 
-    &:hover {
-        color: $red;
-    }
+    &:hover {}
 }
 
 .ul-list {
@@ -134,7 +139,6 @@ ul {
             left: 0;
             z-index: 1;
             font-weight: 700;
-            color: $middle-grey;
         }
     }
 

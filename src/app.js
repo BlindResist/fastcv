@@ -1,20 +1,8 @@
 import Vue from 'vue'
-import data from '@/data.js'
-import router from '@/router.js'
+import router from '@/router'
+import importComponents from '@/utils/importComponents'
 
-// components
-
-const requireComponent = require.context(
-    './components',
-    true,
-    /App[\w-]+\/index\.js$/
-)
-
-requireComponent.keys().forEach(fileName => {
-    const componentConfig = requireComponent(fileName)
-    const componentName = fileName.split('/')[1]
-    Vue.component(componentName, componentConfig.default || componentConfig)
-})
+importComponents()
 
 Object.defineProperty(Vue.prototype, '$bus', {
     get () {
@@ -22,11 +10,9 @@ Object.defineProperty(Vue.prototype, '$bus', {
     }
 })
 
-/* eslint-disable no-new */
 const vm = new Vue({
     el: '#app',
     data: {
-        app: data,
         bus: new Vue({})
     },
     router,

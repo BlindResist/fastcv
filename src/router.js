@@ -1,11 +1,21 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
+import Constructor from '@/pages/Constructor/index.vue'
+
 Vue.use(VueRouter)
 
 const router = new VueRouter({
     linkActiveClass: 'is-current',
-    routes: []
+    routes: [
+        {
+            path: '/',
+            component: Constructor,
+            meta: {
+                title: 'Resume Constructor - Constructor page'
+            }
+        }
+    ]
 })
 
 router.afterEach((to, from) => {
