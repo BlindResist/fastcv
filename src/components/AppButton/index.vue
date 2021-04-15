@@ -39,13 +39,15 @@ export default {
             validator: prop => ['s', 'm', 'l'].includes(prop)
         },
         rounded: Boolean,
-        download: Boolean
+        download: Boolean,
+        autoWidth: Boolean
     },
     computed: {
         classObject () {
             const array = [
                 {
-                    'app-button--rounded': this.rounded
+                    'app-button--rounded': this.rounded,
+                    'app-button--auto-width': this.autoWidth
                 }
             ]
 
@@ -86,6 +88,10 @@ export default {
         border-radius: .5rem;
     }
 
+    &--auto-width {
+        width: auto;
+    }
+
     &--theme {
 
         &-yellow {
@@ -94,6 +100,15 @@ export default {
 
             &:hover {
                 background-color: $yellow-dark;
+            }
+        }
+
+        &-red {
+            color: $red-darker;
+            background-color: $red;
+
+            &:hover {
+                background-color: $red-dark;
             }
         }
     }

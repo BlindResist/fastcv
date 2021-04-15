@@ -30,7 +30,7 @@
                 </div>
             </div>
             <div class="constructor-aside__body">
-                <app-accordion initial="first">
+                <app-accordion>
                     <app-accordion-item id="personal-information">
                         <template v-slot:header>Personal information</template>
                         <template v-slot:body>
@@ -46,60 +46,36 @@
                                     <app-input
                                         name="name"
                                         placeholder="Name"
-                                        v-model="formData.name"
+                                        v-model="formData.personal.name"
                                     />
                                 </div>
                                 <div class="col-default-12">
                                     <app-input
                                         name="address"
                                         placeholder="Address"
-                                        v-model="formData.address"
+                                        v-model="formData.personal.address"
                                     />
                                 </div>
                                 <div class="col-default-12">
                                     <app-input
                                         name="phone"
-                                        v-model="formData.phone"
+                                        v-model="formData.personal.phone"
                                         placeholder="Phone number"
                                     />
                                 </div>
                                 <div class="col-default-6">
-                                    <!-- <app-input
-                                        name="maritalStatus"
-                                        placeholder="Marital status"
-                                        v-model="formData.maritalStatus"
-                                    /> -->
                                     <app-select
                                         name="maritalStatus"
-                                        :data="[
-                                            {
-                                                'id': 'married',
-                                                'text': 'Married',
-                                                'disabled': false,
-                                                'selected': false
-                                            },
-                                            {
-                                                'id': 'single',
-                                                'text': 'Single',
-                                                'disabled': false,
-                                                'selected': false
-                                            },
-                                            {
-                                                'id': 'divorced',
-                                                'text': 'Divorced',
-                                                'disabled': false,
-                                                'selected': false
-                                            }
-                                        ]"
+                                        :data="data.maritalStatus"
                                         placeholder="Marital status"
-                                        v-model="formData.maritalStatus"
+                                        v-model="formData.personal.maritalStatus"
                                     />
                                 </div>
                                 <div class="col-default-6">
                                     <app-input
                                         name="dateOfBirth"
                                         placeholder="Date of birth"
-                                        v-model="formData.dateOfBirth"
+                                        v-model="formData.personal.dateOfBirth"
                                     />
                                 </div>
                                 <div class="col-default-12">
@@ -107,7 +83,7 @@
                                         name="email"
                                         type="email"
                                         placeholder="Email"
-                                        v-model="formData.email"
+                                        v-model="formData.personal.email"
                                     />
                                 </div>
                             </div>
@@ -115,11 +91,51 @@
                     </app-accordion-item>
                     <app-accordion-item id="objective">
                         <template v-slot:header>Objective</template>
-                        <template v-slot:body>Objective</template>
+                        <template v-slot:body>
+                            <div class="row">
+                                <div class="col-default-12">
+                                    <app-input
+                                        name="objective"
+                                        placeholder="Your objective"
+                                        v-model="formData.objective.position"
+                                    />
+                                </div>
+                                <div class="col-default-12">
+                                    <app-textarea
+                                        name="About objective"
+                                        v-model="formData.objective.about"
+                                        placeholder="Describe your advantages in this position"
+                                    />
+                                </div>
+                            </div>
+                        </template>
                     </app-accordion-item>
                     <app-accordion-item id="education">
                         <template v-slot:header>Education</template>
-                        <template v-slot:body>Education</template>
+                        <template v-slot:body>
+                            <div class="row">
+                                <div class="col-default-12">
+                                    <component
+                                        :id="index"
+                                        :key="index"
+                                        :is="component"
+                                        @remove="removeComponent"
+                                        :data="formData.education[index]"
+                                        v-model="formData.education[index]"
+                                        v-for="(component, index) in components.education"
+                                    />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-default-12">
+                                    <app-button
+                                        rounded
+                                        theme="yellow"
+                                        @click="addComponent('education')"
+                                    >+ Add new</app-button>
+                                </div>
+                            </div>
+                        </template>
                     </app-accordion-item>
                     <app-accordion-item id="qualifications">
                         <template v-slot:header>Qualifications</template>
@@ -173,43 +189,133 @@
 <script>
 import jsPDF from 'jspdf'
 import 'jspdf/dist/polyfills.es.js'
+import html2canvas from 'html2canvas'
+import Education from './education.vue'
 
 export default {
     name: 'constructor',
+    components: {
+        Education
+    },
     data () {
         return {
+            counter: 1,
+            dimensions: {
+                width: 700,
+                ratio: 1.4142
+            },
             formData: {
-                name: '',
-                phone: '',
-                email: '',
                 photo: '',
-                address: '',
-                dateOfBirth: '',
-                maritalStatus: ''
+                objective: {
+                    position: 'Middle Frontend developer',
+                    about: 'Some of my advantages'
+                },
+                personal: {
+                    name: 'Anpilov Artem',
+                    phone: '89045166555',
+                    email: 'blind.resist@gmail.com',
+                    address: 'Perevozniy pereulok 19/1',
+                    dateOfBirth: '21.05.1987',
+                    maritalStatus: ''
+                },
+                education: [
+                    {
+                        id: 'education-0',
+                        university: 'Московский государственный университет приборостроения и информатики, Москва',
+                        degree: 'Степень магистра по направлению «информатика»',
+                        period: '2001—2006'
+                    }
+                ]
+            },
+            data: {
+                maritalStatus: [
+                    {
+                        id: 'married',
+                        text: 'Married',
+                        disabled: false,
+                        selected: false
+                    },
+                    {
+                        id: 'single',
+                        text: 'Single',
+                        disabled: false,
+                        selected: false
+                    },
+                    {
+                        id: 'divorced',
+                        text: 'Divorced',
+                        disabled: false,
+                        selected: false
+                    }
+                ]
+            },
+            components: {
+                education: [
+                    Education
+                ]
             }
+        }
+    },
+    computed: {
+        format () {
+            return [
+                this.dimensions.width,
+                this.dimensions.width * this.dimensions.ratio
+            ]
         }
     },
     methods: {
         createPDF () {
             // eslint-disable-next-line new-cap
-            const pdf = new jsPDF()
+            const pdf = new jsPDF({
+                unit: 'px',
+                format: this.format,
+                orientation: 'portrait'
+            })
             const pdfName = this.formData.name.split(' ').join('-')
+            const contentHtml = this.$refs.document.$refs.page.$el
 
-            pdf.text('Hello World', 10, 10)
-            pdf.save(pdfName + '.pdf')
+            pdf.html(contentHtml, {
+                callback: pdf => {
+                    pdf.save(pdfName + '.pdf')
+                }
+            })
         },
         previewPDF () {
             console.log('preview!')
         },
         clearData () {
-            for (const key in this.formData) {
-                this.formData[key] = ''
+            this.recursiveClearing(this.formData)
+        },
+        recursiveClearing (data) {
+            for (const key in data) {
+                if (typeof data[key] === 'object') {
+                    this.recursiveClearing(data[key])
+                } else if (Array.isArray(data[key])) {
+                    data[key] = []
+                } else {
+                    data[key] = ''
+                }
             }
         },
-        addPhoto (event) {
-            const file = event.target.files[0]
+        addComponent (type) {
+            const id = `${type}-${this.counter++}`
 
-            this.formData.photo = URL.createObjectURL(file)
+            this.formData[type].push({
+                id,
+                period: '',
+                degree: '',
+                university: ''
+            })
+
+            this.components[type].push(type)
+        },
+        removeComponent (data) {
+            const education = this.formData.education
+
+            for (let i = 0; i < education; i++) {
+                if (education[i].id === data.id) delete education[i]
+            }
         }
     }
 }
@@ -255,7 +361,9 @@ export default {
 }
 
 .constructor-preview {
+    display: flex;
+    flex-flow: row nowrap;
     width: calc(100% - 30rem);
-    padding: 4rem;
+    padding: 4rem 0;
 }
 </style>

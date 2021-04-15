@@ -3,13 +3,14 @@
         :for="name"
         class="app-input-file"
     >
+        <span class="app-input-file__button">Upload photo</span>
         <input
             :id="name"
             type="file"
             :name="name"
             @change="change($event)"
         />
-        <span class="app-input-file__name">{{ file.name }}</span>
+        <span class="app-input-file__text">{{ file.name.length ? file.name : text.empty }}</span>
     </label>
 </template>
 
@@ -29,8 +30,7 @@ export default {
                 name: ''
             },
             text: {
-                error: 'Required field',
-                emailError: 'Invalid email format'
+                empty: '...'
             }
         }
     },
@@ -38,7 +38,6 @@ export default {
         change (event) {
             const file = event.target.files[0]
 
-            console.log(file)
             this.file.name = file.name
             this.file.blob = URL.createObjectURL(file)
 
@@ -51,16 +50,34 @@ export default {
 
 <style lang="scss">
 .app-input-file {
+    $padding: 1rem;
+
     display: flex;
     align-items: center;
     flex-flow: row nowrap;
     width: 100%;
-    height: 40px;
     position: relative;
-    background-color: #000;
+    background-color: $gray-lite;
+    cursor: pointer;
 
     input {
         display: none;
+    }
+
+    &__button {
+        padding: $padding;
+        color: $white;
+        background-color: $blue-dark;
+    }
+
+    &__text {
+        max-width: 100%;
+        overflow: hidden;
+        padding: $padding;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        color: rgba($blue-dark, .5);
+        pointer-events: none;
     }
 }
 </style>
