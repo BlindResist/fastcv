@@ -113,7 +113,10 @@
                     <app-accordion-item id="education">
                         <template v-slot:header>Education</template>
                         <template v-slot:body>
-                            <div class="row">
+                            <div
+                                class="row"
+                                v-if="components.education.length"
+                            >
                                 <div class="col-default-12">
                                     <component
                                         :id="index"
@@ -137,13 +140,39 @@
                             </div>
                         </template>
                     </app-accordion-item>
-                    <app-accordion-item id="qualifications">
+                    <!-- <app-accordion-item id="qualifications">
                         <template v-slot:header>Qualifications</template>
                         <template v-slot:body>Qualifications</template>
-                    </app-accordion-item>
+                    </app-accordion-item> -->
                     <app-accordion-item id="work-experience">
                         <template v-slot:header>Work experience</template>
-                        <template v-slot:body>Work experience</template>
+                        <template v-slot:body>
+                            <div
+                                class="row"
+                                v-if="components.experience.length"
+                            >
+                                <div class="col-default-12">
+                                    <component
+                                        :id="index"
+                                        :key="index"
+                                        :is="component"
+                                        @remove="removeComponent"
+                                        :data="formData.experience[index]"
+                                        v-model="formData.experience[index]"
+                                        v-for="(component, index) in components.experience"
+                                    />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-default-12">
+                                    <app-button
+                                        rounded
+                                        theme="yellow"
+                                        @click="addComponent('experience')"
+                                    >+ Add new</app-button>
+                                </div>
+                            </div>
+                        </template>
                     </app-accordion-item>
                     <app-accordion-item id="personal-qualities">
                         <template v-slot:header>Personal qualities</template>
@@ -191,11 +220,13 @@ import jsPDF from 'jspdf'
 import 'jspdf/dist/polyfills.es.js'
 import html2canvas from 'html2canvas'
 import Education from './education.vue'
+import Experience from './experience.vue'
 
 export default {
     name: 'constructor',
     components: {
-        Education
+        Education,
+        Experience
     },
     data () {
         return {
@@ -208,7 +239,7 @@ export default {
                 photo: '',
                 objective: {
                     position: 'Middle Frontend developer',
-                    about: 'Some of my advantages'
+                    about: 'Some of my cool advantages'
                 },
                 personal: {
                     name: 'Anpilov Artem',
@@ -221,9 +252,22 @@ export default {
                 education: [
                     {
                         id: 'education-0',
-                        university: 'Московский государственный университет приборостроения и информатики, Москва',
-                        degree: 'Степень магистра по направлению «информатика»',
-                        period: '2001—2006'
+                        university: 'Voronezh Institute of Economics and Law',
+                        degree: 'Information Technology Specialist',
+                        period: '2004 - 2009'
+                    }
+                ],
+                experience: [
+                    {
+                        id: 'experience-0',
+                        company: 'Zebra Ltd',
+                        from: '2018',
+                        to: 'present',
+                        country: 'Russia',
+                        city: 'Moscow',
+                        position: 'Frontend developer',
+                        duties: '- разработка библиотеки компонентов на VueJS\n- написание javascript ES5+\n- поиск вариантов решения поставленных задач\n- code review\n- поддержка и рефакторинг legacy-кода\n- adaptive, responsive\n- работа в команде с backend\n- верстка html, scss\n- работа с Docker',
+                        achievements: ''
                     }
                 ]
             },
@@ -252,6 +296,9 @@ export default {
             components: {
                 education: [
                     Education
+                ],
+                experience: [
+                    Experience
                 ]
             }
         }
@@ -272,7 +319,7 @@ export default {
                 format: this.format,
                 orientation: 'portrait'
             })
-            const pdfName = this.formData.name.split(' ').join('-')
+            const pdfName = this.formData.personal.name.split(' ').join('-')
             const contentHtml = this.$refs.document.$refs.page.$el
 
             pdf.html(contentHtml, {
@@ -281,9 +328,8 @@ export default {
                 }
             })
         },
-        previewPDF () {
-            console.log('preview!')
-        },
+        previewPDF () {},
+        uploadJSON () {},
         clearData () {
             this.recursiveClearing(this.formData)
         },
@@ -311,10 +357,16 @@ export default {
             this.components[type].push(type)
         },
         removeComponent (data) {
-            const education = this.formData.education
+            const formData = this.formData[data.type]
+            const components = this.components[data.type]
 
-            for (let i = 0; i < education; i++) {
-                if (education[i].id === data.id) delete education[i]
+            for (let i = 0; i < formData.length; i++) {
+                if (formData[i].id === data.id) {
+                    const index = formData.indexOf(formData[i])
+
+                    formData.splice(index, 1)
+                    components.splice(index, 1)
+                }
             }
         }
     }
