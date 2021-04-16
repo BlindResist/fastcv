@@ -2,6 +2,8 @@ import Vue from 'vue'
 import router from '@/router'
 import importComponents from '@/utils/importComponents'
 
+import '@/utils/filters'
+
 importComponents()
 
 Object.defineProperty(Vue.prototype, '$bus', {

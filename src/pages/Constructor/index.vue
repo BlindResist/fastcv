@@ -102,7 +102,7 @@
                                 </div>
                                 <div class="col-default-12">
                                     <app-textarea
-                                        name="About objective"
+                                        name="aboutObjective"
                                         v-model="formData.objective.about"
                                         placeholder="Describe your advantages in this position"
                                     />
@@ -176,11 +176,31 @@
                     </app-accordion-item>
                     <app-accordion-item id="personal-qualities">
                         <template v-slot:header>Personal qualities</template>
-                        <template v-slot:body>Personal qualities</template>
+                        <template v-slot:body>
+                            <div class="row">
+                                <div class="col-default-12">
+                                    <app-textarea
+                                        name="qualities"
+                                        v-model="formData.qualities"
+                                        placeholder="Write about your personal qualities"
+                                    />
+                                </div>
+                            </div>
+                        </template>
                     </app-accordion-item>
                     <app-accordion-item id="special-skills">
                         <template v-slot:header>Special skills</template>
-                        <template v-slot:body>Special skills</template>
+                        <template v-slot:body>
+                            <div class="row">
+                                <div class="col-default-12">
+                                    <app-textarea
+                                        name="skills"
+                                        v-model="formData.skills"
+                                        placeholder="Write about your special skills"
+                                    />
+                                </div>
+                            </div>
+                        </template>
                     </app-accordion-item>
 
                     <!-- <app-accordion-item id="awards">
@@ -218,7 +238,9 @@
 <script>
 import jsPDF from 'jspdf'
 import 'jspdf/dist/polyfills.es.js'
+// eslint-disable-next-line no-unused-vars
 import html2canvas from 'html2canvas'
+import pdfFonts from '@/utils/pdfFonts'
 import Education from './education.vue'
 import Experience from './experience.vue'
 
@@ -230,6 +252,7 @@ export default {
     },
     data () {
         return {
+            jsPDF: Object,
             counter: 1,
             dimensions: {
                 width: 700,
@@ -269,7 +292,9 @@ export default {
                         duties: '- разработка библиотеки компонентов на VueJS\n- написание javascript ES5+\n- поиск вариантов решения поставленных задач\n- code review\n- поддержка и рефакторинг legacy-кода\n- adaptive, responsive\n- работа в команде с backend\n- верстка html, scss\n- работа с Docker',
                         achievements: ''
                     }
-                ]
+                ],
+                skills: 'My special skills',
+                qualities: 'My personal qualities'
             },
             data: {
                 maritalStatus: [
@@ -313,16 +338,25 @@ export default {
     },
     methods: {
         createPDF () {
+            const contentHtml = this.$refs.document.$refs.page.$el
+            const pdfName = this.formData.personal.name.split(' ').join('-')
+
             // eslint-disable-next-line new-cap
-            const pdf = new jsPDF({
+            this.jsPDF = new jsPDF({
                 unit: 'px',
                 format: this.format,
                 orientation: 'portrait'
             })
-            const pdfName = this.formData.personal.name.split(' ').join('-')
-            const contentHtml = this.$refs.document.$refs.page.$el
 
-            pdf.html(contentHtml, {
+            this.jsPDF.addFileToVFS('Roboto-Bold-bold.ttf', pdfFonts.roboto.bold)
+            this.jsPDF.addFileToVFS('Roboto-Light-normal.ttf', pdfFonts.roboto.light)
+            this.jsPDF.addFileToVFS('Roboto-Regular-normal.ttf', pdfFonts.roboto.regular)
+
+            this.jsPDF.addFont('Roboto-Bold-bold.ttf', 'Roboto-Bold', 'bold')
+            this.jsPDF.addFont('Roboto-Light-normal.ttf', 'Roboto-Light', 'normal')
+            this.jsPDF.addFont('Roboto-Regular-normal.ttf', 'Roboto-Regular', 'normal')
+
+            this.jsPDF.html(contentHtml, {
                 callback: pdf => {
                     pdf.save(pdfName + '.pdf')
                 }

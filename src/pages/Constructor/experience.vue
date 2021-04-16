@@ -71,8 +71,11 @@
 </template>
 
 <script>
+import dynamicComponentsEmmiters from '@/mixins/dynamicComponentsEmmiters'
+
 export default {
     name: 'experience',
+    mixins: [dynamicComponentsEmmiters('experience')],
     props: {
         id: {
             type: Number,
@@ -95,25 +98,6 @@ export default {
     data () {
         return {
             innerData: this.data
-        }
-    },
-    watch: {
-        innerData: {
-            deep: true,
-            handler (data) {
-                this.$emit('input', {
-                    ...data,
-                    id: `experience-${this.id}`
-                })
-            }
-        }
-    },
-    methods: {
-        remove () {
-            this.$emit('remove', {
-                type: 'experience',
-                id: `experience-${this.id}`
-            })
         }
     }
 }

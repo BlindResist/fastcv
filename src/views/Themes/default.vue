@@ -12,56 +12,62 @@
                     </div>
                 </div>
                 <div class="col-default-8">
-                    <h2 v-if="data.personal.name">Personal information</h2>
-                    <div class="table">
-                        <table>
-                            <colgroup span="9" align="center" width="50">
-                                <col span="1" style="width: 30%;">
-                                <col span="1" style="width: 70%;">
-                            </colgroup>
-                            <tbody>
-                                <tr v-if="data.personal.name">
-                                    <td>Name</td>
-                                    <td>{{ data.personal.name }}</td>
-                                </tr>
-                                <tr v-if="data.personal.address">
-                                    <td>Address</td>
-                                    <td>{{ data.personal.address }}</td>
-                                </tr>
-                                <tr v-if="data.personal.phone">
-                                    <td>Phone number</td>
-                                    <td>{{ data.personal.phone }}</td>
-                                </tr>
-                                <tr v-if="data.personal.maritalStatus">
-                                    <td>Marital status</td>
-                                    <td>{{ data.personal.maritalStatus }}</td>
-                                </tr>
-                                <tr v-if="data.personal.dateOfBirth">
-                                    <td>Date of birth</td>
-                                    <td>{{ data.personal.dateOfBirth }}</td>
-                                </tr>
-                                <tr v-if="data.personal.email">
-                                    <td>Email</td>
-                                    <td>{{ data.personal.email }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="default-theme__section">
-            <div
-                class="row"
-                v-if="data.objective.position"
-            >
-                <div class="col-default-12">
-                    <h2>Objective</h2>
-                    <h3>{{ data.objective.position }}</h3>
-                    <p
-                        v-if="data.objective.about"
-                        v-html="data.objective.about"
-                    ></p>
+                    <section class="default-theme__section">
+                        <div class="row">
+                            <div class="col-default-12">
+                                <h2 v-if="data.personal.name">Personal information</h2>
+                                <div class="table">
+                                    <table>
+                                        <colgroup span="9" align="center" width="50">
+                                            <col span="1" style="width: 30%;">
+                                            <col span="1" style="width: 70%;">
+                                        </colgroup>
+                                        <tbody>
+                                            <tr v-if="data.personal.name">
+                                                <td>Name</td>
+                                                <td>{{ data.personal.name }}</td>
+                                            </tr>
+                                            <tr v-if="data.personal.address">
+                                                <td>Address</td>
+                                                <td>{{ data.personal.address }}</td>
+                                            </tr>
+                                            <tr v-if="data.personal.phone">
+                                                <td>Phone number</td>
+                                                <td>{{ data.personal.phone }}</td>
+                                            </tr>
+                                            <tr v-if="data.personal.maritalStatus">
+                                                <td>Marital status</td>
+                                                <td>{{ data.personal.maritalStatus }}</td>
+                                            </tr>
+                                            <tr v-if="data.personal.dateOfBirth">
+                                                <td>Date of birth</td>
+                                                <td>{{ data.personal.dateOfBirth }}</td>
+                                            </tr>
+                                            <tr v-if="data.personal.email">
+                                                <td>Email</td>
+                                                <td>{{ data.personal.email }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <section class="default-theme__section">
+                        <div class="row">
+                            <div
+                                class="col-default-12"
+                                v-if="data.objective.position"
+                            >
+                                <h2>Objective</h2>
+                                <h3>{{ data.objective.position }}</h3>
+                                <p
+                                    v-if="data.objective.about"
+                                    v-html="$options.filters.breakLine(data.objective.about)"
+                                ></p>
+                            </div>
+                        </div>
+                    </section>
                 </div>
             </div>
         </section>
@@ -120,16 +126,37 @@
                                         <span class="block margin-top--xs">{{ item.position }}</span>
                                     </td>
                                     <td>
-                                        <p v-html="item.duties"></p>
+                                        <p
+                                            v-if="item.duties"
+                                            v-html="$options.filters.breakLine(item.duties)"
+                                        ></p>
                                         <p
                                             v-if="item.achievements"
-                                            v-html="item.achievements"
+                                            v-html="$options.filters.breakLine(item.achievements)"
                                         ></p>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
+                </div>
+            </div>
+        </section>
+        <section class="default-theme__section">
+            <div class="row">
+                <div
+                    v-if="data.qualities"
+                    class="col-default-6"
+                >
+                    <h2>Personal qualities</h2>
+                    <p v-html="$options.filters.breakLine(data.qualities)"></p>
+                </div>
+                <div
+                    v-if="data.skills"
+                    class="col-default-6"
+                >
+                    <h2>Special skills</h2>
+                    <p v-html="$options.filters.breakLine(data.skills)"></p>
                 </div>
             </div>
         </section>
@@ -144,9 +171,6 @@ export default {
             type: Object,
             default: () => {}
         }
-    },
-    data () {
-        return {}
     }
 }
 </script>
@@ -160,27 +184,39 @@ export default {
     padding: 2rem;
     line-height: 1;
     font-size: .75rem;
-    font-family: Arial, sans-serif;
+    font-family: Roboto-Regular, Arial, sans-serif;
 
     h1 {
         margin-bottom: 2rem;
         font-size: 1rem;
-        font-weight: 700;
         text-align: center;
+        font-weight: 700;
+        font-family: Roboto-Bold, Arial, sans-serif;
     }
 
     h2 {
         padding: 0 0 .5rem;
-        margin-bottom: 1rem;
+        margin-bottom: .5rem;
         font-weight: 700;
         font-size: .875rem;
-        border-bottom: 1px solid rgba($black, .1);
+        font-family: Roboto-Bold, Arial, sans-serif;
+        border-bottom: 1px solid rgba($black, .2);
     }
 
     h3 {
         padding: 0 0 .5rem;
         margin-bottom: .5rem;
         font-size: .75rem;
+        font-weight: 700;
+        font-family: Roboto-Bold, Arial, sans-serif;
+    }
+
+    p {
+        line-height: 1.5;
+
+        &+p {
+            margin-top: 1rem;
+        }
     }
 
     &__section {

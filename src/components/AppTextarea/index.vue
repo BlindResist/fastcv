@@ -61,7 +61,8 @@ export default {
                     required: this.$root.lang === 'ru' ? 'Поле обязательно для заполнения' : 'Required field'
                 }
             },
-            val: this.value
+            val: this.value,
+            parsedValue: ''
         }
     },
     methods: {

@@ -26,8 +26,11 @@
 </template>
 
 <script>
+import dynamicComponentsEmmiters from '@/mixins/dynamicComponentsEmmiters'
+
 export default {
     name: 'education',
+    mixins: [dynamicComponentsEmmiters('education')],
     props: {
         id: {
             type: Number,
@@ -59,25 +62,6 @@ export default {
                     placeholder: 'Degree'
                 }
             ]
-        }
-    },
-    watch: {
-        innerData: {
-            deep: true,
-            handler (data) {
-                this.$emit('input', {
-                    ...data,
-                    id: `education-${this.id}`
-                })
-            }
-        }
-    },
-    methods: {
-        remove () {
-            this.$emit('remove', {
-                type: 'education',
-                id: `education-${this.id}`
-            })
         }
     }
 }
