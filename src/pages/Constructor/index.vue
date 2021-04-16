@@ -6,20 +6,6 @@
             </div>
             <div class="constructor-aside__header">
                 <div class="row center">
-                    <!-- <div class="col-default-4">
-                        <app-button
-                            rounded
-                            theme="yellow"
-                            @click="clearData"
-                        >Clear all</app-button>
-                    </div>
-                    <div class="col-default-4">
-                        <app-button
-                            rounded
-                            theme="yellow"
-                            @click="previewPDF"
-                        >Preview</app-button>
-                    </div> -->
                     <div class="col-default-4">
                         <span class="bold">Options</span>
                     </div>
@@ -38,6 +24,27 @@
                         >Generate</app-button>
                     </div>
                 </div>
+                <app-popup :active="popupActive">
+                    <div class="row">
+                        <div class="col-default-12">
+                            <span class="bold">Additional options</span>
+                        </div>
+                        <div class="col-default-4">
+                            <app-button
+                                rounded
+                                theme="yellow"
+                                @click="clearData"
+                            >Clear all</app-button>
+                        </div>
+                        <div class="col-default-4">
+                            <app-button
+                                rounded
+                                theme="yellow"
+                                @click="previewPDF"
+                            >Preview</app-button>
+                        </div>
+                    </div>
+                </app-popup>
             </div>
             <div class="constructor-aside__body">
                 <app-accordion>
@@ -268,6 +275,7 @@ export default {
                 width: 700,
                 ratio: 1.4142
             },
+            popupActive: false,
             formData: {
                 photo: '',
                 objective: {
@@ -374,7 +382,9 @@ export default {
         },
         previewPDF () {},
         uploadJSON () {},
-        openAdditional () {},
+        openAdditional () {
+            this.popupActive = !this.popupActive
+        },
         clearData () {
             this.recursiveClearing(this.formData)
         },
@@ -454,6 +464,7 @@ export default {
 
     &__header {
         padding: 1rem 2rem;
+        position: relative;
         border-bottom: 1px solid rgba($blue-dark, .15);
         background-color: $gray-dark;
     }

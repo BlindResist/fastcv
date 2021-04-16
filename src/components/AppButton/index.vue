@@ -104,7 +104,7 @@ export default {
         }
 
         &-red {
-            color: $red-darker;
+            color: $white;
             background-color: $red;
 
             &:hover {
@@ -113,7 +113,7 @@ export default {
         }
 
         &-blue {
-            color: $gray-dark;
+            color: $white;
             background-color: $gray-darker;
 
             &:hover {
