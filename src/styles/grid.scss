@@ -20,6 +20,10 @@
     &.reverse {
         flex-direction: row-reverse;
     }
+
+    &.center {
+        align-items: center;
+    }
 }
 
 .col.reverse {

@@ -111,6 +111,15 @@ export default {
                 background-color: $red-dark;
             }
         }
+
+        &-blue {
+            color: $gray-dark;
+            background-color: $gray-darker;
+
+            &:hover {
+                background-color: $gray-darkerer;
+            }
+        }
     }
 }
 </style>

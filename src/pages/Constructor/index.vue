@@ -5,8 +5,8 @@
                 <app-logo />
             </div>
             <div class="constructor-aside__header">
-                <div class="row">
-                    <div class="col-default-4">
+                <div class="row center">
+                    <!-- <div class="col-default-4">
                         <app-button
                             rounded
                             theme="yellow"
@@ -19,6 +19,16 @@
                             theme="yellow"
                             @click="previewPDF"
                         >Preview</app-button>
+                    </div> -->
+                    <div class="col-default-4">
+                        <span class="bold">Options</span>
+                    </div>
+                    <div class="col-default-4">
+                        <app-button
+                            rounded
+                            theme="blue"
+                            @click="openAdditional"
+                        >Additional</app-button>
                     </div>
                     <div class="col-default-4">
                         <app-button
@@ -364,6 +374,7 @@ export default {
         },
         previewPDF () {},
         uploadJSON () {},
+        openAdditional () {},
         clearData () {
             this.recursiveClearing(this.formData)
         },
@@ -442,7 +453,9 @@ export default {
     }
 
     &__header {
-        padding: 1rem 2rem 1.5rem;
+        padding: 1rem 2rem;
+        border-bottom: 1px solid rgba($blue-dark, .15);
+        background-color: $gray-dark;
     }
 }
 
