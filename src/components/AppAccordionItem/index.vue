@@ -81,7 +81,7 @@ export default {
         position: relative;
         font-size: 1rem;
         line-height: 1.4;
-        font-weight: 800;
+        font-weight: 700;
         color: $blue-dark;
         text-decoration: none;
         transition: background-color $transition, color $transition;

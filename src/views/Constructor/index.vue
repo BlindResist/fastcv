@@ -166,13 +166,45 @@
                                 </app-accordion-item> -->
                             </app-accordion>
                         </app-tabs-content>
-                        <app-tabs-content id="options">Options</app-tabs-content>
+                        <app-tabs-content id="options">
+                            <div class="constructor-aside__options">
+                                <div class="row">
+                                    <div class="col-default-12">
+                                        <span class="constructor__caption">Choose theme:</span>
+                                    </div>
+                                    <div class="col-default-12">
+                                        <app-radio
+                                            name="theme"
+                                            v-model="theme"
+                                            :options="[
+                                                {
+                                                    id: 'default',
+                                                    text: 'Default theme',
+                                                    disabled: false
+                                                },
+                                                {
+                                                    id: 'one',
+                                                    text: 'Theme One',
+                                                    disabled: false
+                                                },
+                                                {
+                                                    id: 'two',
+                                                    text: 'Theme Two',
+                                                    disabled: false
+                                                }
+                                            ]"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </app-tabs-content>
                     </template>
                 </app-tabs>
             </div>
         </aside>
         <section class="constructor-preview">
             <app-preview
+                :type="theme"
                 ref="document"
                 :data="formData"
             />
@@ -205,12 +237,13 @@ export default {
     },
     data () {
         return {
-            jsPDF: Object,
             counter: 1,
+            jsPDF: Object,
             dimensions: {
                 width: 700,
                 ratio: 1.4142
             },
+            theme: 'default',
             popupActive: false,
             formData: {
                 objective: {
@@ -295,8 +328,6 @@ export default {
                 }
             })
         },
-        previewPDF () {},
-        uploadJSON () {},
         openAdditional () {
             this.popupActive = !this.popupActive
         },
@@ -347,6 +378,13 @@ export default {
 .constructor {
     display: flex;
     flex-flow: row nowrap;
+
+    &__caption {
+        font-size: 1rem;
+        line-height: 1.4;
+        font-weight: 700;
+        color: $blue-dark;
+    }
 }
 
 .constructor-aside {
@@ -379,11 +417,8 @@ export default {
         }
     }
 
-    &__header {
-        padding: 1rem 2rem;
-        position: relative;
-        border-bottom: 1px solid rgba($blue-dark, .15);
-        background-color: $gray-dark;
+    &__options {
+        padding: 2rem;
     }
 }
 

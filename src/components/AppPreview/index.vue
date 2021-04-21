@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import One from '@/views/Themes/one.vue'
+import Two from '@/views/Themes/two.vue'
 import Default from '@/views/Themes/default.vue'
 
 export default {
@@ -27,6 +29,8 @@ export default {
     data () {
         return {
             themes: {
+                one: One,
+                two: Two,
                 default: Default
             }
         }

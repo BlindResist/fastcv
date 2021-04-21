@@ -1,7 +1,7 @@
 <template>
-    <div class="theme-default">
-        <h1>Resume</h1>
-        <section class="theme-default__section">
+    <div class="theme-two">
+        <h1>Theme 2</h1>
+        <section class="theme-two__section">
             <div class="row">
                 <div class="col-default-4">
                     <div
@@ -12,7 +12,7 @@
                     </div>
                 </div>
                 <div class="col-default-8">
-                    <section class="theme-default__section">
+                    <section class="theme-two__section">
                         <div class="row">
                             <div class="col-default-12">
                                 <h2 v-if="data.personal.name">Personal information</h2>
@@ -53,7 +53,7 @@
                             </div>
                         </div>
                     </section>
-                    <section class="theme-default__section">
+                    <section class="theme-two__section">
                         <div class="row">
                             <div
                                 class="col-default-12"
@@ -71,7 +71,7 @@
                 </div>
             </div>
         </section>
-        <section class="theme-default__section">
+        <section class="theme-two__section">
             <div
                 class="row"
                 v-if="data.education.length"
@@ -101,7 +101,7 @@
                 </div>
             </div>
         </section>
-        <section class="theme-default__section">
+        <section class="theme-two__section">
             <div
                 class="row"
                 v-if="data.experience.length"
@@ -142,7 +142,7 @@
                 </div>
             </div>
         </section>
-        <section class="theme-default__section">
+        <section class="theme-two__section">
             <div class="row">
                 <div
                     v-if="data.qualities"
@@ -165,7 +165,7 @@
 
 <script>
 export default {
-    name: 'theme-default',
+    name: 'theme-two',
     props: {
         data: {
             type: Object,
@@ -187,7 +187,7 @@ export default {
 </script>
 
 <style lang="scss">
-.theme-default {
+.theme-two {
     $width: 700px;
 
     width: $width;
