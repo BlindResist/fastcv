@@ -1,5 +1,5 @@
 <template>
-    <div class="app-date-picker">
+    <div :class="elementClass">
         <date-picker
             :key="lang"
             :type="type"
@@ -27,6 +27,7 @@ export default {
     },
     props: {
         range: Boolean,
+        disabled: Boolean,
         type: {
             type: String,
             default: 'date',
@@ -48,14 +49,21 @@ export default {
             type: String,
             default: 'en'
         },
-        value: {
-            type: String,
-            default: ''
-        }
+        value: [Array, String]
     },
     data () {
         return {
             date: this.value
+        }
+    },
+    computed: {
+        elementClass () {
+            return [
+                'app-date-picker',
+                {
+                    'is-disabled': this.disabled
+                }
+            ]
         }
     },
     methods: {
@@ -390,6 +398,11 @@ export default {
                 }
             }
         }
+    }
+
+    &.is-disabled {
+        opacity: .1;
+        pointer-events: none;
     }
 }
 </style>

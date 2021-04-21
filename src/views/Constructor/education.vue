@@ -40,11 +40,11 @@
 </template>
 
 <script>
-import dynamicComponentsEmmiters from '@/mixins/dynamicComponentsEmmiters'
+import dynamicComponentEmitters from '@/mixins/dynamicComponentEmitters'
 
 export default {
     name: 'education',
-    mixins: [dynamicComponentsEmmiters('education')],
+    mixins: [dynamicComponentEmitters('education')],
     props: {
         id: {
             type: Number,

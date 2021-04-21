@@ -35,7 +35,14 @@
                     placeholder="To"
                     value-type="format"
                     v-model="innerData.to"
+                    :disabled="innerData.currently"
                 />
+            </div>
+            <div class="col-default-12">
+                <app-checkbox
+                    v-model="innerData.currently"
+                    :name="`experience-${id}-currently`"
+                >I currently work here</app-checkbox>
             </div>
             <div class="col-default-6">
                 <app-input
@@ -77,11 +84,11 @@
 </template>
 
 <script>
-import dynamicComponentsEmmiters from '@/mixins/dynamicComponentsEmmiters'
+import dynamicComponentEmitters from '@/mixins/dynamicComponentEmitters'
 
 export default {
     name: 'experience',
-    mixins: [dynamicComponentsEmmiters('experience')],
+    mixins: [dynamicComponentEmitters('experience')],
     props: {
         id: {
             type: Number,
@@ -97,7 +104,8 @@ export default {
                 city: '',
                 position: '',
                 duties: '',
-                achievements: ''
+                achievements: '',
+                currently: ''
             })
         }
     },

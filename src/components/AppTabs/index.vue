@@ -101,7 +101,7 @@ export default {
         height: 100%;
         padding: 1rem 1.5rem;
         font-size: .875rem;
-        font-weight: 400;
+        font-weight: 700;
         line-height: 1.4;
         color: $blue-dark;
         text-decoration: none;

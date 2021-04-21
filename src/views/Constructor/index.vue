@@ -23,60 +23,11 @@
                                 <app-accordion-item id="personal-information">
                                     <template v-slot:header>Personal information</template>
                                     <template v-slot:body>
-                                        <div class="row">
-                                            <div class="col-default-12">
-                                                <app-input-file
-                                                    name="photo"
-                                                    button="Upload photo"
-                                                    v-model="formData.photo"
-                                                />
-                                            </div>
-                                            <div class="col-default-12">
-                                                <app-input
-                                                    name="name"
-                                                    placeholder="Name"
-                                                    v-model="formData.personal.name"
-                                                />
-                                            </div>
-                                            <div class="col-default-12">
-                                                <app-input
-                                                    name="address"
-                                                    placeholder="Address"
-                                                    v-model="formData.personal.address"
-                                                />
-                                            </div>
-                                            <div class="col-default-12">
-                                                <app-input
-                                                    name="phone"
-                                                    placeholder="Phone number"
-                                                    v-model="formData.personal.phone"
-                                                />
-                                            </div>
-                                            <div class="col-default-6">
-                                                <app-select
-                                                    name="maritalStatus"
-                                                    :data="data.maritalStatus"
-                                                    placeholder="Marital status"
-                                                    v-model="formData.personal.maritalStatus"
-                                                />
-                                            </div>
-                                            <div class="col-default-6">
-                                                <app-date-picker
-                                                    lang="en"
-                                                    value-type="format"
-                                                    placeholder="Date of birth"
-                                                    v-model="formData.personal.dateOfBirth"
-                                                />
-                                            </div>
-                                            <div class="col-default-12">
-                                                <app-input
-                                                    name="email"
-                                                    type="email"
-                                                    placeholder="Email"
-                                                    v-model="formData.personal.email"
-                                                />
-                                            </div>
-                                        </div>
+                                        <personal
+                                            type="personal"
+                                            :data="formData.personal"
+                                            v-model="formData.personal"
+                                        />
                                     </template>
                                 </app-accordion-item>
                                 <app-accordion-item id="objective">
@@ -234,6 +185,7 @@ import jsPDF from 'jspdf'
 import 'jspdf/dist/polyfills.es.js'
 // eslint-disable-next-line no-unused-vars
 import html2canvas from 'html2canvas'
+import Personal from './personal.vue'
 import pdfFonts from '@/utils/pdfFonts'
 import Education from './education.vue'
 import Experience from './experience.vue'
@@ -241,6 +193,7 @@ import Experience from './experience.vue'
 export default {
     name: 'constructor',
     components: {
+        Personal,
         Education,
         Experience
     },
@@ -260,12 +213,12 @@ export default {
             },
             popupActive: false,
             formData: {
-                photo: '',
                 objective: {
                     position: 'Middle Frontend developer',
                     about: 'Some of my cool advantages'
                 },
                 personal: {
+                    photo: '',
                     name: 'Anpilov Artem',
                     phone: '89045166555',
                     email: 'blind.resist@gmail.com',
@@ -286,9 +239,10 @@ export default {
                         id: 'experience-0',
                         company: 'Zebra Ltd',
                         from: '2018',
-                        to: 'present',
+                        to: '',
                         country: 'Russia',
                         city: 'Moscow',
+                        currently: true,
                         position: 'Frontend developer',
                         duties: '- разработка библиотеки компонентов на VueJS\n- написание javascript ES5+\n- поиск вариантов решения поставленных задач\n- code review\n- поддержка и рефакторинг legacy-кода\n- adaptive, responsive\n- работа в команде с backend\n- верстка html, scss\n- работа с Docker',
                         achievements: ''
@@ -296,28 +250,6 @@ export default {
                 ],
                 skills: 'My special skills',
                 qualities: 'My personal qualities'
-            },
-            data: {
-                maritalStatus: [
-                    {
-                        id: 'married',
-                        text: 'Married',
-                        disabled: false,
-                        selected: false
-                    },
-                    {
-                        id: 'single',
-                        text: 'Single',
-                        disabled: false,
-                        selected: false
-                    },
-                    {
-                        id: 'divorced',
-                        text: 'Divorced',
-                        disabled: false,
-                        selected: false
-                    }
-                ]
             },
             components: {
                 education: [
@@ -458,6 +390,7 @@ export default {
 .constructor-preview {
     display: flex;
     flex-flow: row nowrap;
+    align-items: flex-start;
     width: 75%;
     padding: 4rem 0 4rem;
 }

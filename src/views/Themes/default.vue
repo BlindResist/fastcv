@@ -121,7 +121,7 @@
                                 >
                                     <td>
                                         <span class="block">{{ item.company }}</span>
-                                        <span class="block margin-top--xs">{{ item.from }} - {{ item.to }}</span>
+                                        <span class="block margin-top--xs">{{ experiencePeriod(item) }}</span>
                                         <span class="block">{{ item.country }}, {{ item.city }}</span>
                                         <span class="block margin-top--xs">{{ item.position }}</span>
                                     </td>
@@ -170,6 +170,17 @@ export default {
         data: {
             type: Object,
             default: () => {}
+        }
+    },
+    methods: {
+        experiencePeriod (item) {
+            let result = ''
+
+            result += item.from ? item.from : ''
+            result += item.from && (item.to || item.currently) ? ' — ' : ''
+            result += item.currently ? 'present' : item.to
+
+            return result
         }
     }
 }

@@ -25,7 +25,7 @@
             class="app-checkbox__error"
             v-show="required && error"
         >
-            <span v-show="!check">{{ $t('text.error') }}</span>
+            <span v-show="!check">{{ text.error }}</span>
         </span>
     </div>
 </template>
@@ -49,7 +49,10 @@ export default {
     data () {
         return {
             error: false,
-            focus: false
+            focus: false,
+            text: {
+                error: 'Required field'
+            }
         }
     },
     computed: {
@@ -95,42 +98,42 @@ export default {
 
     &__box,
     &__text {
-        color: $black;
-        font-size: 16px;
-        line-height: 24px;
+        font-size: 14px;
         font-weight: 400;
+        color: $blue-dark;
+        line-height: 24px;
     }
 
     &__box {
-        position: relative;
         display: block;
+        flex-shrink: 0;
         width: 24px;
         height: 24px;
-        flex-shrink: 0;
-        border: 0;
         margin-right: 16px;
+        position: relative;
+        border: 0;
 
         &::before {
             content: '';
+            width: 24px;
+            height: 24px;
             position: absolute;
             top: 0;
             left: 0;
-            width: 24px;
-            height: 24px;
-            background-color: $white;
-            box-shadow: inset 0 0 0 1px $gray-dark;
+            background-color: transparent;
+            box-shadow: inset 0 0 0 1px $blue-dark;
             transition: box-shadow $transition, background-color $transition;
         }
 
         &::after {
             content: '';
+            width: 18px;
+            height: 18px;
+            opacity: 0;
             position: absolute;
             top: 3px;
             left: 3px;
-            width: 18px;
-            height: 18px;
             background-color: $yellow;
-            opacity: 0;
             transition: background-color $transition, opacity $transition;
         }
     }
@@ -160,11 +163,11 @@ export default {
             }
 
             &::after {
+                opacity: 1;
                 background-position: center;
                 background-repeat: no-repeat;
                 background-color: $yellow;
                 background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTQiIGhlaWdodD0iMTEiIHZpZXdCb3g9IjAgMCAxNCAxMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cGF0aCBkPSJNMSA1TDUgOUwxMyAxIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+PC9zdmc+);
-                opacity: 1;
             }
         }
 
