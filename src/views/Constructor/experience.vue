@@ -18,17 +18,23 @@
                 />
             </div>
             <div class="col-default-6">
-                <app-input
+                <app-date-picker
+                    lang="en"
+                    type="year"
+                    format="YYYY"
                     placeholder="From"
+                    value-type="format"
                     v-model="innerData.from"
-                    :name="`experience-${id}-from`"
                 />
             </div>
             <div class="col-default-6">
-                <app-input
+                <app-date-picker
+                    lang="en"
+                    type="year"
+                    format="YYYY"
                     placeholder="To"
+                    value-type="format"
                     v-model="innerData.to"
-                    :name="`experience-${id}-to`"
                 />
             </div>
             <div class="col-default-6">

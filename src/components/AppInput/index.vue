@@ -173,10 +173,6 @@ export default {
         line-height: 1.4;
         color: $blue-dark;
         font-size: .875rem;
-
-        @include breakpoint(mobile) {
-            font-size: 16px;
-        }
     }
 
     &__placeholder {
@@ -191,11 +187,6 @@ export default {
         text-overflow: ellipsis;
         color: rgba($blue-dark, .5);
         pointer-events: none;
-
-        @include breakpoint(mobile) {
-            padding-top: 10px;
-            padding-bottom: 8px;
-        }
     }
 
     &__error {

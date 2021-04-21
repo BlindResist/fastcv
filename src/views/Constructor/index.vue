@@ -63,8 +63,7 @@
                                             <div class="col-default-6">
                                                 <app-date-picker
                                                     lang="en"
-                                                    value-type="X"
-                                                    format="DD.MM.YYYY"
+                                                    value-type="format"
                                                     placeholder="Date of birth"
                                                     v-model="formData.personal.dateOfBirth"
                                                 />
@@ -279,7 +278,7 @@ export default {
                         id: 'education-0',
                         university: 'Voronezh Institute of Economics and Law',
                         degree: 'Information Technology Specialist',
-                        period: '2004 - 2009'
+                        period: ['2004', '2009']
                     }
                 ],
                 experience: [

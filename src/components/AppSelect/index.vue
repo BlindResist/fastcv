@@ -120,13 +120,16 @@ export default {
     &__container {
         width: 100%;
         overflow: hidden;
-        padding: $padding;
+        padding: 1rem 2rem 1rem 1rem;
         position: relative;
         cursor: pointer;
     }
 
     &__selected {
         display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
         font-weight: 400;
         line-height: 1.4;
         color: $blue-dark;
@@ -137,6 +140,9 @@ export default {
 
     &__placeholder {
         display: block;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
         font-weight: 400;
         line-height: 1.4;
         font-size: .875rem;
@@ -202,7 +208,7 @@ export default {
         margin: auto;
         position: absolute;
         top: 0;
-        right: 1rem;
+        right: .75rem;
         bottom: 0;
         z-index: 2;
         border: 4px solid transparent;

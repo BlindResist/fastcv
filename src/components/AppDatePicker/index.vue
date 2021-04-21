@@ -1,11 +1,14 @@
 <template>
     <div class="app-date-picker">
         <date-picker
-            :lang="lang"
+            :key="lang"
             :type="type"
+            :lang="lang"
+            v-model="date"
+            :range="range"
             :format="format"
-            @change="onChange"
-            :formatter="formatter"
+            @change="change"
+            range-separator=" — "
             :value-type="valueType"
             :placeholder="placeholder"
             popup-class="app-date-picker__popup"
@@ -14,7 +17,6 @@
 </template>
 
 <script>
-import dayjs from 'dayjs'
 import 'vue2-datepicker/index.css'
 import DatePicker from 'vue2-datepicker'
 
@@ -23,49 +25,42 @@ export default {
     components: {
         DatePicker
     },
-    model: {
-        event: 'change'
-    },
     props: {
+        range: Boolean,
         type: {
             type: String,
             default: 'date',
             validator: prop => ['date', 'datetime', 'year', 'month', 'time', 'week'].includes(prop)
         },
-        lang: {
+        valueType: {
             type: String,
-            default: 'en'
+            default: 'timestamp'
+        },
+        placeholder: {
+            type: String,
+            default: ''
         },
         format: {
             type: String,
             default: 'DD.MM.YYYY'
         },
-        valueType: {
+        lang: {
             type: String,
-            default: 'format'
+            default: 'en'
         },
-        range: Boolean,
-        placeholder: {
+        value: {
             type: String,
             default: ''
         }
     },
     data () {
-        return {}
-    },
-    created () {
-        dayjs.locale(this.lang)
-    },
-    computed: {
-        formatter () {
-            return {
-                stringify: value => dayjs(value).format(this.format),
-                parse: value => dayjs(value, this.format).toDate()
-            }
+        return {
+            date: this.value
         }
     },
     methods: {
-        onChange (data) {
+        change (data) {
+            this.$emit('input', data)
             this.$emit('change', data)
         }
     }
@@ -74,10 +69,12 @@ export default {
 
 <style lang="scss">
 .app-date-picker {
+    $padding: 1rem;
+
     font-family: inherit;
 
     .mx-datepicker {
-        max-width: 250px;
+        max-width: none;
         width: 100%;
     }
 
@@ -87,11 +84,19 @@ export default {
     }
 
     .mx-input-wrapper {
+        display: flex;
+        align-items: center;
+        flex-flow: row nowrap;
+        width: 100%;
+        padding: $padding;
+        position: relative;
+        background-color: $gray-lite;
+        box-shadow: inset 0 0 0 1px $blue-dark;
 
         &:hover {
 
             .mx-icon-clear {
-                display: flex;
+                display: none;
             }
 
             .mx-icon-clear+.mx-icon-calendar {
@@ -106,33 +111,43 @@ export default {
     }
 
     .mx-icon-calendar {
+        right: .75rem;
         cursor: pointer;
+
+        path {
+            fill: $blue-dark;
+        }
     }
 
     .mx-input {
-        height: 42px;
-        padding: 8px 45px 8px 20px;
-        color: $black;
-        font-size: 16px;
-        line-height: 1.4;
+        width: calc(100% - 1.25rem);
+        height: auto;
         border: none;
-        border-radius: 0;
-        box-shadow: inset 0 0 0 1px $gray-dark;
+        padding: 0;
+        font-weight: 400;
+        line-height: 1.4;
+        color: $blue-dark;
+        font-size: .875rem;
+        background-color: transparent;
+        box-shadow: none;
 
-        &:hover {
-            box-shadow: inset 0 0 0 1px $gray-lite;
+        &:hover,
+        &:focus {
+            outline: 0 none;
         }
 
-        &:focus {
-            box-shadow: inset 0 0 0 1px $yellow;
+        &:invalid {
+            box-shadow: none;
+        }
+
+        &::-ms-clear {
+            display: none;
         }
 
         &::placeholder {
-            color: $gray-dark;
-        }
-
-        @include breakpoint (mobile) {
-            font-size: 14px;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            color: rgba($blue-dark, .5);
         }
     }
 

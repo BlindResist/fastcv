@@ -89,7 +89,7 @@
                                     :key="index"
                                     v-for="(item, index) in data.education"
                                 >
-                                    <td>{{ item.period }}</td>
+                                    <td>{{ item.period[0] }} — {{ item.period[1] }}</td>
                                     <td>
                                         <span class="block">{{ item.university }}</span>
                                         <span class="block margin-top--xs">{{ item.degree }}</span>

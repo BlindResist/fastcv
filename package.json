@@ -57,7 +57,6 @@
     "vue-router": "^3.4.3",
     "vue-style-loader": "^4.1.2",
     "vue-template-compiler": "^2.6.11",
-    "vuejs-datepicker": "^1.6.2",
     "vue2-datepicker": "^3.9.0",
     "webpack": "^4.27.0",
     "webpack-cli": "^3.1.2"

@@ -10,15 +10,29 @@
             >Delete</app-button>
         </div>
         <div class="row">
-            <div
-                :key="item.name"
-                class="col-default-12"
-                v-for="item in elements"
-            >
+            <div class="col-default-12">
+                <app-date-picker
+                    range
+                    lang="en"
+                    type="year"
+                    format="YYYY"
+                    value-type="format"
+                    placeholder="Period"
+                    v-model="innerData.period"
+                />
+            </div>
+            <div class="col-default-12">
                 <app-input
-                    v-model="innerData[item.name]"
-                    :placeholder="item.placeholder"
-                    :name="`education-${id}-${item.name}`"
+                    v-model="innerData.university"
+                    :name="`education-${id}-university`"
+                    placeholder="Educational institution"
+                />
+            </div>
+            <div class="col-default-12">
+                <app-input
+                    placeholder="Degree"
+                    v-model="innerData.degree"
+                    :name="`education-${id}-degree`"
                 />
             </div>
         </div>
@@ -47,21 +61,7 @@ export default {
     },
     data () {
         return {
-            innerData: this.data,
-            elements: [
-                {
-                    name: 'period',
-                    placeholder: 'Period'
-                },
-                {
-                    name: 'university',
-                    placeholder: 'Educational institution'
-                },
-                {
-                    name: 'degree',
-                    placeholder: 'Degree'
-                }
-            ]
+            innerData: this.data
         }
     }
 }
