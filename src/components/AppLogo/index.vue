@@ -1,6 +1,6 @@
 <template>
     <div class="app-logo">
-        <span class="app-logo--first">Resume</span>&#124;<span class="app-logo--second">Constructor</span>
+        <span class="app-logo--first">GOGO</span>!<span class="app-logo--second">CV</span>
     </div>
 </template>
 

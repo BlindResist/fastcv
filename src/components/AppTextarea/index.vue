@@ -102,6 +102,7 @@ export default {
     position: relative;
     border-radius: 0;
     background-color: $gray-lite;
+    box-shadow: inset 0 0 0 1px $blue-dark;
 
     textarea {
         display: block;

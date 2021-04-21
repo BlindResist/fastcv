@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Constructor from '@/pages/Constructor/index.vue'
+import ConstructorPage from '@/pages/constructor/index.vue'
 
 Vue.use(VueRouter)
 
@@ -10,7 +10,7 @@ const router = new VueRouter({
     routes: [
         {
             path: '/',
-            component: Constructor,
+            component: ConstructorPage,
             meta: {
                 title: 'Resume Constructor - Constructor page'
             }

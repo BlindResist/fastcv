@@ -2,7 +2,7 @@
     <div :class="elementClass('app-accordion-item')">
         <div
             @click="toggleItem"
-            class="app-accordion-item__header"
+            :class="elementClass('app-accordion-item__header')"
         >
             <span :class="elementClass('app-accordion-item__button')">&#62;</span>
             <slot name="header" />
@@ -13,7 +13,7 @@
         >
             <div
                 v-show="state"
-                class="app-accordion-item__body"
+                :class="elementClass('app-accordion-item__body')"
             >
                 <slot name="body" />
             </div>
@@ -71,10 +71,6 @@ export default {
 .app-accordion-item {
     transition: background-color $transition;
 
-    &.is-active {
-        background-color: $gray-dark;
-    }
-
     + .app-accordion-item {
         margin-top: 2px;
     }
@@ -102,6 +98,8 @@ export default {
             color: $blue-dark;
             background-color: $gray-dark;
         }
+
+        &.is-active {}
     }
 
     &__button {
@@ -129,11 +127,16 @@ export default {
     }
 
     &__body {
-        padding: 1rem 2rem 2rem;
+        padding: 2rem;
         font-size: .875rem;
         line-height: 1.4;
         font-weight: 400;
         color: $blue-dark;
+        transition: background-color $transition;
+
+        &.is-active {
+            background-color: $gray-lite;
+        }
     }
 }
 </style>

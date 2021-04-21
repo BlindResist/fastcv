@@ -145,6 +145,7 @@ export default {
     padding: $padding;
     position: relative;
     background-color: $gray-lite;
+    box-shadow: inset 0 0 0 1px $blue-dark;
 
     input {
         width: 100%;
@@ -209,9 +210,7 @@ export default {
         z-index: 1;
     }
 
-    &.is-focused {
-        box-shadow: inset 0 0 0 1px $blue-dark;
-    }
+    &.is-focused {}
 
     &.is-disabled {
         opacity: .1;

@@ -58,6 +58,7 @@ export default {
     width: 100%;
     position: relative;
     background-color: $gray-lite;
+    box-shadow: inset 0 0 0 1px $blue-dark;
     cursor: pointer;
 
     input {
@@ -67,6 +68,7 @@ export default {
     &__button {
         padding: $padding;
         color: $white;
+        white-space: nowrap;
         background-color: $blue-dark;
     }
 

@@ -114,6 +114,7 @@ export default {
     width: 100%;
     position: relative;
     background-color: $gray-lite;
+    box-shadow: inset 0 0 0 1px $blue-dark;
     user-select: none;
 
     &__container {
