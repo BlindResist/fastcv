@@ -8,9 +8,12 @@
             :id="name"
             type="file"
             :name="name"
+            :multiple="multiple"
             @change="change($event)"
+            :accept="acceptSettings[accept]"
         />
-        <span class="app-input-file__text">{{ file.name.length ? file.name : text.empty }}</span>
+        <span class="app-input-file__text">{{ fileText }}</span>
+        <!-- <span class="app-input-file__tip"></span> -->
     </label>
 </template>
 
@@ -21,23 +24,38 @@ export default {
         name: {
             type: String,
             required: true
+        },
+        multiple: Boolean,
+        accept: {
+            type: String,
+            default: 'image'
         }
     },
     data () {
         return {
             file: {
                 blob: '',
-                name: ''
+                name: '',
+                object: Object
             },
             text: {
                 empty: '...'
+            },
+            acceptSettings: {
+                image: '.jpg,.jpeg,.png,.bmp,image/bmp,image/png,image/x-png'
             }
+        }
+    },
+    computed: {
+        fileText () {
+            return this.file.name.length ? this.file.name : this.text.empty
         }
     },
     methods: {
         change (event) {
             const file = event.target.files[0]
 
+            this.file.object = file
             this.file.name = file.name
             this.file.blob = URL.createObjectURL(file)
 

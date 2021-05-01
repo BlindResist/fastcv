@@ -52,6 +52,13 @@
                 v-model="innerData.email"
             />
         </div>
+        <div class="col-default-12">
+            <app-input
+                name="site"
+                v-model="innerData.site"
+                placeholder="Personal site"
+            />
+        </div>
     </div>
 </template>
 
@@ -70,8 +77,9 @@ export default {
         data: {
             type: Object,
             default: () => ({
-                photo: '',
+                site: '',
                 name: '',
+                photo: '',
                 phone: '',
                 email: '',
                 address: '',

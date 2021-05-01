@@ -262,7 +262,7 @@ export default {
                 content: '';
                 position: absolute;
                 top: 50%;
-                right: 1.5rem;
+                right: .5rem;
                 transform: translateY(-50%);
                 width: 1.5rem;
                 height: 1.5rem;

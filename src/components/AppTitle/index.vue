@@ -46,11 +46,11 @@ export default {
 <style lang="scss">
 .app-title {
     line-height: 1.25;
-    color: $gray-dark;
+    color: $blue-dark;
 
     &--bordered {
         padding-bottom: 1rem;
-        border-bottom: 3px solid $gray-lite;
+        border-bottom: 3px solid $blue-dark;
     }
 
     &--uppercase {

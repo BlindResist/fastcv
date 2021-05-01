@@ -1,14 +1,14 @@
 <template>
     <div class="theme-two">
-        <h1>Theme 2</h1>
+        <!-- <h1>Theme 2</h1> -->
         <section class="theme-two__section">
             <div class="row">
                 <div class="col-default-4">
                     <div
-                        v-if="data.photo"
+                        v-if="data.personal.photo"
                         class="photo"
                     >
-                        <img :src="data.photo" />
+                        <img :src="data.personal.photo" />
                     </div>
                 </div>
                 <div class="col-default-8">

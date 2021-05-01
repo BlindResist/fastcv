@@ -15,7 +15,12 @@ Object.defineProperty(Vue.prototype, '$bus', {
 const vm = new Vue({
     el: '#app',
     data: {
-        bus: new Vue({})
+        bus: new Vue({}),
+        brandName: 'Fast!CV',
+        brand: {
+            name: 'Fast!CV',
+            url: 'fastcv.digama.online'
+        }
     },
     router,
     mounted () {}

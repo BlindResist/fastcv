@@ -167,35 +167,16 @@
                             </app-accordion>
                         </app-tabs-content>
                         <app-tabs-content id="options">
-                            <div class="constructor-aside__options">
-                                <div class="row">
-                                    <div class="col-default-12">
-                                        <span class="constructor__caption">Choose theme:</span>
-                                    </div>
-                                    <div class="col-default-12">
-                                        <app-radio
-                                            name="theme"
-                                            v-model="theme"
-                                            :options="[
-                                                {
-                                                    id: 'default',
-                                                    text: 'Default theme',
-                                                    disabled: false
-                                                },
-                                                {
-                                                    id: 'one',
-                                                    text: 'Theme One',
-                                                    disabled: false
-                                                },
-                                                {
-                                                    id: 'two',
-                                                    text: 'Theme Two',
-                                                    disabled: false
-                                                }
-                                            ]"
-                                        />
-                                    </div>
-                                </div>
+                            <div class="constructor-aside__option">
+                                <span class="constructor-aside__caption">Choose theme:</span>
+                                <app-radio
+                                    name="theme"
+                                    v-model="theme"
+                                    :options="themes"
+                                />
+                            </div>
+                            <div class="constructor-aside__option">
+                                <span class="constructor-aside__caption">Choose color:</span>
                             </div>
                         </app-tabs-content>
                     </template>
@@ -203,6 +184,9 @@
             </div>
         </aside>
         <section class="constructor-preview">
+            <div class="constructor-preview__title">
+                <app-title tag="h3">{{ headerTitle }}</app-title>
+            </div>
             <app-preview
                 :type="theme"
                 ref="document"
@@ -243,7 +227,7 @@ export default {
                 width: 700,
                 ratio: 1.4142
             },
-            theme: 'default',
+            theme: 'one',
             popupActive: false,
             formData: {
                 objective: {
@@ -251,7 +235,8 @@ export default {
                     about: 'Some of my cool advantages'
                 },
                 personal: {
-                    photo: '',
+                    site: 'http://digama.online',
+                    photo: './images/no-image.png',
                     name: 'Anpilov Artem',
                     phone: '89045166555',
                     email: 'blind.resist@gmail.com',
@@ -291,8 +276,29 @@ export default {
                 experience: [
                     Experience
                 ]
-            }
+            },
+            themes: [
+                {
+                    id: 'default',
+                    text: 'Default theme',
+                    disabled: false
+                },
+                {
+                    id: 'one',
+                    text: 'Theme One',
+                    disabled: false
+                },
+                {
+                    id: 'two',
+                    text: 'Theme Two',
+                    disabled: false
+                }
+            ],
+            storage: window.localStorage
         }
+    },
+    created () {
+        // this.setFromLocalStorage()
     },
     computed: {
         format () {
@@ -300,9 +306,27 @@ export default {
                 this.dimensions.width,
                 this.dimensions.width * this.dimensions.ratio
             ]
+        },
+        headerTitle () {
+            return this.themes.find(item => item.id === this.theme).text
         }
     },
+    // watch: {
+    //     formData: {
+    //         deep: true,
+    //         handler (value) {
+    //             this.storage.setItem('formData', JSON.stringify(value))
+    //         }
+    //     }
+    // },
     methods: {
+        setFromLocalStorage () {
+            const formData = this.storage.getItem('formData')
+
+            if (formData !== null) {
+                this.formData = JSON.parse(formData)
+            }
+        },
         createPDF () {
             const contentHtml = this.$refs.document.$refs.page.$el
             const pdfName = this.formData.personal.name.split(' ').join('-')
@@ -378,13 +402,6 @@ export default {
 .constructor {
     display: flex;
     flex-flow: row nowrap;
-
-    &__caption {
-        font-size: 1rem;
-        line-height: 1.4;
-        font-weight: 700;
-        color: $blue-dark;
-    }
 }
 
 .constructor-aside {
@@ -417,8 +434,21 @@ export default {
         }
     }
 
-    &__options {
+    &__caption {
+        display: block;
+        margin-bottom: 1rem;
+        font-size: 1rem;
+        line-height: 1.4;
+        font-weight: 700;
+        color: $blue-dark;
+    }
+
+    &__option {
         padding: 2rem;
+
+        &+& {
+            border-top: 1px solid rgba($blue-dark, .2);
+        }
     }
 }
 
@@ -427,6 +457,17 @@ export default {
     flex-flow: row nowrap;
     align-items: flex-start;
     width: 75%;
-    padding: 4rem 0 4rem;
+    padding: 5rem 0 4rem;
+    position: relative;
+
+    &__title {
+        width: 100%;
+        padding: 1.5rem;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        text-align: center;
+    }
 }
 </style>

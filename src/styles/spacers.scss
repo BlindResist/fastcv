@@ -1,5 +1,9 @@
 .margin-bottom {
 
+    &--xxs {
+        margin-bottom: .5rem;
+    }
+
     &--xs {
         margin-bottom: 1rem;
     }
@@ -46,6 +50,10 @@
 }
 
 .margin-top {
+
+    &--xxs {
+        margin-top: .5rem;
+    }
 
     &--xs {
         margin-top: 1rem;
@@ -94,6 +102,10 @@
 
 .margin-left {
 
+    &--xxs {
+        margin-left: .5rem;
+    }
+
     &--xs {
         margin-left: 1rem;
     }
@@ -140,6 +152,10 @@
 }
 
 .margin-right {
+
+    &--xxs {
+        margin-right: .5rem;
+    }
 
     &--xs {
         margin-right: 1rem;
@@ -188,6 +204,10 @@
 
 .padding-bottom {
 
+    &--xxs {
+        padding-bottom: .5rem;
+    }
+
     &--xs {
         padding-bottom: 1rem;
     }
@@ -234,6 +254,10 @@
 }
 
 .padding-top {
+
+    &--xxs {
+        padding-top: .5rem;
+    }
 
     &--xs {
         padding-top: 1rem;
@@ -282,6 +306,10 @@
 
 .padding-left {
 
+    &--xxs {
+        padding-left: .5rem;
+    }
+
     &--xs {
         padding-left: 1rem;
     }
@@ -328,6 +356,10 @@
 }
 
 .padding-right {
+
+    &--xxs {
+        padding-right: .5rem;
+    }
 
     &--xs {
         padding-right: 1rem;

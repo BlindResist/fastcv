@@ -1,14 +1,13 @@
 <template>
     <div class="theme-default">
-        <h1>Resume</h1>
         <section class="theme-default__section">
             <div class="row">
                 <div class="col-default-4">
                     <div
-                        v-if="data.photo"
                         class="photo"
+                        v-if="data.personal.photo"
                     >
-                        <img :src="data.photo" />
+                        <img :src="data.personal.photo" />
                     </div>
                 </div>
                 <div class="col-default-8">
@@ -18,7 +17,7 @@
                                 <h2 v-if="data.personal.name">Personal information</h2>
                                 <div class="table">
                                     <table>
-                                        <colgroup span="9" align="center" width="50">
+                                        <colgroup>
                                             <col span="1" style="width: 30%;">
                                             <col span="1" style="width: 70%;">
                                         </colgroup>
@@ -46,6 +45,10 @@
                                             <tr v-if="data.personal.email">
                                                 <td>Email</td>
                                                 <td>{{ data.personal.email }}</td>
+                                            </tr>
+                                            <tr v-if="data.personal.site">
+                                                <td>Personal site</td>
+                                                <td>{{ data.personal.site }}</td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -80,7 +83,7 @@
                     <h2>Education</h2>
                     <div class="table table--padding">
                         <table>
-                            <colgroup span="9" align="center" width="50">
+                            <colgroup>
                                 <col span="1" style="width: 20%;">
                                 <col span="1" style="width: 80%;">
                             </colgroup>
@@ -215,7 +218,6 @@ export default {
     }
 
     h3 {
-        padding: 0 0 .5rem;
         margin-bottom: .5rem;
         font-size: .75rem;
         font-weight: 700;
@@ -258,7 +260,7 @@ export default {
     .table {
 
         table {
-            width: 100%;
+            width: 99%;
 
             tbody {
 

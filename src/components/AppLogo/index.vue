@@ -1,6 +1,6 @@
 <template>
     <div class="app-logo">
-        <span class="app-logo--first">GOGO</span>!<span class="app-logo--second">CV</span>
+        <span class="app-logo--0">Fast</span>!<span class="app-logo--1"></span><span class="app-logo--2">CV</span>
     </div>
 </template>
 
@@ -17,7 +17,7 @@ export default {
 .app-logo {
     font-weight: 700;
     color: $blue-dark;
-    font-size: 1.5rem;
-    text-transform: uppercase;
+    font-size: 2.5rem;
+    letter-spacing: -.25rem;
 }
 </style>
