@@ -67,16 +67,9 @@
             </div>
             <div class="col-default-12">
                 <app-textarea
-                    placeholder="Job duties"
-                    v-model="innerData.duties"
-                    :name="`experience-${id}-duties`"
-                />
-            </div>
-            <div class="col-default-12">
-                <app-textarea
-                    placeholder="Achievements"
-                    v-model="innerData.achievements"
-                    :name="`experience-${id}-achievements`"
+                    placeholder="Job duties & achievements"
+                    v-model="innerData.about"
+                    :name="`experience-${id}-about`"
                 />
             </div>
         </div>
@@ -97,14 +90,13 @@ export default {
         data: {
             type: Object,
             default: () => ({
-                company: '',
-                from: '',
                 to: '',
-                country: '',
+                from: '',
                 city: '',
+                about: '',
+                company: '',
+                country: '',
                 position: '',
-                duties: '',
-                achievements: '',
                 currently: ''
             })
         }

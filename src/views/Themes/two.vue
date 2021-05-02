@@ -1,186 +1,153 @@
 <template>
     <div class="theme-two">
-        <!-- <h1>Theme 2</h1> -->
-        <section class="theme-two__section">
-            <div class="row">
-                <div class="col-default-4">
-                    <div
-                        v-if="data.personal.photo"
-                        class="photo"
-                    >
-                        <img :src="data.personal.photo" />
-                    </div>
-                </div>
-                <div class="col-default-8">
-                    <section class="theme-two__section">
-                        <div class="row">
-                            <div class="col-default-12">
-                                <h2 v-if="data.personal.name">Personal information</h2>
-                                <div class="table">
-                                    <table>
-                                        <colgroup span="9" align="center" width="50">
-                                            <col span="1" style="width: 30%;">
-                                            <col span="1" style="width: 70%;">
-                                        </colgroup>
-                                        <tbody>
-                                            <tr v-if="data.personal.name">
-                                                <td>Name</td>
-                                                <td>{{ data.personal.name }}</td>
-                                            </tr>
-                                            <tr v-if="data.personal.address">
-                                                <td>Address</td>
-                                                <td>{{ data.personal.address }}</td>
-                                            </tr>
-                                            <tr v-if="data.personal.phone">
-                                                <td>Phone number</td>
-                                                <td>{{ data.personal.phone }}</td>
-                                            </tr>
-                                            <tr v-if="data.personal.maritalStatus">
-                                                <td>Marital status</td>
-                                                <td>{{ data.personal.maritalStatus }}</td>
-                                            </tr>
-                                            <tr v-if="data.personal.dateOfBirth">
-                                                <td>Date of birth</td>
-                                                <td>{{ data.personal.dateOfBirth }}</td>
-                                            </tr>
-                                            <tr v-if="data.personal.email">
-                                                <td>Email</td>
-                                                <td>{{ data.personal.email }}</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+        <div class="theme-two__col theme-two__col--left">
+            <div class="theme-two__header">
+                <h1>{{ data.personal.name }}</h1>
+            </div>
+            <div class="theme-two__photo">
+                <img :src="data.personal.photo" />
+            </div>
+            <div class="theme-two__inner">
+                <section class="theme-two__section">
+                    <h2 v-if="data.personal.name">Personal information</h2>
+                    <div class="info-block">
+                        <div
+                            class="info-block__item"
+                            v-if="data.personal.address"
+                        >
+                            <span class="block info-block__caption">Address</span>
+                            <span class="block margin-top--xxs">{{ data.personal.address }}</span>
                         </div>
-                    </section>
-                    <section class="theme-two__section">
-                        <div class="row">
-                            <div
-                                class="col-default-12"
-                                v-if="data.objective.position"
-                            >
-                                <h2>Objective</h2>
-                                <h3>{{ data.objective.position }}</h3>
-                                <p
-                                    v-if="data.objective.about"
-                                    v-html="$options.filters.breakLine(data.objective.about)"
-                                ></p>
-                            </div>
+                        <div
+                            class="info-block__item"
+                            v-if="data.personal.phone"
+                        >
+                            <span class="block info-block__caption">Phone</span>
+                            <span class="block margin-top--xxs">{{ data.personal.phone }}</span>
                         </div>
-                    </section>
-                </div>
-            </div>
-        </section>
-        <section class="theme-two__section">
-            <div
-                class="row"
-                v-if="data.education.length"
-            >
-                <div class="col-default-12">
-                    <h2>Education</h2>
-                    <div class="table table--padding">
-                        <table>
-                            <colgroup span="9" align="center" width="50">
-                                <col span="1" style="width: 20%;">
-                                <col span="1" style="width: 80%;">
-                            </colgroup>
-                            <tbody>
-                                <tr
-                                    :key="index"
-                                    v-for="(item, index) in data.education"
-                                >
-                                    <td>{{ item.period[0] }} — {{ item.period[1] }}</td>
-                                    <td>
-                                        <span class="block">{{ item.university }}</span>
-                                        <span class="block margin-top--xs">{{ item.degree }}</span>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                        <div
+                            class="info-block__item"
+                            v-if="data.personal.maritalStatus"
+                        >
+                            <span class="block info-block__caption">Marital status</span>
+                            <span class="block margin-top--xxs">{{ data.personal.maritalStatus }}</span>
+                        </div>
+                        <div
+                            class="info-block__item"
+                            v-if="data.personal.dateOfBirth"
+                        >
+                            <span class="block info-block__caption">Date of birth</span>
+                            <span class="block margin-top--xxs">{{ data.personal.dateOfBirth }}</span>
+                        </div>
+                        <div
+                            class="info-block__item"
+                            v-if="data.personal.email"
+                        >
+                            <span class="block info-block__caption">Email</span>
+                            <span class="block margin-top--xxs">{{ data.personal.email }}</span>
+                        </div>
+                        <div
+                            class="info-block__item"
+                            v-if="data.personal.site"
+                        >
+                            <span class="block info-block__caption">Site/page</span>
+                            <span class="block margin-top--xxs">{{ data.personal.site }}</span>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </section>
-        <section class="theme-two__section">
-            <div
-                class="row"
-                v-if="data.experience.length"
-            >
-                <div class="col-default-12">
-                    <h2>Work experience</h2>
-                    <div class="table table--padding">
-                        <table>
-                            <colgroup span="9" align="center" width="50">
-                                <col span="1" style="width: 30%;">
-                                <col span="1" style="width: 70%;">
-                            </colgroup>
-                            <tbody>
-                                <tr
-                                    :key="index"
-                                    v-for="(item, index) in data.experience"
-                                >
-                                    <td>
-                                        <span class="block">{{ item.company }}</span>
-                                        <span class="block margin-top--xs">{{ experiencePeriod(item) }}</span>
-                                        <span class="block">{{ item.country }}, {{ item.city }}</span>
-                                        <span class="block margin-top--xs">{{ item.position }}</span>
-                                    </td>
-                                    <td>
-                                        <p
-                                            v-if="item.duties"
-                                            v-html="$options.filters.breakLine(item.duties)"
-                                        ></p>
-                                        <p
-                                            v-if="item.achievements"
-                                            v-html="$options.filters.breakLine(item.achievements)"
-                                        ></p>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </section>
-        <section class="theme-two__section">
-            <div class="row">
-                <div
+                </section>
+                <section
                     v-if="data.qualities"
-                    class="col-default-6"
+                    class="theme-two__section"
                 >
                     <h2>Personal qualities</h2>
-                    <p v-html="$options.filters.breakLine(data.qualities)"></p>
-                </div>
-                <div
+                    <div class="info-block">
+                        <div class="info-block__item">
+                            <p v-html="$options.filters.breakLine(data.qualities)"></p>
+                        </div>
+                    </div>
+                </section>
+                <section
                     v-if="data.skills"
-                    class="col-default-6"
+                    class="theme-two__section"
                 >
                     <h2>Special skills</h2>
-                    <p v-html="$options.filters.breakLine(data.skills)"></p>
-                </div>
+                    <div class="info-block">
+                        <div class="info-block__item">
+                            <p v-html="$options.filters.breakLine(data.skills)"></p>
+                        </div>
+                    </div>
+                </section>
             </div>
-        </section>
+        </div>
+        <div class="theme-two__col theme-two__col--right">
+            <div class="theme-two__inner">
+                <section class="theme-two__section">
+                    <h2>Objective</h2>
+                    <div class="info-block">
+                        <div class="info-block__item">
+                            <span class="info-block__caption block margin-bottom--xxs">{{ data.objective.position }}</span>
+                            <p
+                                v-if="data.objective.about"
+                                v-html="$options.filters.breakLine(data.objective.about)"
+                            ></p>
+                        </div>
+                    </div>
+                </section>
+                <section
+                    class="theme-two__section"
+                    v-if="data.education.length"
+                >
+                    <h2>Education</h2>
+                    <div class="info-block">
+                        <div
+                            :key="index"
+                            class="info-block__item"
+                            v-for="(item, index) in data.education"
+                        >
+                            <span class="block info-block__caption">{{ item.degree }}</span>
+                            <span class="block margin-top--xxs">{{ item.period[0] }} — {{ item.period[1] }}</span>
+                            <span class="block margin-top--xxs">{{ item.university }}</span>
+                        </div>
+                    </div>
+                </section>
+                <section
+                    class="theme-two__section"
+                    v-if="data.experience.length"
+                >
+                    <h2>Work experience</h2>
+                    <div class="info-block">
+                        <div
+                            :key="index"
+                            class="info-block__item"
+                            v-for="(item, index) in data.experience"
+                        >
+                            <span class="block info-block__caption">{{ item.position }}</span>
+                            <span class="block margin-top--xxs margin-bottom--xxs">{{ item.company }} | {{ item | period() }} | {{ item.country }}, {{ item.city }}</span>
+                            <p
+                                v-if="item.about"
+                                v-html="$options.filters.breakLine(item.about)"
+                            ></p>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+        <watermark />
     </div>
 </template>
 
 <script>
+import Watermark from '@/components/Watermark/index.vue'
+
 export default {
     name: 'theme-two',
+    components: {
+        Watermark
+    },
     props: {
         data: {
             type: Object,
             default: () => {}
-        }
-    },
-    methods: {
-        experiencePeriod (item) {
-            let result = ''
-
-            result += item.from ? item.from : ''
-            result += item.from && (item.to || item.currently) ? ' — ' : ''
-            result += item.currently ? 'present' : item.to
-
-            return result
         }
     }
 }
@@ -189,36 +156,46 @@ export default {
 <style lang="scss">
 .theme-two {
     $width: 700px;
+    $ratio: 1.41;
 
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-start;
+    justify-content: flex-start;
     width: $width;
-    height: calc(#{$width}*1.4142);
-    padding: 2rem;
+    height: calc(#{$width}*#{$ratio});
+    position: relative;
     line-height: 1;
     font-size: .75rem;
     font-family: Roboto-Regular, Arial, sans-serif;
 
     h1 {
-        margin-bottom: 2rem;
-        font-size: 1rem;
-        text-align: center;
+        color: $white;
+        line-height: 1;
         font-weight: 700;
+        line-height: 1.2;
+        font-size: 1.75rem;
+        letter-spacing: .25px;
         font-family: Roboto-Bold, Arial, sans-serif;
     }
 
     h2 {
-        padding: 0 0 .5rem;
-        margin-bottom: .5rem;
+        padding: .25rem .5rem .5rem;
+        color: $white;
+        line-height: 1.2;
         font-weight: 700;
         font-size: .875rem;
+        letter-spacing: .25px;
         font-family: Roboto-Bold, Arial, sans-serif;
-        border-bottom: 1px solid rgba($black, .2);
+        background-color: $blue-dark;
     }
 
     h3 {
-        padding: 0 0 .5rem;
         margin-bottom: .5rem;
-        font-size: .75rem;
         font-weight: 700;
+        line-height: 1.2;
+        font-size: .75rem;
+        letter-spacing: .25px;
         font-family: Roboto-Bold, Arial, sans-serif;
     }
 
@@ -230,19 +207,43 @@ export default {
         }
     }
 
-    &__section {
+    &__col {
+        height: 100%;
 
-        &:not(:first-of-type) {
-            margin-top: 2rem;
+        &--left {
+            width: 40%;
+            color: $blue-dark;
+            background-color: $gray-dark;
+        }
+
+        &--right {
+            width: 60%;
         }
     }
 
-    .photo {
+    &__header {
+        padding: 1rem;
+        background-color: $blue-dark;
+    }
+
+    &__inner {
+        padding: 1rem;
+    }
+
+    &__section {
+
+        &:not(:last-of-type) {
+            margin-bottom: 1rem;
+        }
+    }
+
+    &__photo {
         width: 100%;
         height: 0;
         overflow: hidden;
-        padding-bottom: 100%;
+        padding-bottom: 80%;
         position: relative;
+        background-color: $blue-middle;
 
         img {
             width: 100%;
@@ -289,6 +290,22 @@ export default {
 
         li+li {
             margin-top: .75rem;
+        }
+    }
+
+    .info-block {
+
+        &__item {
+            padding: .5rem 0;
+
+            &:not(:first-of-type) {
+                border-top: 1px solid $blue-middle;
+            }
+        }
+
+        &__caption {
+            font-weight: 700;
+            font-family: Roboto-Bold, Arial, sans-serif;
         }
     }
 }

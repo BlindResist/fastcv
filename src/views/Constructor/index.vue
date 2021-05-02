@@ -81,10 +81,6 @@
                                         </div>
                                     </template>
                                 </app-accordion-item>
-                                <!-- <app-accordion-item id="qualifications">
-                                    <template v-slot:header>Qualifications</template>
-                                    <template v-slot:body>Qualifications</template>
-                                </app-accordion-item> -->
                                 <app-accordion-item id="work-experience">
                                     <template v-slot:header>Work experience</template>
                                     <template v-slot:body>
@@ -143,27 +139,6 @@
                                         </div>
                                     </template>
                                 </app-accordion-item>
-
-                                <!-- <app-accordion-item id="awards">
-                                    <template v-slot:header>Awards</template>
-                                    <template v-slot:body>Awards</template>
-                                </app-accordion-item>
-                                <app-accordion-item id="research-experience">
-                                    <template v-slot:header>Research experience</template>
-                                    <template v-slot:body>Research experience</template>
-                                </app-accordion-item>
-                                <app-accordion-item id="publications">
-                                    <template v-slot:header>Publications</template>
-                                    <template v-slot:body>Publications</template>
-                                </app-accordion-item>
-                                <app-accordion-item id="memberships">
-                                    <template v-slot:header>Memberships</template>
-                                    <template v-slot:body>Memberships</template>
-                                </app-accordion-item>
-                                <app-accordion-item id="references">
-                                    <template v-slot:header>References</template>
-                                    <template v-slot:body>References</template>
-                                </app-accordion-item> -->
                             </app-accordion>
                         </app-tabs-content>
                         <app-tabs-content id="options">
@@ -227,7 +202,7 @@ export default {
                 width: 700,
                 ratio: 1.4142
             },
-            theme: 'one',
+            theme: 'default',
             popupActive: false,
             formData: {
                 objective: {
@@ -262,8 +237,7 @@ export default {
                         city: 'Moscow',
                         currently: true,
                         position: 'Frontend developer',
-                        duties: '- разработка библиотеки компонентов на VueJS\n- написание javascript ES5+\n- поиск вариантов решения поставленных задач\n- code review\n- поддержка и рефакторинг legacy-кода\n- adaptive, responsive\n- работа в команде с backend\n- верстка html, scss\n- работа с Docker',
-                        achievements: ''
+                        about: '- разработка библиотеки компонентов на VueJS\n- написание javascript ES5+\n- поиск вариантов решения поставленных задач\n- code review\n- поддержка и рефакторинг legacy-кода\n- adaptive, responsive\n- работа в команде с backend\n- верстка html, scss\n- работа с Docker'
                     }
                 ],
                 skills: 'My special skills',
@@ -285,12 +259,12 @@ export default {
                 },
                 {
                     id: 'one',
-                    text: 'Theme One',
+                    text: 'Theme "One"',
                     disabled: false
                 },
                 {
                     id: 'two',
-                    text: 'Theme Two',
+                    text: 'Theme "Two"',
                     disabled: false
                 }
             ],
@@ -333,9 +307,14 @@ export default {
 
             // eslint-disable-next-line new-cap
             this.jsPDF = new jsPDF({
-                unit: 'px',
+                unit: 'mm',
                 format: this.format,
-                orientation: 'portrait'
+                orientation: 'portrait',
+                html2canvas: {
+                    scale: 1,
+                    useCORS: true,
+                    allowTaint: true
+                }
             })
 
             this.jsPDF.addFileToVFS('Roboto-Bold-bold.ttf', pdfFonts.roboto.bold)
@@ -459,6 +438,7 @@ export default {
     width: 75%;
     padding: 5rem 0 4rem;
     position: relative;
+    background-color: $gray-liter;
 
     &__title {
         width: 100%;

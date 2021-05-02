@@ -48,6 +48,7 @@ export default {
     display: inline-flex;
     margin: 0 auto;
     border: 1px solid rgba($black, .2);
+    background-color: $white;
     box-shadow: .5rem .5rem 0 0 rgba($black, .1);
 }
 </style>

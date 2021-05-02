@@ -8,50 +8,49 @@
                 <img :src="data.personal.photo" />
             </div>
             <div class="theme-one__inner">
-                </section>
                 <section class="theme-one__section">
                     <h2 v-if="data.personal.name">Personal information</h2>
-                    <div class="info-block">
+                    <div class="theme-one__info-block">
                         <div
-                            class="info-block__item"
                             v-if="data.personal.address"
+                            class="theme-one__info-block-item"
                         >
-                            <span class="block info-block__caption">Address</span>
+                            <span class="block theme-one__info-block-caption">Address</span>
                             <span class="block margin-top--xxs">{{ data.personal.address }}</span>
                         </div>
                         <div
-                            class="info-block__item"
                             v-if="data.personal.phone"
+                            class="theme-one__info-block-item"
                         >
-                            <span class="block info-block__caption">Phone number</span>
+                            <span class="block theme-one__info-block-caption">Phone</span>
                             <span class="block margin-top--xxs">{{ data.personal.phone }}</span>
                         </div>
                         <div
-                            class="info-block__item"
                             v-if="data.personal.maritalStatus"
+                            class="theme-one__info-block-item"
                         >
-                            <span class="block info-block__caption">Marital status</span>
+                            <span class="block theme-one__info-block-caption">Marital status</span>
                             <span class="block margin-top--xxs">{{ data.personal.maritalStatus }}</span>
                         </div>
                         <div
-                            class="info-block__item"
                             v-if="data.personal.dateOfBirth"
+                            class="theme-one__info-block-item"
                         >
-                            <span class="block info-block__caption">Date of birth</span>
+                            <span class="block theme-one__info-block-caption">Date of birth</span>
                             <span class="block margin-top--xxs">{{ data.personal.dateOfBirth }}</span>
                         </div>
                         <div
-                            class="info-block__item"
                             v-if="data.personal.email"
+                            class="theme-one__info-block-item"
                         >
-                            <span class="block info-block__caption">Email</span>
+                            <span class="block theme-one__info-block-caption">Email</span>
                             <span class="block margin-top--xxs">{{ data.personal.email }}</span>
                         </div>
                         <div
-                            class="info-block__item"
                             v-if="data.personal.site"
+                            class="theme-one__info-block-item"
                         >
-                            <span class="block info-block__caption">Personal site</span>
+                            <span class="block theme-one__info-block-caption">Site/page</span>
                             <span class="block margin-top--xxs">{{ data.personal.site }}</span>
                         </div>
                     </div>
@@ -61,8 +60,8 @@
                     class="theme-one__section"
                 >
                     <h2>Personal qualities</h2>
-                    <div class="info-block">
-                        <div class="info-block__item">
+                    <div class="theme-one__info-block">
+                        <div class="theme-one__info-block-item">
                             <p v-html="$options.filters.breakLine(data.qualities)"></p>
                         </div>
                     </div>
@@ -72,8 +71,8 @@
                     class="theme-one__section"
                 >
                     <h2>Special skills</h2>
-                    <div class="info-block">
-                        <div class="info-block__item">
+                    <div class="theme-one__info-block">
+                        <div class="theme-one__info-block-item">
                             <p v-html="$options.filters.breakLine(data.skills)"></p>
                         </div>
                     </div>
@@ -84,9 +83,9 @@
             <div class="theme-one__inner">
                 <section class="theme-one__section">
                     <h2>Objective</h2>
-                    <div class="info-block">
-                        <div class="info-block__item">
-                            <span class="info-block__caption block margin-bottom--xxs">{{ data.objective.position }}</span>
+                    <div class="theme-one__info-block">
+                        <div class="theme-one__info-block-item">
+                            <span class="theme-one__info-block-caption block margin-bottom--xxs">{{ data.objective.position }}</span>
                             <p
                                 v-if="data.objective.about"
                                 v-html="$options.filters.breakLine(data.objective.about)"
@@ -99,13 +98,13 @@
                     v-if="data.education.length"
                 >
                     <h2>Education</h2>
-                    <div class="info-block">
+                    <div class="theme-one__info-block">
                         <div
                             :key="index"
-                            class="info-block__item"
+                            class="theme-one__info-block-item"
                             v-for="(item, index) in data.education"
                         >
-                            <span class="block info-block__caption">{{ item.degree }}</span>
+                            <span class="block theme-one__info-block-caption">{{ item.degree }}</span>
                             <span class="block margin-top--xxs">{{ item.period[0] }} — {{ item.period[1] }}</span>
                             <span class="block margin-top--xxs">{{ item.university }}</span>
                         </div>
@@ -116,22 +115,17 @@
                     v-if="data.experience.length"
                 >
                     <h2>Work experience</h2>
-                    <div class="info-block">
+                    <div class="theme-one__info-block">
                         <div
                             :key="index"
-                            class="info-block__item"
+                            class="theme-one__info-block-item"
                             v-for="(item, index) in data.experience"
                         >
-                            <span class="block info-block__caption">{{ item.position }}</span>
-                            <span class="block margin-top--xxs">{{ item.company }} | {{ experiencePeriod(item) }}</span>
-                            <span class="block margin-top--xxs margin-bottom--xxs">{{ item.country }}, {{ item.city }}</span>
+                            <span class="block theme-one__info-block-caption">{{ item.position }}</span>
+                            <span class="block margin-top--xxs margin-bottom--xxs">{{ item.company }} | {{ item | period() }} | {{ item.country }}, {{ item.city }}</span>
                             <p
-                                v-if="item.duties"
-                                v-html="$options.filters.breakLine(item.duties)"
-                            ></p>
-                            <p
-                                v-if="item.achievements"
-                                v-html="$options.filters.breakLine(item.achievements)"
+                                v-if="item.about"
+                                v-html="$options.filters.breakLine(item.about)"
                             ></p>
                         </div>
                     </div>
@@ -155,17 +149,6 @@ export default {
             type: Object,
             default: () => {}
         }
-    },
-    methods: {
-        experiencePeriod (item) {
-            let result = ''
-
-            result += item.from ? item.from : ''
-            result += item.from && (item.to || item.currently) ? ' — ' : ''
-            result += item.currently ? 'present' : item.to
-
-            return result
-        }
     }
 }
 </script>
@@ -173,13 +156,19 @@ export default {
 <style lang="scss">
 .theme-one {
     $width: 700px;
+    $ratio: 1.41;
+    $white: #fff;
+    $black: #212121;
+    $gray-dark: #d7e9f0;
+    $blue-dark: #003755;
+    $blue-middle: #a1bdc9;
 
     display: flex;
     flex-flow: row nowrap;
     align-items: flex-start;
     justify-content: flex-start;
     width: $width;
-    height: calc(#{$width}*1.4142);
+    height: calc(#{$width}*#{$ratio});
     position: relative;
     line-height: 1;
     font-size: .75rem;
@@ -191,7 +180,7 @@ export default {
         font-weight: 700;
         line-height: 1.2;
         font-size: 1.75rem;
-        letter-spacing: .125px;
+        letter-spacing: .25px;
         font-family: Roboto-Bold, Arial, sans-serif;
     }
 
@@ -201,7 +190,7 @@ export default {
         line-height: 1.2;
         font-weight: 700;
         font-size: .875rem;
-        letter-spacing: .125px;
+        letter-spacing: .25px;
         font-family: Roboto-Bold, Arial, sans-serif;
         background-color: $blue-dark;
     }
@@ -211,7 +200,7 @@ export default {
         font-weight: 700;
         line-height: 1.2;
         font-size: .75rem;
-        letter-spacing: .125px;
+        letter-spacing: .25px;
         font-family: Roboto-Bold, Arial, sans-serif;
     }
 
@@ -238,12 +227,12 @@ export default {
     }
 
     &__header {
-        padding: 1.25rem 1rem 1.5rem;
+        padding: 1rem;
         background-color: $blue-dark;
     }
 
     &__inner {
-        padding: 1.5rem 1rem;
+        padding: 1rem;
     }
 
     &__section {
@@ -257,7 +246,7 @@ export default {
         width: 100%;
         height: 0;
         overflow: hidden;
-        padding-bottom: 100%;
+        padding-bottom: 80%;
         position: relative;
         background-color: $blue-middle;
 
@@ -272,46 +261,9 @@ export default {
         }
     }
 
-    .table {
+    &__info-block {
 
-        table {
-            width: 100%;
-
-            tbody {
-
-                td {
-                    padding: .3rem 0;
-                }
-            }
-        }
-
-        &--padding {
-
-            table {
-
-                tbody {
-
-                    tr:not(:first-of-type) {
-
-                        td {
-                            padding: 1rem 0 .3rem;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    .list {
-
-        li+li {
-            margin-top: .75rem;
-        }
-    }
-
-    .info-block {
-
-        &__item {
+        &-item {
             padding: .5rem 0;
 
             &:not(:first-of-type) {
@@ -319,7 +271,7 @@ export default {
             }
         }
 
-        &__caption {
+        &-caption {
             font-weight: 700;
             font-family: Roboto-Bold, Arial, sans-serif;
         }
