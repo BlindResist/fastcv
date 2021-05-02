@@ -1,6 +1,6 @@
 <template>
     <div class="page">
-        <constructor />
+        <constructor :lang="lang" />
     </div>
 </template>
 
@@ -11,6 +11,11 @@ export default {
     name: 'constructor-page',
     components: {
         Constructor
+    },
+    computed: {
+        lang () {
+            return this.$root.lang
+        }
     }
 }
 </script>
