@@ -151,7 +151,32 @@
                                 />
                             </div>
                             <div class="constructor-aside__option">
-                                <span class="constructor-aside__caption">Choose color:</span>
+                                <span class="constructor-aside__caption">Download CV data JSON</span>
+                                <app-button
+                                    rounded
+                                    tag="a"
+                                    download
+                                    theme="yellow"
+                                    :href="JSONUrl"
+                                    :download-name="`${cvName}.json`"
+                                >Download</app-button>
+                            </div>
+                            <div class="constructor-aside__option">
+                                <span class="constructor-aside__caption">Upload CV data JSON</span>
+                                <app-input-file
+                                    emit="file"
+                                    name="json"
+                                    accept="json"
+                                    v-model="uploadedJSON"
+                                    button-text="Upload JSON"
+                                />
+                                <app-button
+                                    rounded
+                                    theme="yellow"
+                                    class="margin-top--xs"
+                                    @click="applyUploadedData"
+                                    :disabled="Object.getOwnPropertyNames(uploadedJSON).length !== 0"
+                                >Apply new data</app-button>
                             </div>
                         </app-tabs-content>
                     </template>
@@ -204,6 +229,7 @@ export default {
             },
             theme: 'default',
             popupActive: false,
+            uploadedJSON: Object,
             formData: {
                 objective: {
                     position: 'Middle Frontend developer',
@@ -244,12 +270,8 @@ export default {
                 qualities: 'My personal qualities'
             },
             components: {
-                education: [
-                    Education
-                ],
-                experience: [
-                    Experience
-                ]
+                education: [Education],
+                experience: [Experience]
             },
             themes: [
                 {
@@ -266,6 +288,21 @@ export default {
                     id: 'two',
                     text: 'Theme "Two"',
                     disabled: false
+                },
+                {
+                    id: 'three',
+                    text: 'Theme "Three"',
+                    disabled: true
+                },
+                {
+                    id: 'four',
+                    text: 'Theme "Four"',
+                    disabled: true
+                },
+                {
+                    id: 'five',
+                    text: 'Theme "Five"',
+                    disabled: true
                 }
             ],
             storage: window.localStorage
@@ -275,7 +312,7 @@ export default {
         // this.setFromLocalStorage()
     },
     computed: {
-        format () {
+        pdfFormat () {
             return [
                 this.dimensions.width,
                 this.dimensions.width * this.dimensions.ratio
@@ -283,6 +320,23 @@ export default {
         },
         headerTitle () {
             return this.themes.find(item => item.id === this.theme).text
+        },
+        JSONUrl () {
+            return `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(this.formData))}`
+        },
+        cvName () {
+            let currentDate = new Date()
+            const year = currentDate.getFullYear()
+            const day = String(currentDate.getDate()).padStart(2, '0')
+            const month = String(currentDate.getMonth() + 1).padStart(2, '0')
+
+            if (this.lang === 'ru') {
+                currentDate = `${day}-${month}-${year}`
+            } else {
+                currentDate = `${month}-${day}-${year}`
+            }
+
+            return `${this.formData.personal.name.split(' ').join('-')}-${currentDate}`
         }
     },
     // watch: {
@@ -303,12 +357,11 @@ export default {
         },
         createPDF () {
             const contentHtml = this.$refs.document.$refs.page.$el
-            const pdfName = this.formData.personal.name.split(' ').join('-')
 
             // eslint-disable-next-line new-cap
             this.jsPDF = new jsPDF({
                 unit: 'mm',
-                format: this.format,
+                format: this.pdfFormat,
                 orientation: 'portrait',
                 html2canvas: {
                     scale: 1,
@@ -327,12 +380,9 @@ export default {
 
             this.jsPDF.html(contentHtml, {
                 callback: pdf => {
-                    pdf.save(pdfName + '.pdf')
+                    pdf.save(this.cvName + '.pdf')
                 }
             })
-        },
-        openAdditional () {
-            this.popupActive = !this.popupActive
         },
         clearData () {
             this.recursiveClearing(this.formData)
@@ -372,6 +422,17 @@ export default {
                     components.splice(index, 1)
                 }
             }
+        },
+        applyUploadedData () {
+            const fileReader = new FileReader()
+
+            fileReader.readAsText(this.uploadedJSON)
+
+            fileReader.onload = e => {
+                const result = JSON.parse(e.target.result)
+
+                this.formData = result
+            }
         }
     }
 }
@@ -406,8 +467,8 @@ export default {
             right: 0;
             z-index: 1;
             border: 20px solid transparent;
-            border-right-color: $white;
-            border-top-color: $white;
+            border-right-color: $gray-liter;
+            border-top-color: $gray-liter;
             border-left-color: $gray-dark;
             border-bottom-color: $gray-dark;
         }
@@ -420,6 +481,7 @@ export default {
         line-height: 1.4;
         font-weight: 700;
         color: $blue-dark;
+        user-select: none;
     }
 
     &__option {

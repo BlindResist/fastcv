@@ -3,8 +3,8 @@
         <div class="col-default-12">
             <app-input-file
                 name="photo"
-                button="Upload photo"
                 v-model="innerData.photo"
+                button-text="Upload photo"
             />
         </div>
         <div class="col-default-12">

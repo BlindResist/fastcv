@@ -81,10 +81,10 @@ export default {
         },
         objectClass () {
             return {
-                'is-error': this.error,
-                'is-filled': this.val,
-                'is-focused': this.focus,
-                'is-disabled': this.disabled,
+                'app-input--filled': this.val,
+                'app-input--error': this.error,
+                'app-input--focused': this.focus,
+                'app-input--disabled': this.disabled,
                 'app-input--tel': this.type === 'tel'
             }
         }
@@ -201,14 +201,12 @@ export default {
         z-index: 1;
     }
 
-    &.is-focused {}
-
-    &.is-disabled {
+    &--disabled {
         opacity: .1;
         pointer-events: none;
     }
 
-    &.is-error {
+    &--error {
         box-shadow: inset 0 0 0 1px $red;
     }
 }

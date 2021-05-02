@@ -11,7 +11,14 @@
             </div>
             <div class="theme-default__col theme-default__col--right">
                 <h1>{{ data.personal.name }}</h1>
-                <h2 v-if="data.personal.name">Personal information</h2>
+                <h2 v-if="
+                        data.personal.address ||
+                        data.personal.phone ||
+                        data.personal.maritalStatus ||
+                        data.personal.dateOfBirth ||
+                        data.personal.email ||
+                        data.personal.site
+                    ">Personal information</h2>
                 <div class="theme-default__table">
                     <table>
                         <colgroup>

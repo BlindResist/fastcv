@@ -5,7 +5,7 @@
             :class="[
                 'app-radio',
                 {
-                    'is-disabled' : item.disabled
+                    'app-radio--disabled' : item.disabled
                 }
             ]"
             v-for="(item, index) in options"
@@ -102,9 +102,19 @@ export default {
 <style lang="scss">
 .app-radio {
     position: relative;
+    user-select: none;
 
     &+& {
         margin-top: .5rem;
+    }
+
+    &--disabled {
+        opacity: .5;
+        pointer-events: none;
+
+        .app-radio__label {
+            cursor: default;
+        }
     }
 
     &__input {
@@ -176,15 +186,6 @@ export default {
         }
     }
 
-    &__input:disabled + .app-radio__label {
-        color: $gray-dark;
-
-        &::before {
-            background-color: $gray-dark;
-            box-shadow: inset 0 0 0 1px $gray-dark;
-        }
-    }
-
     &__input:checked + .app-radio__label {
 
         &::before {
@@ -201,14 +202,6 @@ export default {
         color: $red;
         font-size: 16px;
         line-height: 1.4;
-    }
-
-    &.is-disabled {
-        opacity: .3;
-
-        .app-radio__label {
-            cursor: default;
-        }
     }
 }
 </style>

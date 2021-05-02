@@ -43,12 +43,11 @@ export default {
     },
     methods: {
         elementClass (classname) {
-            return [
-                classname,
-                {
-                    'is-active': this.state
-                }
-            ]
+            let result = classname
+
+            if (this.state) result += ` ${classname}--active`
+
+            return result
         },
         toggleItem () {
             this.state = !this.state
@@ -98,8 +97,6 @@ export default {
             color: $blue-dark;
             background-color: $gray-dark;
         }
-
-        &.is-active {}
     }
 
     &__button {
@@ -121,7 +118,7 @@ export default {
         transform: rotate(90deg);
         transition: transform .3s;
 
-        &.is-active {
+        &--active {
             transform: rotate(270deg);
         }
     }
@@ -134,7 +131,7 @@ export default {
         color: $blue-dark;
         transition: background-color $transition;
 
-        &.is-active {
+        &--active {
             background-color: $gray-lite;
         }
     }

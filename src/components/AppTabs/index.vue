@@ -106,6 +106,7 @@ export default {
         color: $blue-dark;
         text-decoration: none;
         transition: color .3s, opacity .3s;
+        user-select: none;
         cursor: pointer;
 
         &:first-child {

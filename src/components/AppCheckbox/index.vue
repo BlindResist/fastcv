@@ -4,8 +4,8 @@
             :for="name"
             class="app-checkbox"
             :class="{
-                'is-checked': check,
-                'is-disabled': disabled
+                'app-checkbox--checked': check,
+                'app-checkbox--disabled': disabled
             }"
         >
             <input
@@ -153,7 +153,7 @@ export default {
         }
     }
 
-    &.is-checked {
+    &--checked {
 
         .app-checkbox__box {
 
@@ -182,7 +182,7 @@ export default {
         }
     }
 
-    &.is-disabled {
+    &--disabled {
         opacity: .1;
         pointer-events: none;
     }

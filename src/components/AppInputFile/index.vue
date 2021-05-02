@@ -3,7 +3,7 @@
         :for="name"
         class="app-input-file"
     >
-        <span class="app-input-file__button">Upload photo</span>
+        <span class="app-input-file__button">{{ buttonText }}</span>
         <input
             :id="name"
             type="file"
@@ -29,6 +29,14 @@ export default {
         accept: {
             type: String,
             default: 'image'
+        },
+        buttonText: {
+            type: String,
+            default: 'Upload photo'
+        },
+        emit: {
+            type: String,
+            default: 'blob'
         }
     },
     data () {
@@ -36,13 +44,14 @@ export default {
             file: {
                 blob: '',
                 name: '',
-                object: Object
+                itself: Object
             },
             text: {
                 empty: '...'
             },
             acceptSettings: {
-                image: '.jpg,.jpeg,.png,.bmp,image/bmp,image/png,image/x-png'
+                image: '.jpg,.jpeg,.png,.bmp,image/bmp,image/png,image/x-png',
+                json: 'application/json'
             }
         }
     },
@@ -55,11 +64,19 @@ export default {
         change (event) {
             const file = event.target.files[0]
 
-            this.file.object = file
+            this.file.itself = file
             this.file.name = file.name
             this.file.blob = URL.createObjectURL(file)
 
-            this.$emit('input', this.file.blob)
+            let data = this.file
+
+            if (this.emit === 'blob') {
+                data = this.file.blob
+            } else if (this.emit === 'file') {
+                data = this.file.itself
+            }
+
+            this.$emit('input', data)
         }
     }
 }
@@ -77,6 +94,7 @@ export default {
     position: relative;
     background-color: $gray-lite;
     box-shadow: inset 0 0 0 1px $blue-dark;
+    user-select: none;
     cursor: pointer;
 
     input {

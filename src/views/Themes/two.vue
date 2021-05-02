@@ -9,7 +9,14 @@
             </div>
             <div class="theme-two__inner">
                 <section class="theme-two__section">
-                    <h2 v-if="data.personal.name">Personal information</h2>
+                    <h2 v-if="
+                        data.personal.address ||
+                        data.personal.phone ||
+                        data.personal.maritalStatus ||
+                        data.personal.dateOfBirth ||
+                        data.personal.email ||
+                        data.personal.site
+                    ">Personal information</h2>
                     <div class="info-block">
                         <div
                             class="info-block__item"
@@ -82,7 +89,7 @@
         <div class="theme-two__col theme-two__col--right">
             <div class="theme-two__inner">
                 <section class="theme-two__section">
-                    <h2>Objective</h2>
+                    <h2 v-if="data.objective.position || data.objective.about">Objective</h2>
                     <div class="info-block">
                         <div class="info-block__item">
                             <span class="info-block__caption block margin-bottom--xxs">{{ data.objective.position }}</span>

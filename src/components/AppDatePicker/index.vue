@@ -61,7 +61,7 @@ export default {
             return [
                 'app-date-picker',
                 {
-                    'is-disabled': this.disabled
+                    'app-date-picker--disabled': this.disabled
                 }
             ]
         }
@@ -400,8 +400,8 @@ export default {
         }
     }
 
-    &.is-disabled {
-        opacity: .1;
+    &--disabled {
+        opacity: .5;
         pointer-events: none;
     }
 }

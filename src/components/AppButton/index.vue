@@ -2,10 +2,12 @@
     <component
         :is="tag"
         class="app-button"
+        :disabled="disabled"
         :class="classObject"
         @click="$emit('click')"
         :href="tag === 'a' ? href : false"
-        :download="tag === 'a' && download"
+        :target="tag === 'a' && blank ? '_blank' : false"
+        :download="tag === 'a' && download ? downloadName : false"
     >
         <span
             v-if="!!$slots.left"
@@ -38,7 +40,13 @@ export default {
             default: 'l',
             validator: prop => ['s', 'm', 'l'].includes(prop)
         },
+        downloadName: {
+            type: String,
+            default: 'file'
+        },
+        blank: Boolean,
         rounded: Boolean,
+        disabled: Boolean,
         download: Boolean,
         autoWidth: Boolean
     },
@@ -47,6 +55,7 @@ export default {
             const array = [
                 {
                     'app-button--rounded': this.rounded,
+                    'app-button--disabled': this.disabled,
                     'app-button--auto-width': this.autoWidth
                 }
             ]
@@ -77,10 +86,11 @@ export default {
     border: 0;
     outline: 0;
     transition: background-color $transition, color $transition;
+    user-select: none;
     cursor: pointer;
 
-    &[disabled] {
-        opacity: .1;
+    &--disabled {
+        opacity: .5;
         pointer-events: none;
     }
 

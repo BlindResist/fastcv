@@ -21,9 +21,9 @@
                 <li
                     :key="option.id"
                     v-html="option.text"
-                    class="app-select__option"
                     v-for="option in options"
-                    :class="buildClass(option)"
+                    class="app-select__option"
+                    :class="optionClass(option)"
                     @click="changeSelected(option)"
                 ></li>
             </ul>
@@ -65,18 +65,20 @@ export default {
     },
     methods: {
         elementClass (classname) {
+            let result = classname
+
+            if (this.opened) result += ` ${classname}--opened`
+
+            return result
+        },
+        optionClass (option) {
             return [
-                classname,
+                'app-select__option',
                 {
-                    'is-opened': this.opened
+                    'app-select__option--selected': option.selected,
+                    'app-select__option--disabled': option.disabled
                 }
             ]
-        },
-        buildClass (option) {
-            return {
-                'is-selected': option.selected,
-                'is-disabled': option.disabled
-            }
         },
         hideDropdown (e) {
             const isOutside = this.$el !== e.target && !this.$el.contains(e.target)
@@ -215,10 +217,6 @@ export default {
         border-top: 8px solid $blue-dark;
         border-bottom: 0;
         pointer-events: none;
-
-        .is-opened & {
-            transform: rotate(180deg);
-        }
     }
 
     &__dropdown {
@@ -233,7 +231,7 @@ export default {
         filter: drop-shadow(0px 2px 12px rgba(8, 61, 140, 0.14));
         transition: opacity $transition;
 
-        &.is-opened {
+        &--opened {
             display: block;
         }
     }
@@ -255,7 +253,7 @@ export default {
             background-color: $gray-dark;
         }
 
-        &.is-selected {
+        &--selected {
             position: relative;
 
             &::before {
@@ -272,9 +270,16 @@ export default {
             }
         }
 
-        &.is-disabled {
+        &--disabled {
             opacity: .5;
             pointer-events: none;
+        }
+    }
+
+    &--opened {
+
+        .app-select__arrow {
+            transform: rotate(180deg);
         }
     }
 }
