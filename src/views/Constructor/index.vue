@@ -15,7 +15,7 @@
                         <app-button
                             rounded
                             theme="yellow"
-                            @click="createPDF"
+                            @click="generate"
                         >{{ $t('buttons.generate') }}</app-button>
                     </template>
                     <template v-slot:content>
@@ -186,7 +186,7 @@
         </aside>
         <section class="constructor-preview">
             <div class="constructor-preview__title">
-                <app-title tag="h3">{{ headerTitle }}</app-title>
+                <app-title tag="h3">{{ $t('constructor.preview.theme') }} "{{ selectedTheme }}"</app-title>
             </div>
             <app-preview
                 :type="theme"
@@ -287,7 +287,7 @@ export default {
                 this.dimensions.width * this.dimensions.ratio
             ]
         },
-        headerTitle () {
+        selectedTheme () {
             return this.themes.find(item => item.id === this.theme).text
         },
         JSONUrl () {
@@ -357,6 +357,14 @@ export default {
             if (formData !== null) {
                 this.formData = JSON.parse(formData)
             }
+        },
+        generate () {
+            this.$bus.$emit('loading', true)
+
+            setTimeout(() => {
+                this.createPDF()
+                this.$bus.$emit('loading', false)
+            }, 2000)
         },
         createPDF () {
             const contentHtml = this.$refs.document.$refs.page.$el

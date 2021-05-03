@@ -15,7 +15,7 @@ export default {
         currentWork: 'I currently work here'
     },
     radios: {
-        themes: ['Default theme', 'Theme "One"', 'Theme "Two"', 'Theme "Three"', 'Theme "Four"', 'Theme "Five"']
+        themes: ['Simple', 'One', 'Two', 'Three', 'Four', 'Five']
     },
     fields: {
         name: 'Name',
@@ -59,6 +59,9 @@ export default {
                 download: 'Download CV data JSON',
                 upload: 'Upload CV data JSON'
             }
+        },
+        preview: {
+            theme: 'Theme'
         }
     }
 }

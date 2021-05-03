@@ -21,7 +21,9 @@ i18n.setLocaleMessage('en', LocalesEN)
 i18n.setLocaleMessage('ru', LocalesRU)
 
 Object.defineProperty(Vue.prototype, '$bus', {
-    get: () => this.$root.bus
+    get () {
+        return this.$root.bus
+    }
 })
 
 window.vm = new Vue({
@@ -29,6 +31,7 @@ window.vm = new Vue({
     i18n,
     router,
     data: {
+        loading: false,
         bus: new Vue({}),
         langs: ['ru', 'en'],
         lang: new Lang().get(),
@@ -36,5 +39,11 @@ window.vm = new Vue({
             name: 'Fast!CV',
             url: 'fastcv.online'
         }
+    },
+    mounted () {
+        this.$bus.$on('loading', state => { this.loading = state })
+    },
+    beforeDestroy () {
+        this.$bus.$off('loading', state => { this.loading = state })
     }
 })
