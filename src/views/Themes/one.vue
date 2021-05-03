@@ -16,48 +16,48 @@
                         data.personal.dateOfBirth ||
                         data.personal.email ||
                         data.personal.site
-                    ">Personal information</h2>
+                    ">{{ $t('infoBlocks.personal') }}</h2>
                     <div class="theme-one__info-block">
                         <div
                             v-if="data.personal.address"
                             class="theme-one__info-block-item"
                         >
-                            <span class="block theme-one__info-block-caption">Address</span>
+                            <span class="block theme-one__info-block-caption">{{ $t('fields.address') }}</span>
                             <span class="block margin-top--xxs">{{ data.personal.address }}</span>
                         </div>
                         <div
                             v-if="data.personal.phone"
                             class="theme-one__info-block-item"
                         >
-                            <span class="block theme-one__info-block-caption">Phone</span>
+                            <span class="block theme-one__info-block-caption">{{ $t('fields.phone') }}</span>
                             <span class="block margin-top--xxs">{{ data.personal.phone }}</span>
                         </div>
                         <div
                             v-if="data.personal.maritalStatus"
                             class="theme-one__info-block-item"
                         >
-                            <span class="block theme-one__info-block-caption">Marital status</span>
+                            <span class="block theme-one__info-block-caption">{{ $t('fields.maritalStatus') }}</span>
                             <span class="block margin-top--xxs">{{ data.personal.maritalStatus }}</span>
                         </div>
                         <div
                             v-if="data.personal.dateOfBirth"
                             class="theme-one__info-block-item"
                         >
-                            <span class="block theme-one__info-block-caption">Date of birth</span>
+                            <span class="block theme-one__info-block-caption">{{ $t('fields.dateOfBirth') }}</span>
                             <span class="block margin-top--xxs">{{ data.personal.dateOfBirth }}</span>
                         </div>
                         <div
                             v-if="data.personal.email"
                             class="theme-one__info-block-item"
                         >
-                            <span class="block theme-one__info-block-caption">Email</span>
+                            <span class="block theme-one__info-block-caption">{{ $t('fields.email') }}</span>
                             <span class="block margin-top--xxs">{{ data.personal.email }}</span>
                         </div>
                         <div
                             v-if="data.personal.site"
                             class="theme-one__info-block-item"
                         >
-                            <span class="block theme-one__info-block-caption">Site/page</span>
+                            <span class="block theme-one__info-block-caption">{{ $t('fields.site') }}</span>
                             <span class="block margin-top--xxs">{{ data.personal.site }}</span>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                     v-if="data.qualities"
                     class="theme-one__section"
                 >
-                    <h2>Personal qualities</h2>
+                    <h2>{{ $t('infoBlocks.qualities') }}</h2>
                     <div class="theme-one__info-block">
                         <div class="theme-one__info-block-item">
                             <p v-html="$options.filters.breakLine(data.qualities)"></p>
@@ -77,7 +77,7 @@
                     v-if="data.skills"
                     class="theme-one__section"
                 >
-                    <h2>Special skills</h2>
+                    <h2>{{ $t('infoBlocks.skills') }}</h2>
                     <div class="theme-one__info-block">
                         <div class="theme-one__info-block-item">
                             <p v-html="$options.filters.breakLine(data.skills)"></p>
@@ -89,7 +89,7 @@
         <div class="theme-one__col theme-one__col--right">
             <div class="theme-one__inner">
                 <section class="theme-one__section">
-                    <h2 v-if="data.objective.position || data.objective.about">Objective</h2>
+                    <h2 v-if="data.objective.position || data.objective.about">{{ $t('infoBlocks.objective') }}</h2>
                     <div class="theme-one__info-block">
                         <div class="theme-one__info-block-item">
                             <span class="theme-one__info-block-caption block margin-bottom--xxs">{{ data.objective.position }}</span>
@@ -104,7 +104,7 @@
                     class="theme-one__section"
                     v-if="data.education.length"
                 >
-                    <h2>Education</h2>
+                    <h2>{{ $t('infoBlocks.education') }}</h2>
                     <div class="theme-one__info-block">
                         <div
                             :key="index"
@@ -121,7 +121,7 @@
                     class="theme-one__section"
                     v-if="data.experience.length"
                 >
-                    <h2>Work experience</h2>
+                    <h2>{{ $t('infoBlocks.work') }}</h2>
                     <div class="theme-one__info-block">
                         <div
                             :key="index"

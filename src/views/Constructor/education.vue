@@ -1,13 +1,13 @@
 <template>
     <div class="addition-block">
         <div class="addition-block__header">
-            <span class="addition-block__title">Education #{{ id + 1 }}</span>
+            <span class="addition-block__title">{{ $t('infoBlocks.education') }} #{{ id + 1 }}</span>
             <app-button
                 rounded
                 auto-width
                 theme="red"
                 @click="remove"
-            >Delete</app-button>
+            >{{ $t('buttons.delete') }}</app-button>
         </div>
         <div class="row">
             <div class="col-default-12">
@@ -17,22 +17,22 @@
                     type="year"
                     format="YYYY"
                     value-type="format"
-                    placeholder="Period"
                     v-model="innerData.period"
+                    :placeholder="$t('fields.period')"
                 />
             </div>
             <div class="col-default-12">
                 <app-input
                     v-model="innerData.university"
                     :name="`education-${id}-university`"
-                    placeholder="Educational institution"
+                    :placeholder="$t('fields.university')"
                 />
             </div>
             <div class="col-default-12">
                 <app-input
-                    placeholder="Degree"
                     v-model="innerData.degree"
                     :name="`education-${id}-degree`"
+                    :placeholder="$t('fields.degree')"
                 />
             </div>
         </div>

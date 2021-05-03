@@ -4,59 +4,59 @@
             <app-input-file
                 name="photo"
                 v-model="innerData.photo"
-                button-text="Upload photo"
+                :button-text="$t('buttons.uploadPhoto')"
             />
         </div>
         <div class="col-default-12">
             <app-input
                 name="name"
-                placeholder="Name"
                 v-model="innerData.name"
+                :placeholder="$t('fields.name')"
             />
         </div>
         <div class="col-default-12">
             <app-input
                 name="address"
-                placeholder="Address"
                 v-model="innerData.address"
+                :placeholder="$t('fields.address')"
             />
         </div>
         <div class="col-default-12">
             <app-input
                 name="phone"
-                placeholder="Phone number"
                 v-model="innerData.phone"
+                :placeholder="$t('fields.phone')"
             />
         </div>
         <div class="col-default-6">
             <app-select
                 name="maritalStatus"
-                placeholder="Marital status"
-                :data="options.maritalStatus"
+                :data="maritalStatus"
                 v-model="innerData.maritalStatus"
+                :placeholder="$t('fields.maritalStatus')"
             />
         </div>
         <div class="col-default-6">
             <app-date-picker
                 lang="en"
                 value-type="format"
-                placeholder="Date of birth"
                 v-model="innerData.dateOfBirth"
+                :placeholder="$t('fields.dateOfBirth')"
             />
         </div>
         <div class="col-default-12">
             <app-input
                 name="email"
                 type="email"
-                placeholder="Email"
                 v-model="innerData.email"
+                :placeholder="$t('fields.email')"
             />
         </div>
         <div class="col-default-12">
             <app-input
                 name="site"
                 v-model="innerData.site"
-                placeholder="Personal site"
+                :placeholder="$t('fields.site')"
             />
         </div>
     </div>
@@ -90,29 +90,31 @@ export default {
     },
     data () {
         return {
-            innerData: this.data,
-            options: {
-                maritalStatus: [
-                    {
-                        id: 'married',
-                        text: 'Married',
-                        disabled: false,
-                        selected: false
-                    },
-                    {
-                        id: 'single',
-                        text: 'Single',
-                        disabled: false,
-                        selected: false
-                    },
-                    {
-                        id: 'divorced',
-                        text: 'Divorced',
-                        disabled: false,
-                        selected: false
-                    }
-                ]
-            }
+            innerData: this.data
+        }
+    },
+    computed: {
+        maritalStatus () {
+            return [
+                {
+                    id: 'married',
+                    disabled: false,
+                    selected: false,
+                    text: this.$t('selects.maritalStatus[0]')
+                },
+                {
+                    id: 'single',
+                    disabled: false,
+                    selected: false,
+                    text: this.$t('selects.maritalStatus[1]')
+                },
+                {
+                    id: 'divorced',
+                    disabled: false,
+                    selected: false,
+                    text: this.$t('selects.maritalStatus[2]')
+                }
+            ]
         }
     }
 }

@@ -2,13 +2,8 @@
     <div class="app-radio-wrapper">
         <div
             :key="index"
-            :class="[
-                'app-radio',
-                {
-                    'app-radio--disabled' : item.disabled
-                }
-            ]"
             v-for="(item, index) in options"
+            :class="elementClass(item.disabled)"
         >
             <input
                 type="radio"
@@ -16,14 +11,14 @@
                 v-model="val"
                 :value="item.id"
                 class="app-radio__input"
-                :id="`${name}_${index}`"
+                :id="`${name}-${index}`"
                 :disabled="item.disabled"
                 @input="onInput($event.target.value)"
                 @change="onChange($event.target.value)"
             />
             <label
                 class="app-radio__label"
-                :for="`${name}_${index}`"
+                :for="`${name}-${index}`"
             >
                 <span
                     v-html="item.text"
@@ -44,9 +39,10 @@
 export default {
     name: 'app-radio',
     props: {
-        options: {
+        data: {
             type: Array,
-            required: true
+            required: true,
+            default: () => []
         },
         name: {
             type: String,
@@ -58,6 +54,7 @@ export default {
         return {
             error: false,
             focus: false,
+            options: this.data,
             text: {
                 error: this.$root.lang === 'ru' ? 'Поле обязательно для заполнения' : 'Required field'
             }
@@ -79,7 +76,20 @@ export default {
             }
         }
     },
+    watch: {
+        data (newData) {
+            this.options = newData
+        }
+    },
     methods: {
+        elementClass (state) {
+            return [
+                'app-radio',
+                {
+                    'app-radio--disabled': state
+                }
+            ]
+        },
         onChange (value) {
             this.validate(value)
             this.$emit('input', value)

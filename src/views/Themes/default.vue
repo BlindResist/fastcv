@@ -18,7 +18,7 @@
                         data.personal.dateOfBirth ||
                         data.personal.email ||
                         data.personal.site
-                    ">Personal information</h2>
+                    ">{{ $t('infoBlocks.personal') }}</h2>
                 <div class="theme-default__table">
                     <table>
                         <colgroup>
@@ -27,27 +27,27 @@
                         </colgroup>
                         <tbody>
                             <tr v-if="data.personal.address">
-                                <td>Address</td>
+                                <td>{{ $t('fields.address') }}</td>
                                 <td>{{ data.personal.address }}</td>
                             </tr>
                             <tr v-if="data.personal.phone">
-                                <td>Phone</td>
+                                <td>{{ $t('fields.phone') }}</td>
                                 <td>{{ data.personal.phone }}</td>
                             </tr>
                             <tr v-if="data.personal.maritalStatus">
-                                <td>Marital status</td>
+                                <td>{{ $t('fields.maritalStatus') }}</td>
                                 <td>{{ data.personal.maritalStatus }}</td>
                             </tr>
                             <tr v-if="data.personal.dateOfBirth">
-                                <td>Date of birth</td>
+                                <td>{{ $t('fields.dateOfBirth') }}</td>
                                 <td>{{ data.personal.dateOfBirth }}</td>
                             </tr>
                             <tr v-if="data.personal.email">
-                                <td>Email</td>
+                                <td>{{ $t('fields.email') }}</td>
                                 <td>{{ data.personal.email }}</td>
                             </tr>
                             <tr v-if="data.personal.site">
-                                <td>Site/page</td>
+                                <td>{{ $t('fields.site') }}</td>
                                 <td>{{ data.personal.site }}</td>
                             </tr>
                         </tbody>
@@ -60,7 +60,7 @@
             v-if="data.objective.position || data.objective.about"
         >
             <div class="theme-default__col">
-                <h2>Objective</h2>
+                <h2>{{ $t('infoBlocks.objective') }}</h2>
                 <h3 v-if="data.objective.position">{{ data.objective.position }}</h3>
                 <p
                     v-if="data.objective.about"
@@ -73,7 +73,7 @@
             class="theme-default__section"
         >
             <div class="theme-default__col">
-                <h2>Education</h2>
+                <h2>{{ $t('infoBlocks.education') }}</h2>
                 <div class="theme-default__table theme-default__table--padding">
                     <table>
                         <colgroup>
@@ -101,7 +101,7 @@
             class="theme-default__section"
         >
             <div class="theme-default__col">
-                <h2>Work experience</h2>
+                <h2>{{ $t('infoBlocks.work') }}</h2>
                 <div class="theme-default__table theme-default__table--padding">
                     <table>
                         <colgroup>
@@ -136,14 +136,14 @@
                 v-if="data.qualities"
                 class="theme-default__col"
             >
-                <h2>Personal qualities</h2>
+                <h2>{{ $t('infoBlocks.qualities') }}</h2>
                 <p v-html="$options.filters.breakLine(data.qualities)"></p>
             </div>
             <div
                 v-if="data.skills"
                 class="theme-default__col"
             >
-                <h2>Special skills</h2>
+                <h2>{{ $t('infoBlocks.skills') }}</h2>
                 <p v-html="$options.filters.breakLine(data.skills)"></p>
             </div>
         </section>

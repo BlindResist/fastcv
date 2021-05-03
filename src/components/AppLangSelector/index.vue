@@ -1,14 +1,14 @@
 <template>
     <div class="app-lang-selector">
-        <div class="app-lang-selector__inner">
+        <template v-for="lang in langs">
             <a
                 href="#"
                 :key="lang"
-                v-for="lang in langs"
+                v-if="lang !== current"
                 @click.prevent="change(lang)"
                 class="app-lang-selector__link"
             >{{ lang.toUpperCase() }}</a>
-        </div>
+        </template>
     </div>
 </template>
 
@@ -18,13 +18,15 @@ export default {
     data () {
         return {
             langs: this.$root.langs,
+            current: this.$root.lang,
             storage: window.localStorage
         }
     },
     methods: {
         change (lang) {
+            this.current = lang
+            this.$i18n.locale = lang
             this.storage.setItem('lang', lang)
-            this.$nextTick(() => this.$router.go())
         }
     }
 }
@@ -33,8 +35,13 @@ export default {
 <style lang="scss">
 .app-lang-selector {
 
-    &__inner {}
-
-    &__link {}
+    &__link {
+        display: block;
+        padding: .5rem;
+        font-size: .75rem;
+        color: $blue-dark;
+        border-radius: 6px;
+        background-color: $gray-dark;
+    }
 }
 </style>

@@ -37,6 +37,7 @@ export default {
     props: {
         data: {
             type: Array,
+            required: true,
             default: () => []
         },
         name: String,
@@ -59,8 +60,8 @@ export default {
         document.removeEventListener('click', e => this.hideDropdown(e))
     },
     watch: {
-        data (array) {
-            this.options = array
+        data (newData) {
+            this.options = newData
         }
     },
     methods: {

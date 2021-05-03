@@ -1,27 +1,28 @@
 <template>
     <div class="constructor">
         <aside class="constructor-aside">
-            <div class="constructor-aside__logo">
+            <div class="constructor-aside__header">
+                <app-lang-selector />
                 <app-logo />
             </div>
             <div class="constructor-aside__body">
                 <app-tabs>
                     <template v-slot:label>
-                        <app-tabs-label id="cv">CV</app-tabs-label>
-                        <app-tabs-label id="options">Options</app-tabs-label>
+                        <app-tabs-label id="cv">{{ $t('constructor.aside.tabs.cv') }}</app-tabs-label>
+                        <app-tabs-label id="options">{{ $t('constructor.aside.tabs.options') }}</app-tabs-label>
                     </template>
                     <template v-slot:additional>
                         <app-button
                             rounded
                             theme="yellow"
                             @click="createPDF"
-                        >Generate</app-button>
+                        >{{ $t('buttons.generate') }}</app-button>
                     </template>
                     <template v-slot:content>
                         <app-tabs-content id="cv">
                             <app-accordion initial="first">
                                 <app-accordion-item id="personal-information">
-                                    <template v-slot:header>Personal information</template>
+                                    <template v-slot:header>{{ $t('infoBlocks.personal') }}</template>
                                     <template v-slot:body>
                                         <personal
                                             type="personal"
@@ -31,28 +32,28 @@
                                     </template>
                                 </app-accordion-item>
                                 <app-accordion-item id="objective">
-                                    <template v-slot:header>Objective</template>
+                                    <template v-slot:header>{{ $t('infoBlocks.objective') }}</template>
                                     <template v-slot:body>
                                         <div class="row">
                                             <div class="col-default-12">
                                                 <app-input
                                                     name="objective"
-                                                    placeholder="Your objective"
                                                     v-model="formData.objective.position"
+                                                    :placeholder="$t('fields.objective')"
                                                 />
                                             </div>
                                             <div class="col-default-12">
                                                 <app-textarea
                                                     name="aboutObjective"
                                                     v-model="formData.objective.about"
-                                                    placeholder="Describe your advantages in this position"
+                                                    :placeholder="$t('fields.aboutObjective')"
                                                 />
                                             </div>
                                         </div>
                                     </template>
                                 </app-accordion-item>
                                 <app-accordion-item id="education">
-                                    <template v-slot:header>Education</template>
+                                    <template v-slot:header>{{ $t('infoBlocks.education') }}</template>
                                     <template v-slot:body>
                                         <div
                                             class="row"
@@ -76,13 +77,13 @@
                                                     rounded
                                                     theme="yellow"
                                                     @click="addComponent('education')"
-                                                >+ Add new</app-button>
+                                                >{{ $t('buttons.addNew') }}</app-button>
                                             </div>
                                         </div>
                                     </template>
                                 </app-accordion-item>
                                 <app-accordion-item id="work-experience">
-                                    <template v-slot:header>Work experience</template>
+                                    <template v-slot:header>{{ $t('infoBlocks.work') }}</template>
                                     <template v-slot:body>
                                         <div
                                             class="row"
@@ -106,34 +107,34 @@
                                                     rounded
                                                     theme="yellow"
                                                     @click="addComponent('experience')"
-                                                >+ Add new</app-button>
+                                                >{{ $t('buttons.addNew') }}</app-button>
                                             </div>
                                         </div>
                                     </template>
                                 </app-accordion-item>
                                 <app-accordion-item id="personal-qualities">
-                                    <template v-slot:header>Personal qualities</template>
+                                    <template v-slot:header>{{ $t('infoBlocks.qualities') }}</template>
                                     <template v-slot:body>
                                         <div class="row">
                                             <div class="col-default-12">
                                                 <app-textarea
                                                     name="qualities"
                                                     v-model="formData.qualities"
-                                                    placeholder="Write about your personal qualities"
+                                                    :placeholder="$t('fields.qualities')"
                                                 />
                                             </div>
                                         </div>
                                     </template>
                                 </app-accordion-item>
                                 <app-accordion-item id="special-skills">
-                                    <template v-slot:header>Special skills</template>
+                                    <template v-slot:header>{{ $t('infoBlocks.skills') }}</template>
                                     <template v-slot:body>
                                         <div class="row">
                                             <div class="col-default-12">
                                                 <app-textarea
                                                     name="skills"
                                                     v-model="formData.skills"
-                                                    placeholder="Write about your special skills"
+                                                    :placeholder="$t('fields.skills')"
                                                 />
                                             </div>
                                         </div>
@@ -143,15 +144,15 @@
                         </app-tabs-content>
                         <app-tabs-content id="options">
                             <div class="constructor-aside__option">
-                                <span class="constructor-aside__caption">Choose theme:</span>
+                                <span class="constructor-aside__caption">{{ $t('constructor.aside.options.theme') }}:</span>
                                 <app-radio
                                     name="theme"
+                                    :data="themes"
                                     v-model="theme"
-                                    :options="themes"
                                 />
                             </div>
                             <div class="constructor-aside__option">
-                                <span class="constructor-aside__caption">Download CV data JSON</span>
+                                <span class="constructor-aside__caption">{{ $t('constructor.aside.options.download') }}:</span>
                                 <app-button
                                     rounded
                                     tag="a"
@@ -159,16 +160,16 @@
                                     theme="yellow"
                                     :href="JSONUrl"
                                     :download-name="`${cvName}.json`"
-                                >Download</app-button>
+                                >{{ $t('buttons.download') }}</app-button>
                             </div>
                             <div class="constructor-aside__option">
-                                <span class="constructor-aside__caption">Upload CV data JSON</span>
+                                <span class="constructor-aside__caption">{{ $t('constructor.aside.options.upload') }}</span>
                                 <app-input-file
                                     emit="file"
                                     name="json"
                                     accept="json"
                                     v-model="uploadedJSON"
-                                    button-text="Upload JSON"
+                                    :button-text="$t('buttons.uploadJSON')"
                                 />
                                 <app-button
                                     rounded
@@ -176,7 +177,7 @@
                                     class="margin-top--xs"
                                     @click="applyUploadedData"
                                     :disabled="Object.getOwnPropertyNames(uploadedJSON).length !== 0"
-                                >Apply new data</app-button>
+                                >{{ $t('buttons.apply') }}</app-button>
                             </div>
                         </app-tabs-content>
                     </template>
@@ -273,38 +274,6 @@ export default {
                 education: [Education],
                 experience: [Experience]
             },
-            themes: [
-                {
-                    id: 'default',
-                    text: 'Default theme',
-                    disabled: false
-                },
-                {
-                    id: 'one',
-                    text: 'Theme "One"',
-                    disabled: false
-                },
-                {
-                    id: 'two',
-                    text: 'Theme "Two"',
-                    disabled: false
-                },
-                {
-                    id: 'three',
-                    text: 'Theme "Three"',
-                    disabled: true
-                },
-                {
-                    id: 'four',
-                    text: 'Theme "Four"',
-                    disabled: true
-                },
-                {
-                    id: 'five',
-                    text: 'Theme "Five"',
-                    disabled: true
-                }
-            ],
             storage: window.localStorage
         }
     },
@@ -337,6 +306,40 @@ export default {
             }
 
             return `${this.formData.personal.name.split(' ').join('-')}-${currentDate}`
+        },
+        themes () {
+            return [
+                {
+                    id: 'default',
+                    disabled: false,
+                    text: this.$t('radios.themes[0]')
+                },
+                {
+                    id: 'one',
+                    disabled: false,
+                    text: this.$t('radios.themes[1]')
+                },
+                {
+                    id: 'two',
+                    disabled: false,
+                    text: this.$t('radios.themes[2]')
+                },
+                {
+                    id: 'three',
+                    disabled: true,
+                    text: this.$t('radios.themes[3]')
+                },
+                {
+                    id: 'four',
+                    disabled: true,
+                    text: this.$t('radios.themes[4]')
+                },
+                {
+                    id: 'five',
+                    disabled: true,
+                    text: this.$t('radios.themes[5]')
+                }
+            ]
         }
     },
     // watch: {
@@ -450,7 +453,7 @@ export default {
     min-height: 100%;
     background-color: $gray-dark;
 
-    &__logo {
+    &__header {
         padding: 2rem;
         position: relative;
         text-align: center;
@@ -471,6 +474,14 @@ export default {
             border-top-color: $gray-liter;
             border-left-color: $gray-dark;
             border-bottom-color: $gray-dark;
+        }
+
+        .app-lang-selector {
+            position: absolute;
+            top: 50%;
+            left: 2rem;
+            z-index: 1;
+            transform: translateY(-50%);
         }
     }
 

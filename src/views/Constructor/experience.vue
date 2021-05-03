@@ -1,20 +1,20 @@
 <template>
     <div class="addition-block">
         <div class="addition-block__header">
-            <span class="addition-block__title">Work #{{ id + 1 }}</span>
+            <span class="addition-block__title">{{ $t('infoBlocks.work') }} #{{ id + 1 }}</span>
             <app-button
                 rounded
                 auto-width
                 theme="red"
                 @click="remove"
-            >Delete</app-button>
+            >{{ $t('buttons.delete') }}</app-button>
         </div>
         <div class="row">
             <div class="col-default-12">
                 <app-input
-                    placeholder="Company name"
                     v-model="innerData.company"
                     :name="`experience-${id}-company`"
+                    :placeholder="$t('fields.company')"
                 />
             </div>
             <div class="col-default-6">
@@ -22,9 +22,9 @@
                     lang="en"
                     type="year"
                     format="YYYY"
-                    placeholder="From"
                     value-type="format"
                     v-model="innerData.from"
+                    :placeholder="$t('fields.from')"
                 />
             </div>
             <div class="col-default-6">
@@ -32,44 +32,44 @@
                     lang="en"
                     type="year"
                     format="YYYY"
-                    placeholder="To"
                     value-type="format"
                     v-model="innerData.to"
                     :disabled="innerData.currently"
+                    :placeholder="$t('fields.to')"
                 />
             </div>
             <div class="col-default-12">
                 <app-checkbox
                     v-model="innerData.currently"
                     :name="`experience-${id}-currently`"
-                >I currently work here</app-checkbox>
+                >{{ $t('checkboxes.currentWork') }}</app-checkbox>
             </div>
             <div class="col-default-6">
                 <app-input
-                    placeholder="Country"
                     v-model="innerData.country"
                     :name="`experience-${id}-country`"
+                    :placeholder="$t('fields.country')"
                 />
             </div>
             <div class="col-default-6">
                 <app-input
-                    placeholder="City"
                     v-model="innerData.city"
                     :name="`experience-${id}-city`"
+                    :placeholder="$t('fields.city')"
                 />
             </div>
             <div class="col-default-12">
                 <app-input
-                    placeholder="Position"
                     v-model="innerData.position"
                     :name="`experience-${id}-position`"
+                    :placeholder="$t('fields.position')"
                 />
             </div>
             <div class="col-default-12">
                 <app-textarea
-                    placeholder="Job duties & achievements"
                     v-model="innerData.about"
                     :name="`experience-${id}-about`"
+                    :placeholder="$t('fields.duties')"
                 />
             </div>
         </div>
