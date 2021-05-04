@@ -15,7 +15,7 @@
                         <app-button
                             rounded
                             theme="yellow"
-                            @click="generate"
+                            v-processing="{ callback: createPDF }"
                         >{{ $t('buttons.generate') }}</app-button>
                     </template>
                     <template v-slot:content>
@@ -153,6 +153,7 @@
                             </div>
                             <div class="constructor-aside__option">
                                 <span class="constructor-aside__caption">{{ $t('constructor.aside.options.download') }}:</span>
+                                <div class="constructor-aside__desc">{{ $t('descriptions.downloadJSON') }}</div>
                                 <app-button
                                     rounded
                                     tag="a"
@@ -164,17 +165,20 @@
                             </div>
                             <div class="constructor-aside__option">
                                 <span class="constructor-aside__caption">{{ $t('constructor.aside.options.upload') }}</span>
+                                <div class="constructor-aside__desc">{{ $t('descriptions.uploadJSON') }}</div>
                                 <app-input-file
                                     emit="file"
                                     name="json"
-                                    accept="json"
+                                    accept-type="json"
+                                    :accept-size="512000"
                                     v-model="uploadedJSON"
+                                    :description="$t('fields.uploadFile')"
                                     :button-text="$t('buttons.uploadJSON')"
                                 />
                                 <app-button
                                     rounded
                                     theme="yellow"
-                                    class="margin-top--xs"
+                                    class="margin-top--s"
                                     @click="applyUploadedData"
                                     :disabled="Object.getOwnPropertyNames(uploadedJSON).length !== 0"
                                 >{{ $t('buttons.apply') }}</app-button>
@@ -273,12 +277,8 @@ export default {
             components: {
                 education: [Education],
                 experience: [Experience]
-            },
-            storage: window.localStorage
+            }
         }
-    },
-    created () {
-        // this.setFromLocalStorage()
     },
     computed: {
         pdfFormat () {
@@ -342,30 +342,7 @@ export default {
             ]
         }
     },
-    // watch: {
-    //     formData: {
-    //         deep: true,
-    //         handler (value) {
-    //             this.storage.setItem('formData', JSON.stringify(value))
-    //         }
-    //     }
-    // },
     methods: {
-        setFromLocalStorage () {
-            const formData = this.storage.getItem('formData')
-
-            if (formData !== null) {
-                this.formData = JSON.parse(formData)
-            }
-        },
-        generate () {
-            this.$bus.$emit('loading', true)
-
-            setTimeout(() => {
-                this.createPDF()
-                this.$bus.$emit('loading', false)
-            }, 2000)
-        },
         createPDF () {
             const contentHtml = this.$refs.document.$refs.page.$el
 
@@ -390,9 +367,7 @@ export default {
             this.jsPDF.addFont('Roboto-Regular-normal.ttf', 'Roboto-Regular', 'normal')
 
             this.jsPDF.html(contentHtml, {
-                callback: pdf => {
-                    pdf.save(this.cvName + '.pdf')
-                }
+                callback: pdf => pdf.save(`${this.cvName}.pdf`)
             })
         },
         clearData () {
@@ -509,6 +484,12 @@ export default {
         &+& {
             border-top: 1px solid rgba($blue-dark, .2);
         }
+    }
+
+    &__desc {
+        line-height: 1.5;
+        font-size: .875rem;
+        margin-bottom: 1.5rem;
     }
 }
 

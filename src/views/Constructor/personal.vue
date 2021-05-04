@@ -4,6 +4,7 @@
             <app-input-file
                 name="photo"
                 v-model="innerData.photo"
+                :description="$t('fields.uploadFile')"
                 :button-text="$t('buttons.uploadPhoto')"
             />
         </div>

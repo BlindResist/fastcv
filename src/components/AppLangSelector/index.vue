@@ -1,13 +1,13 @@
 <template>
-    <div class="app-lang-selector">
+    <div class="app-lang-selector" >
         <template v-for="lang in langs">
-            <a
-                href="#"
+            <app-link
+                prevent
                 :key="lang"
                 v-if="lang !== current"
-                @click.prevent="change(lang)"
                 class="app-lang-selector__link"
-            >{{ lang.toUpperCase() }}</a>
+                v-processing="{ callback: change, data: lang }"
+            >{{ lang.toUpperCase() }}</app-link>
         </template>
     </div>
 </template>

@@ -38,7 +38,8 @@ export default {
         country: 'Country',
         city: 'City',
         position: 'Position',
-        duties: 'Job duties & achievements'
+        duties: 'Job duties & achievements',
+        uploadFile: ['Supported file formats', 'Maximum file size']
     },
     infoBlocks: {
         personal: 'Personal information',
@@ -47,6 +48,14 @@ export default {
         work: 'Work experience',
         qualities: 'Personal qualities',
         skills: 'Special skills'
+    },
+    error: {
+        fileSize: 'Invalid file size!',
+        fileFormat: 'Invalid file format!'
+    },
+    descriptions: {
+        uploadJSON: 'You can upload the previously downloaded *.json CV data file',
+        downloadJSON: 'A *.json file with the data you entered in your CV will be downloaded to your computer'
     },
     constructor: {
         aside: {

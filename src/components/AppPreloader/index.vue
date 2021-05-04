@@ -53,7 +53,7 @@ export default {
     top: 0;
     left: 0;
     z-index: 999;
-    background-color: rgba($gray-dark, .8);
+    background-color: rgba($white, .8);
     user-select: none;
 
     &__spinner {
