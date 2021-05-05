@@ -344,18 +344,13 @@ export default {
     },
     methods: {
         createPDF () {
-            const contentHtml = this.$refs.document.$refs.page.$el
+            const content = this.$refs.document.$refs.page.$el
 
             // eslint-disable-next-line new-cap
             this.jsPDF = new jsPDF({
                 unit: 'mm',
                 format: this.pdfFormat,
-                orientation: 'portrait',
-                html2canvas: {
-                    scale: 1,
-                    useCORS: true,
-                    allowTaint: true
-                }
+                orientation: 'portrait'
             })
 
             this.jsPDF.addFileToVFS('Roboto-Bold-bold.ttf', pdfFonts.roboto.bold)
@@ -366,8 +361,17 @@ export default {
             this.jsPDF.addFont('Roboto-Light-normal.ttf', 'Roboto-Light', 'normal')
             this.jsPDF.addFont('Roboto-Regular-normal.ttf', 'Roboto-Regular', 'normal')
 
-            this.jsPDF.html(contentHtml, {
-                callback: pdf => pdf.save(`${this.cvName}.pdf`)
+            html2canvas(content, {
+                scale: 1,
+                useCORS: true,
+                allowTaint: true
+            }).then(canvas => {
+                this.jsPDF.html(content, {
+                    callback: pdf => {
+                        // pdf.output('dataurlnewwindow')
+                        pdf.save(`${this.cvName}.pdf`)
+                    }
+                })
             })
         },
         clearData () {

@@ -23,6 +23,7 @@ export default {
             type: String,
             default: 'bold'
         },
+        invert: Boolean,
         comment: Boolean,
         bordered: Boolean,
         uppercase: Boolean
@@ -34,6 +35,7 @@ export default {
                 `app-title--${this.tag}`,
                 `app-title--${this.weight}`,
                 {
+                    'app-title--invert': this.invert,
                     'app-title--bordered': this.bordered,
                     'app-title--uppercase': this.uppercase
                 }
@@ -47,6 +49,10 @@ export default {
 .app-title {
     line-height: 1.25;
     color: $blue-dark;
+
+    &--invert {
+        color: $white;
+    }
 
     &--bordered {
         padding-bottom: 1rem;

@@ -253,13 +253,12 @@ export default {
         background-color: $blue-middle;
 
         img {
-            width: 100%;
-            height: 100%;
+            max-width: 100%;
+            max-height: 100%;
             position: absolute;
             top: 0;
             left: 0;
             z-index: 1;
-            object-fit: cover;
         }
     }
 
