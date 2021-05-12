@@ -32,10 +32,6 @@ export default {
                 {
                     name: 'telegram',
                     link: 'https://t.me/BlindResist'
-                },
-                {
-                    name: 'github',
-                    link: 'https://github.com/BlindResist'
                 }
             ]
         }
@@ -65,7 +61,7 @@ export default {
         }
 
         &:hover {
-            color: $yellow;
+            color: $yellow-dark;
         }
     }
 }

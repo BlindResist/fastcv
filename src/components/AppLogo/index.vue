@@ -29,6 +29,7 @@ export default {
     color: $blue-dark;
     font-size: 2.5rem;
     letter-spacing: -.25rem;
+    user-select: none;
 
     &--big {
         font-size: 4em;

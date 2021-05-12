@@ -1,11 +1,10 @@
 <template>
     <a
         :href="link"
-        class="app-link"
+        :class="classObject"
         @click="click($event)"
-    >
-        <slot />
-    </a>
+        :target="blank ? '_blank' : false"
+    ><slot /></a>
 </template>
 
 <script>
@@ -16,10 +15,27 @@ export default {
             type: String,
             default: '#'
         },
-        prevent: Boolean
+        hover: {
+            type: String,
+            default: 'yellow'
+        },
+        blank: Boolean,
+        prevent: Boolean,
+        underline: {
+            type: Boolean,
+            default: true
+        }
     },
-    data () {
-        return {}
+    computed: {
+        classObject () {
+            return [
+                'app-link',
+                `app-link--hover-${this.hover}`,
+                {
+                    'app-link--underline': this.underline
+                }
+            ]
+        }
     },
     methods: {
         click (e) {
@@ -32,5 +48,36 @@ export default {
 </script>
 
 <style lang="scss">
-.app-link {}
+.app-link {
+    color: $black;
+    transition: color $transition;
+
+    &:visited,
+    &:focus,
+    &:active {
+        outline: none;
+        outline: 0 none;
+    }
+
+    &--hover {
+
+        &-yellow {
+
+            &:hover {
+                color: $yellow-dark;
+            }
+        }
+
+        &-no {
+
+            &:hover {
+                color: $black;
+            }
+        }
+    }
+
+    &--underline {
+        text-decoration: underline;
+    }
+}
 </style>

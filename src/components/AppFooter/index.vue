@@ -1,7 +1,13 @@
 <template>
     <footer class="app-footer">
         <div class="app-footer__inner">
-            <span class="app-footer__text">&#169; {{ currentYear }} {{ $t('mainpage.footer.first') }} <span class="love">{{ $t('mainpage.footer.last') }}</span></span>
+            <span class="app-footer__text">
+                &#169;&nbsp;{{ currentYear }}&nbsp;{{ $t('mainpage.footer') }}
+                <app-link
+                    blank
+                    :href="href"
+                >digama.online</app-link>
+            </span>
             <social class="app-footer__social" />
         </div>
     </footer>
@@ -17,6 +23,7 @@ export default {
     },
     data () {
         return {
+            href: 'http://digama.online/',
             currentYear: new Date().getFullYear()
         }
     }
@@ -33,22 +40,8 @@ export default {
     z-index: 100;
     pointer-events: none;
 
-    &:before {
-        display: block;
-        width: 100%;
-        height: 120%;
-        position: absolute;
-        left: 0;
-        bottom: 0;
-        background: -moz-linear-gradient(top,  rgba(255,255,255,0) 0%, rgba(255,255,255,1) 31%);
-        background: -webkit-linear-gradient(top,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 31%);
-        background: linear-gradient(to bottom,  rgba(255,255,255,0) 0%,rgba(255,255,255,1) 31%);
-        filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#ffffff',GradientType=0 );
-        pointer-events: none;
-
-        @include breakpoint(mobile) {
-            content: '';
-        }
+    @include breakpoint(mobile) {
+        padding: 1rem;
     }
 
     &__inner {

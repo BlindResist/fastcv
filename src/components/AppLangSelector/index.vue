@@ -1,9 +1,11 @@
 <template>
-    <div class="app-lang-selector" >
+    <div class="app-lang-selector">
         <template v-for="lang in langs">
             <app-link
                 prevent
+                hover="no"
                 :key="lang"
+                :underline="false"
                 v-if="lang !== current"
                 class="app-lang-selector__link"
                 v-processing="{ callback: change, data: lang }"
@@ -34,6 +36,7 @@ export default {
 
 <style lang="scss">
 .app-lang-selector {
+    user-select: none;
 
     &__link {
         display: block;

@@ -49,6 +49,10 @@ export default {
 
     &__content {
         max-width: 50vw;
+
+        @include breakpoint(mobile) {
+            max-width: 80vw;
+        }
     }
 
     &__block {
