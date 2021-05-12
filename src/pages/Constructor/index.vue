@@ -1,7 +1,7 @@
 <template>
-    <div class="page">
+    <main class="page">
         <constructor :lang="lang" />
-    </div>
+    </main>
 </template>
 
 <script>

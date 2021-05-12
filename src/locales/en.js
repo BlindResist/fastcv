@@ -6,7 +6,8 @@ export default {
         apply: 'Apply',
         uploadPhoto: 'Upload photo',
         uploadJSON: 'Upload JSON',
-        delete: 'Delete'
+        delete: 'Delete',
+        build: 'Build your CV!'
     },
     selects: {
         maritalStatus: ['Married', 'Single', 'Divorced']
@@ -71,6 +72,13 @@ export default {
         },
         preview: {
             theme: 'Theme'
+        }
+    },
+    mainpage: {
+        text: 'Fast! CV&nbsp;is a&nbsp;tool for creating a&nbsp;simple resume containing only the most important information for a&nbsp;potential employer!<br>Without registration and SMS :)',
+        footer: {
+            first: 'Builded with',
+            last: 'love'
         }
     }
 }
