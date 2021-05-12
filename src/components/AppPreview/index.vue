@@ -12,6 +12,7 @@
 <script>
 import One from '@/views/Themes/one.vue'
 import Two from '@/views/Themes/two.vue'
+import Three from '@/views/Themes/three.vue'
 import Default from '@/views/Themes/default.vue'
 
 export default {
@@ -31,6 +32,7 @@ export default {
             themes: {
                 one: One,
                 two: Two,
+                three: Three,
                 default: Default
             }
         }

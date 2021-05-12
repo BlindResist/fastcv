@@ -179,31 +179,31 @@ export default {
     position: relative;
     color: $black;
     line-height: 1;
-    font-size: .75rem;
+    font-size: 12px;
     font-family: Roboto-Regular, Arial, sans-serif;
 
     h1 {
-        margin-bottom: 1rem;
+        margin-bottom: 16px;
+        font-size: 28px;
         font-weight: 700;
-        font-size: 1.75rem;
         letter-spacing: .25px;
         font-family: Roboto-Bold, Arial, sans-serif;
     }
 
     h2 {
-        padding: 0 0 .5rem;
-        margin-bottom: .5rem;
+        padding: 0 0 8px;
+        margin-bottom: 8px;
+        font-size: 14px;
         font-weight: 700;
-        font-size: .875rem;
         letter-spacing: .25px;
         font-family: Roboto-Bold, Arial, sans-serif;
         border-bottom: 1px solid rgba($black, .2);
     }
 
     h3 {
-        margin-bottom: .5rem;
+        margin-bottom: 8px;
         font-weight: 700;
-        font-size: .75rem;
+        font-size: 12px;
         letter-spacing: .25px;
         font-family: Roboto-Bold, Arial, sans-serif;
     }
@@ -212,7 +212,7 @@ export default {
         line-height: 1.5;
 
         &+p {
-            margin-top: 1rem;
+            margin-top: 16px;
         }
     }
 
@@ -221,7 +221,7 @@ export default {
         height: 100%;
         flex-shrink: 1;
         flex-grow: 1;
-        padding: 0 1rem;
+        padding: 0 16px;
 
         &--left {
             width: 30%;
@@ -237,7 +237,7 @@ export default {
         flex-flow: row nowrap;
         align-items: flex-start;
         justify-content: flex-start;
-        padding: 1rem 0;
+        padding: 16px 0;
     }
 
     &__photo {
@@ -248,12 +248,15 @@ export default {
         position: relative;
 
         img {
-            max-width: 100%;
-            max-height: 100%;
+            // max-width: 100%;
+            // max-height: 100%;
+            width: 100%;
+            height: 100%;
             position: absolute;
             top: 0;
             left: 0;
             z-index: 1;
+            object-fit: cover;
         }
     }
 
@@ -265,7 +268,7 @@ export default {
             tbody {
 
                 td {
-                    padding: .25rem 0;
+                    padding: 4px 0;
                 }
             }
         }
@@ -279,7 +282,7 @@ export default {
                     tr:not(:first-of-type) {
 
                         td {
-                            padding: .5rem 0 .25rem;
+                            padding: 8px 0 4px;
                         }
                     }
                 }

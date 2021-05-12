@@ -163,12 +163,14 @@ export default {
 <style lang="scss">
 .theme-one {
     $width: 700px;
-    $ratio: 1.41;
+    $ratio: 1.412;
     $white: #fff;
     $black: #212121;
-    $gray-dark: #d7e9f0;
-    $blue-dark: #003755;
-    $blue-middle: #a1bdc9;
+    $color1: #1c6fae;
+    $color2: #90d1ea;
+    $color3: #4195c9;
+    $color4: #d3eaef;
+    $color5: #69b6de;
 
     display: flex;
     flex-flow: row nowrap;
@@ -178,35 +180,61 @@ export default {
     height: calc(#{$width}*#{$ratio});
     position: relative;
     line-height: 1;
-    font-size: .75rem;
+    font-size: 12px;
+    letter-spacing: .25px;
     font-family: Roboto-Regular, Arial, sans-serif;
 
     h1 {
         color: $white;
         line-height: 1;
         font-weight: 700;
-        line-height: 1.2;
-        font-size: 1.75rem;
+        line-height: 1;
+        font-size: 24px;
         letter-spacing: .25px;
         font-family: Roboto-Bold, Arial, sans-serif;
     }
 
     h2 {
-        padding: .25rem .5rem .5rem;
+        padding: 6px 24px 8px;
+        position: relative;
         color: $white;
         line-height: 1.2;
         font-weight: 700;
-        font-size: .875rem;
-        letter-spacing: .25px;
+        font-size: 14px;
+        letter-spacing: .5px;
         font-family: Roboto-Bold, Arial, sans-serif;
-        background-color: $blue-dark;
+        border-radius: 4px;
+        background-color: $color1;
+
+        &:before,
+        &:after {
+            content: '';
+            display: block;
+            width: 8px;
+            height: 8px;
+            margin: auto;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            z-index: 1;
+            border-radius: 50%;
+            background-color: $white;
+        }
+
+        &:before {
+            left: 8px;
+        }
+
+        &:after {
+            right: 8px;
+        }
     }
 
     h3 {
-        margin-bottom: .5rem;
+        margin-bottom: 8px;
         font-weight: 700;
         line-height: 1.2;
-        font-size: .75rem;
+        font-size: 12px;
         letter-spacing: .25px;
         font-family: Roboto-Bold, Arial, sans-serif;
     }
@@ -215,7 +243,7 @@ export default {
         line-height: 1.5;
 
         &+p {
-            margin-top: 1rem;
+            margin-top: 16px;
         }
     }
 
@@ -224,8 +252,8 @@ export default {
 
         &--left {
             width: 40%;
-            color: $blue-dark;
-            background-color: $gray-dark;
+            color: $white;
+            background-color: $color3;
         }
 
         &--right {
@@ -234,46 +262,50 @@ export default {
     }
 
     &__header {
-        padding: 1rem;
-        background-color: $blue-dark;
+        padding: 16px;
     }
 
     &__inner {
-        padding: 1rem;
+        padding: 16px;
     }
 
     &__section {
 
         &:not(:last-of-type) {
-            margin-bottom: 1rem;
+            margin-bottom: 16px;
         }
     }
 
     &__photo {
-        width: 100%;
+        width: calc(100% - 32px);
         height: 0;
         overflow: hidden;
-        padding-bottom: 80%;
+        padding-bottom: 70%;
+        margin: 0 16px;
         position: relative;
-        background-color: $blue-middle;
+        border-radius: 4px;
 
         img {
-            max-width: 100%;
-            max-height: 100%;
+            // max-width: 100%;
+            // max-height: 100%;
+            width: 100%;
+            height: 100%;
             position: absolute;
             top: 0;
             left: 0;
             z-index: 1;
+            object-fit: cover;
         }
     }
 
     &__info-block {
+        word-break: break-all;
 
         &-item {
-            padding: .5rem 0;
+            padding: 8px 0;
 
             &:not(:first-of-type) {
-                border-top: 1px solid $blue-middle;
+                border-top: 1px solid $white;
             }
         }
 
