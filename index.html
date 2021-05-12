@@ -17,10 +17,11 @@
 <body>
     <div
         id="app"
+        :class="{ loaded }"
         class="page-wrapper content"
     >
         <router-view></router-view>
-        <app-preloader :active="loading" />
+        <app-preloader :active="loading"></app-preloader>
     </div>
     <script src="./dist/build.js"></script>
 </body>

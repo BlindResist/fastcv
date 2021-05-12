@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import verge from 'verge'
 import router from '@/router'
 import VueI18n from 'vue-i18n'
 import importComponents from '@/utils/importComponents'
@@ -31,6 +32,8 @@ window.vm = new Vue({
     i18n,
     router,
     data: {
+        viewportW: 0,
+        loaded: false,
         loading: false,
         bus: new Vue({}),
         langs: ['ru', 'en'],
@@ -41,6 +44,8 @@ window.vm = new Vue({
         }
     },
     mounted () {
+        this.loaded = true
+        this.viewportW = verge.viewportW()
         this.$bus.$on('loading', state => { this.loading = state })
     },
     beforeDestroy () {

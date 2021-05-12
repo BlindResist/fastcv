@@ -98,25 +98,25 @@ export default {
 
     &__box,
     &__text {
-        font-size: 14px;
+        font-size: .875rem;
         font-weight: 400;
         color: $blue-dark;
-        line-height: 24px;
+        line-height: 1.5rem;
     }
 
     &__box {
         display: block;
         flex-shrink: 0;
-        width: 24px;
-        height: 24px;
-        margin-right: 16px;
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-right: 1rem;
         position: relative;
         border: 0;
 
         &::before {
             content: '';
-            width: 24px;
-            height: 24px;
+            width: 1.5rem;
+            height: 1.5rem;
             position: absolute;
             top: 0;
             left: 0;
@@ -127,8 +127,8 @@ export default {
 
         &::after {
             content: '';
-            width: 18px;
-            height: 18px;
+            width: 1.125rem;
+            height: 1.125rem;
             opacity: 0;
             position: absolute;
             top: 3px;

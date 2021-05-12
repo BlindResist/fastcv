@@ -87,7 +87,7 @@ export default {
     }
 
     .mx-datepicker-range {
-        max-width: 490px;
+        max-width: 30.75rem;
         width: 100%;
     }
 
@@ -170,8 +170,8 @@ export default {
         .mx-icon-right,
         .mx-icon-left {
             display: block;
-            width: 14px;
-            height: 14px;
+            width: .875rem;
+            height: .875rem;
             background-size: contain;
             background-position: center;
             background-repeat: no-repeat;
@@ -199,8 +199,8 @@ export default {
         .mx-icon-double-left,
         .mx-icon-double-right {
             display: block;
-            width: 16px;
-            height: 14px;
+            width: 1rem;
+            height: .875rem;
             background-size: contain;
             background-repeat: repeat-x;
             background-position: 0 center;
@@ -224,7 +224,7 @@ export default {
             vertical-align: middle;
             position: relative;
             color: $black;
-            font-size: 14px;
+            font-size: .875rem;
 
             &:hover {
                 color: $black;
@@ -345,7 +345,7 @@ export default {
         }
 
         .mx-calendar-header-label {
-            font-size: 18px;
+            font-size: 1.125rem;
 
             .mx-btn {
                 font-weight: 800;
@@ -370,7 +370,7 @@ export default {
 
                 &:hover,
                 &.active {
-                    border-radius: 26px;
+                    border-radius: 1.625rem;
                 }
             }
         }
@@ -381,7 +381,7 @@ export default {
 
                 &:hover,
                 &.active {
-                    border-radius: 26px;
+                    border-radius: 1.625rem;
                 }
             }
         }
@@ -393,7 +393,7 @@ export default {
                 th {
                     color: $gray-dark;
                     font-weight: 800;
-                    font-size: 12px;
+                    font-size: .75rem;
                     vertical-align: middle;
                 }
             }

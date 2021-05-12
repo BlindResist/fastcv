@@ -185,7 +185,7 @@ export default {
     &__error {
         display: block;
         position: absolute;
-        top: calc(100% + 4px);
+        top: calc(100% + .25rem);
         left: 0;
         z-index: 1;
         font-size: .75rem;

@@ -427,10 +427,7 @@ export default {
 }
 
 .constructor-aside {
-    // width: 25%;
-    // min-width: 400px;
-    // min-height: 100%;
-    width: 454px;
+    width: 28.25rem;
     flex-shrink: 0;
     background-color: $gray-dark;
 
@@ -495,7 +492,7 @@ export default {
     display: flex;
     flex-flow: row nowrap;
     align-items: flex-start;
-    width: calc(100% - 454px);
+    width: calc(100% - 28.25rem);
     overflow: hidden;
     padding: 2rem 0 4rem;
     position: relative;

@@ -144,23 +144,23 @@ export default {
     }
 
     &__label {
-        position: relative;
         display: flex;
-        height: 24px;
-        font-size: 16px;
-        line-height: 24px;
-        color: $black;
-        cursor: pointer;
-        transition: color $transition;
+        height: 1.5rem;
+        font-size: 1rem;
         padding-left: 39px;
+        position: relative;
+        color: $black;
+        line-height: 1.5rem;
+        transition: color $transition;
+        cursor: pointer;
 
         &::before {
             content: '';
+            width: 1.5rem;
+            height: 1.5rem;
             position: absolute;
             top: 0;
             left: 0;
-            width: 24px;
-            height: 24px;
             border-radius: 100%;
             background-color: $white;
             box-shadow: inset 0 0 0 1px $gray-dark;
@@ -169,14 +169,14 @@ export default {
 
         &::after {
             content: '';
+            width: 1.125rem;
+            height: 1.125rem;
+            opacity: 0;
             position: absolute;
             top: 3px;
             left: 3px;
-            width: 18px;
-            height: 18px;
-            background-color: $yellow;
             border-radius: 100%;
-            opacity: 0;
+            background-color: $yellow;
             transition: opacity $transition, background-color $transition;
         }
 
@@ -210,7 +210,7 @@ export default {
 
     &__error {
         color: $red;
-        font-size: 16px;
+        font-size: 1rem;
         line-height: 1.4;
     }
 }

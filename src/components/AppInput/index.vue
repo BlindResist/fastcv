@@ -190,15 +190,15 @@ export default {
     }
 
     &__error {
+        padding-top: .25rem;
         position: absolute;
         top: 100%;
         left: 0;
-        font-size: 12px;
+        z-index: 1;
+        color: $red;
+        font-size: .75rem;
         font-weight: 400;
         line-height: 1.4;
-        color: $red;
-        padding-top: 4px;
-        z-index: 1;
     }
 
     &--disabled {

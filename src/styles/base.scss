@@ -58,6 +58,7 @@ ul {
 #app {
     display: flex;
     flex: 1 1 100%;
+    opacity: 0;
     transition: opacity .5s 1s ease;
 
     &.loaded {

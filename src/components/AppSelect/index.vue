@@ -172,8 +172,8 @@ export default {
         &:after {
             content: '';
             display: block;
-            width: 12px;
-            height: 2px;
+            width: .75rem;
+            height: .125rem;
             position: absolute;
             top: 0;
             left: 0;
