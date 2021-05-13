@@ -54,6 +54,8 @@ export default {
         }
     },
     mounted () {
+        this.onLoad()
+
         document.addEventListener('click', e => this.hideDropdown(e))
     },
     beforeDestroy () {
@@ -65,6 +67,11 @@ export default {
         }
     },
     methods: {
+        onLoad () {
+            for (let i = 0; i < this.options.length; i++) {
+                if (this.options[i].selected === true) this.initSelected(this.options[i])
+            }
+        },
         elementClass (classname) {
             let result = classname
 
@@ -90,6 +97,14 @@ export default {
             option.selected ? this.removeSelected() : this.addSelected(option)
             this.opened = false
             this.$emit('input', this.selected.text)
+        },
+        initSelected (option) {
+            this.selected.id = option.id
+            this.selected.text = option.text
+
+            for (let i = 0; i < this.options.length; i++) {
+                this.options[i].selected = this.options[i].id === option.id
+            }
         },
         addSelected (option) {
             this.selected.id = option.id

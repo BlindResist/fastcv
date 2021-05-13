@@ -1,11 +1,11 @@
 /* eslint-disable no-undef */
 import Vue from 'vue'
 
-Vue.filter('breakLine', function (string) {
+Vue.filter('breakLine', string => {
     return string.replace(/(?:\r\n|\r|\n)/g, '<br>')
 })
 
-Vue.filter('period', function (item) {
+Vue.filter('period', item => {
     let result = ''
 
     result += item.from ? item.from : ''

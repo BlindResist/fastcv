@@ -66,6 +66,7 @@ export default {
             },
             options: {
                 theme: 'Choose theme',
+                colors: 'Choose colors',
                 download: 'Download CV data JSON',
                 upload: 'Upload CV data JSON'
             }
@@ -75,6 +76,8 @@ export default {
         }
     },
     mainpage: {
+        share: 'Tell about us :)',
+        title: 'Fast!CV - Easy & fast CV constructor!',
         text: 'Fast!CV&nbsp;is a&nbsp;tool for creating a&nbsp;simple CV containing only the most important information for a&nbsp;potential employer!<br>Without registration and SMS :)',
         footer: 'Created by'
     }

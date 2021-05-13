@@ -8,19 +8,13 @@
                     :href="href"
                 >digama.online</app-link>
             </span>
-            <social class="app-footer__social" />
         </div>
     </footer>
 </template>
 
 <script>
-import Social from '@/components/Social/index.vue'
-
 export default {
     name: 'app-footer',
-    components: {
-        Social
-    },
     data () {
         return {
             href: 'http://digama.online/',

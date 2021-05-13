@@ -244,7 +244,7 @@ export default {
                     email: 'blind.resist@gmail.com',
                     address: 'Perevozniy pereulok 19/1',
                     dateOfBirth: '21.05.1987',
-                    maritalStatus: ''
+                    maritalStatus: 'Married'
                 },
                 education: [
                     {
@@ -321,17 +321,6 @@ export default {
                     disabled: false,
                     text: this.$t('radios.themes[3]')
                 }
-                // ,
-                // {
-                //     id: 'four',
-                //     disabled: true,
-                //     text: this.$t('radios.themes[4]')
-                // },
-                // {
-                //     id: 'five',
-                //     disabled: true,
-                //     text: this.$t('radios.themes[5]')
-                // }
             ]
         }
     },
@@ -356,7 +345,9 @@ export default {
             html2canvas(content, {
                 scale: 1,
                 useCORS: true,
-                allowTaint: true
+                allowTaint: true,
+                width: this.pdfFormat[0],
+                height: this.pdfFormat[1]
             }).then(canvas => {
                 this.JSPDF.html(content, {
                     callback: pdf => {

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 
 Vue.directive('reload', {
-    bind: function (el, binding, vnode) {
+    bind (el, binding, vnode) {
         if (binding.value) {
             el.addEventListener('click', e => {
                 e.preventDefault()
@@ -12,7 +12,7 @@ Vue.directive('reload', {
 })
 
 Vue.directive('processing', {
-    bind: function (el, binding, vnode) {
+    bind (el, binding, vnode) {
         el.addEventListener('click', e => {
             const data = binding.value.data
 

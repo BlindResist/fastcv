@@ -48,6 +48,7 @@ export default {
 <style lang="scss">
 .app-preview {
     display: inline-flex;
+    overflow: hidden;
     margin: 0 auto;
     border: 1px solid rgba($black, .2);
     background-color: $white;

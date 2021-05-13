@@ -28,6 +28,7 @@ export default {
     font-weight: 700;
     color: $blue-dark;
     font-size: 2.5rem;
+    font-style: italic;
     letter-spacing: -.25rem;
     user-select: none;
 

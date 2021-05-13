@@ -115,7 +115,15 @@ export default {
                     selected: false,
                     text: this.$t('selects.maritalStatus[2]')
                 }
-            ]
+            ].map(item => {
+                if (this.innerData.maritalStatus.length) {
+                    if (item.text === this.innerData.maritalStatus) {
+                        item.selected = true
+                    }
+                }
+
+                return item
+            })
         }
     }
 }

@@ -201,7 +201,7 @@ export default {
         line-height: 1.2;
         font-weight: 700;
         font-size: 14px;
-        letter-spacing: .5px;
+        letter-spacing: .25px;
         font-family: Roboto-Bold, Arial, sans-serif;
         border-radius: 4px;
         background-color: $color1;

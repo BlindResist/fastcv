@@ -15,6 +15,9 @@
                         v-processing="{ callback: goToConstructor }"
                     >{{ $t('buttons.build') }}</app-button>
                 </div>
+                <div class="main-page__block">
+                    <share />
+                </div>
             </div>
             <app-lang-selector />
         </section>
@@ -23,8 +26,13 @@
 </template>
 
 <script>
+import Share from '@/components/Share/index.vue'
+
 export default {
     name: 'main-page',
+    components: {
+        Share
+    },
     computed: {
         lang () {
             return this.$root.lang
