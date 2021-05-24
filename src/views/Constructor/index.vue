@@ -447,22 +447,17 @@ export default {
     background-color: $gray-dark;
 
     @include breakpoint(tablet) {
-        width: 70%;
-        height: 100%;
+        min-height: 100%;
         position: absolute;
         top: 0;
         left: 0;
         z-index: 10;
         transform: translateX(-100%);
         transition: transform $transition;
-
-        @media screen and (orientation: landscape) {
-            width: 50%;
-        }
     }
 
     @include breakpoint(mobile) {
-        width: 80%;
+        width: 24rem;
     }
 
     &__header {
