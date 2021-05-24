@@ -1,7 +1,8 @@
 export default {
+    title: 'Fast!CV - Easy & fast CV constructor!',
     buttons: {
         generate: 'Generate',
-        addNew: '+ Add new',
+        addNew: '+ Add',
         download: 'Download',
         apply: 'Apply',
         uploadPhoto: 'Upload photo',
@@ -50,13 +51,18 @@ export default {
         qualities: 'Personal qualities',
         skills: 'Special skills'
     },
+    helper: {
+        objective: 'At&nbsp;this point, you must indicate the purpose of&nbsp;the CV&nbsp;&mdash; the competition for the position for which you are applying. At&nbsp;the same time, you can not only write what position you are interested&nbsp;in, but also briefly justify why you should take&nbsp;it, what qualities will help you successfully realize yourself in&nbsp;this place.',
+        qualities: 'This section of&nbsp;your&nbsp;CV might seem like the easiest to&nbsp;deal with, but in&nbsp;reality, you will need to&nbsp;find a&nbsp;balance between praising yourself and being overly humble. Our advice: try to&nbsp;put yourself in&nbsp;the shoes of&nbsp;the employer and think about what qualities the candidate should have for this position.',
+        skills: 'It&nbsp;is&nbsp;in&nbsp;this section that you have the opportunity to&nbsp;open up&nbsp;and show your best side thanks to&nbsp;additional skills.'
+    },
     error: {
         fileSize: 'Invalid file size!',
         fileFormat: 'Invalid file format!'
     },
     descriptions: {
         uploadJSON: 'You can upload the previously downloaded *.json CV data file',
-        downloadJSON: 'A *.json file with the data you entered in your CV will be downloaded to your computer'
+        downloadJSON: 'A *.json file with the data (except photo) you entered in your CV will be downloaded to your computer'
     },
     constructor: {
         aside: {
@@ -69,6 +75,9 @@ export default {
                 colors: 'Choose colors',
                 download: 'Download CV data JSON',
                 upload: 'Upload CV data JSON'
+            },
+            placeholders: {
+                name: 'Your name'
             }
         },
         preview: {

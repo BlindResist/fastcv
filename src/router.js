@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import i18n from '@/utils/i18n'
 import VueRouter from 'vue-router'
 
 import MainPage from '@/pages/main/index.vue'
@@ -11,24 +12,18 @@ const router = new VueRouter({
     routes: [
         {
             path: '/',
-            component: MainPage,
-            meta: {
-                title: 'Fast!CV - Easy & fast CV constructor'
-            }
+            component: MainPage
         },
         {
             path: '/constructor',
-            component: ConstructorPage,
-            meta: {
-                title: 'Fast!CV - Constructor'
-            }
+            component: ConstructorPage
         }
     ]
 })
 
 router.afterEach((to, from) => {
     Vue.nextTick(() => {
-        document.title = to.meta.title ? to.meta.title : 'Fast!CV - Easy & fast CV constructor'
+        document.title = i18n.t('title')
     })
 })
 

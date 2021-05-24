@@ -16,11 +16,11 @@ Vue.directive('processing', {
         el.addEventListener('click', e => {
             const data = binding.value.data
 
-            vnode.componentInstance.$bus.$emit('loading', true)
+            vnode.componentInstance.$bus.$emit('processing', true)
 
             setTimeout(() => {
                 binding.value.callback(data)
-                vnode.componentInstance.$bus.$emit('loading', false)
+                vnode.componentInstance.$bus.$emit('processing', false)
             }, 2000)
         })
     }

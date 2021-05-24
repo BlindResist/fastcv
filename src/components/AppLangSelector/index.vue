@@ -27,7 +27,9 @@ export default {
     methods: {
         change (lang) {
             this.current = lang
+            this.$root.lang = lang
             this.$i18n.locale = lang
+            document.title = this.$t('title')
             this.storage.setItem('lang', lang)
         }
     }

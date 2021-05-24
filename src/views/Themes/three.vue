@@ -2,7 +2,7 @@
     <div class="theme-three">
         <div class="theme-three__content">
             <section class="theme-three__section">
-                <h1 :data-text="data.personal.name">{{ data.personal.name }}</h1>
+                <h1 v-if="data.personal.name">{{ data.personal.name }}</h1>
                 <h2 v-if="data.objective.position">{{ data.objective.position }}</h2>
                 <p
                     v-if="data.objective.about"

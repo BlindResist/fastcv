@@ -1,25 +1,17 @@
 import Vue from 'vue'
 import verge from 'verge'
 import router from '@/router'
-import VueI18n from 'vue-i18n'
+import { TippyComponent } from 'vue-tippy'
 import importComponents from '@/utils/importComponents'
 
 import '@/utils/filters'
 import '@/utils/directives'
 import Lang from '@/utils/lang'
-import LocalesEN from '@/locales/en'
-import LocalesRU from '@/locales/ru'
+import i18n from '@/utils/i18n'
 
 importComponents()
 
-Vue.use(VueI18n)
-
-const i18n = new VueI18n({
-    locale: new Lang().get()
-})
-
-i18n.setLocaleMessage('en', LocalesEN)
-i18n.setLocaleMessage('ru', LocalesRU)
+Vue.component('tippy', TippyComponent)
 
 Object.defineProperty(Vue.prototype, '$bus', {
     get () {
@@ -34,21 +26,21 @@ window.vm = new Vue({
     data: {
         viewportW: 0,
         loaded: false,
-        loading: false,
         bus: new Vue({}),
+        processing: false,
         langs: ['ru', 'en'],
         lang: new Lang().get(),
         brand: {
             name: 'Fast!CV',
-            url: 'fastcv.online'
+            url: 'fastcv.digama.online'
         }
     },
     mounted () {
         this.loaded = true
         this.viewportW = verge.viewportW()
-        this.$bus.$on('loading', state => { this.loading = state })
+        this.$bus.$on('processing', state => { this.processing = state })
     },
     beforeDestroy () {
-        this.$bus.$off('loading', state => { this.loading = state })
+        this.$bus.$off('processing', state => { this.processing = state })
     }
 })

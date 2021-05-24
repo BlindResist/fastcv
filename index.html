@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Resume Constructor</title>
+    <title>Fast!CV</title>
     <meta charset="UTF-8" />
     <meta name="author" content="Artem Anpilov" />
     <meta name="copyright" content="All rights reserved by Artem Anpilov" />
@@ -21,7 +21,7 @@
         class="page-wrapper content"
     >
         <router-view></router-view>
-        <app-preloader :active="loading"></app-preloader>
+        <app-preloader :active="processing"></app-preloader>
     </div>
     <script src="./dist/build.js"></script>
 </body>

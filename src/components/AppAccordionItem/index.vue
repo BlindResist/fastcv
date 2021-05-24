@@ -68,6 +68,7 @@ export default {
 
 <style lang="scss">
 .app-accordion-item {
+    border-bottom: 1px solid $gray-lite;
     transition: background-color $transition;
 
     + .app-accordion-item {
