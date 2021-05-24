@@ -1,5 +1,8 @@
 <template>
-    <div class="app-preview">
+    <div
+        class="app-preview"
+        :style="{ transform }"
+    >
         <component
             ref="page"
             :data="data"
@@ -34,12 +37,33 @@ export default {
                 two: Two,
                 three: Three,
                 default: Default
-            }
+            },
+            padding: 128,
+            transform: ''
         }
+    },
+    mounted () {
+        this.fitPreview()
+
+        window.addEventListener('resize', () => this.fitPreview())
     },
     computed: {
         component () {
             return this.themes[this.type]
+        }
+    },
+    methods: {
+        fitPreview () {
+            const parent = {
+                width: this.$parent.$el.offsetWidth,
+                height: this.$parent.$el.offsetHeight
+            }
+
+            const width = parent.width / (this.$el.offsetWidth + this.padding)
+            const height = parent.height / (this.$el.offsetHeight + this.padding)
+            const scale = Math.min(width, height)
+
+            this.transform = `translate(-50%, -50%) scale(${scale})`
         }
     }
 }
@@ -48,10 +72,14 @@ export default {
 <style lang="scss">
 .app-preview {
     display: inline-flex;
+    flex-shrink: 0;
     overflow: hidden;
-    margin: 0 auto;
+    position: relative;
+    left: 50%;
+    top: 50%;
     border: 1px solid rgba($black, .2);
     background-color: $white;
     box-shadow: .5rem .5rem 0 0 rgba($black, .1);
+    transform-origin: center center;
 }
 </style>

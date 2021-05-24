@@ -154,7 +154,7 @@ export default {
         transition: color $transition;
         cursor: pointer;
 
-        &::before {
+        &:before {
             content: '';
             width: 1.5rem;
             height: 1.5rem;
@@ -163,35 +163,21 @@ export default {
             left: 0;
             border-radius: 100%;
             background-color: $white;
-            box-shadow: inset 0 0 0 1px $gray-dark;
             transition: box-shadow $transition, background-color $transition, opacity $transition;
-        }
-
-        &::after {
-            content: '';
-            width: 1.125rem;
-            height: 1.125rem;
-            opacity: 0;
-            position: absolute;
-            top: 3px;
-            left: 3px;
-            border-radius: 100%;
-            background-color: $yellow;
-            transition: opacity $transition, background-color $transition;
         }
 
         &:hover {
 
             &::before {
-                box-shadow: inset 0 0 0 1px $yellow;
+                box-shadow: inset 0 0 0 4px $yellow;
             }
         }
 
         &:active {
 
-            &::before {
-                background-color: $white;
-                box-shadow: inset 0 0 0 1px $yellow;
+            &:before {
+                background-color: $yellow;
+                box-shadow: inset 0 0 0 4px $white;
             }
         }
     }
@@ -199,12 +185,8 @@ export default {
     &__input:checked + .app-radio__label {
 
         &::before {
-            background-color: $white;
-            box-shadow: inset 0 0 0 1px $yellow;
-        }
-
-        &::after {
-            opacity: 1;
+            background-color: $yellow;
+            box-shadow: inset 0 0 0 4px $white;
         }
     }
 

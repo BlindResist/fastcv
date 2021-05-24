@@ -1,5 +1,5 @@
 <template>
-    <footer class="app-footer">
+    <footer :class="elClass">
         <div class="app-footer__inner">
             <span class="app-footer__text">
                 &#169;&nbsp;{{ currentYear }}&nbsp;{{ $t('mainpage.footer') }}
@@ -15,10 +15,26 @@
 <script>
 export default {
     name: 'app-footer',
+    props: {
+        location: {
+            type: String,
+            default: 'main'
+        }
+    },
     data () {
         return {
             href: 'http://digama.online/',
             currentYear: new Date().getFullYear()
+        }
+    },
+    computed: {
+        elClass () {
+            return [
+                'app-footer',
+                {
+                    'app-footer--aside': this.location === 'aside'
+                }
+            ]
         }
     }
 }
@@ -66,6 +82,11 @@ export default {
 
     &__social {
         pointer-events: auto;
+    }
+
+    &--aside {
+        margin-top: auto;
+        position: static;
     }
 }
 </style>

@@ -29,7 +29,7 @@
                 :placeholder="$t('fields.phone')"
             />
         </div>
-        <div class="col-default-6">
+        <div class="col-default-6 col-mobile-12">
             <app-select
                 name="maritalStatus"
                 :data="maritalStatus"
@@ -37,7 +37,7 @@
                 :placeholder="$t('fields.maritalStatus')"
             />
         </div>
-        <div class="col-default-6">
+        <div class="col-default-6 col-mobile-12">
             <app-date-picker
                 lang="en"
                 value-type="format"

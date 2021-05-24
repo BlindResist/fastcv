@@ -1,6 +1,6 @@
 <template>
     <div class="constructor">
-        <aside class="constructor-aside">
+        <aside :class="asideClass">
             <div class="constructor-aside__header">
                 <app-lang-selector />
                 <router-link
@@ -205,8 +205,13 @@
                     </template>
                 </app-tabs>
             </div>
+            <div
+                @click="aside = !aside"
+                class="constructor-aside__burger icon icon-menu"
+            ></div>
+            <app-footer location="aside" />
         </aside>
-        <section class="constructor-preview">
+        <section :class="previewClass">
             <app-preview
                 :type="theme"
                 ref="document"
@@ -272,7 +277,8 @@ export default {
             components: {
                 education: [],
                 experience: []
-            }
+            },
+            aside: false
         }
     },
     computed: {
@@ -319,6 +325,22 @@ export default {
                     id: 'three',
                     disabled: false,
                     text: this.$t('radios.themes[3]')
+                }
+            ]
+        },
+        asideClass () {
+            return [
+                'constructor-aside',
+                {
+                    'constructor-aside--active': this.aside
+                }
+            ]
+        },
+        previewClass () {
+            return [
+                'constructor-preview',
+                {
+                    'constructor-preview--active': !this.aside
                 }
             ]
         }
@@ -414,12 +436,34 @@ export default {
 .constructor {
     display: flex;
     flex-flow: row nowrap;
+    height: 100%;
 }
 
 .constructor-aside {
+    display: flex;
+    flex-flow: column nowrap;
     width: 28.25rem;
     flex-shrink: 0;
     background-color: $gray-dark;
+
+    @include breakpoint(tablet) {
+        width: 70%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        transform: translateX(-100%);
+        transition: transform $transition;
+
+        @media screen and (orientation: landscape) {
+            width: 50%;
+        }
+    }
+
+    @include breakpoint(mobile) {
+        width: 80%;
+    }
 
     &__header {
         padding: 2rem;
@@ -438,8 +482,8 @@ export default {
             right: 0;
             z-index: 1;
             border: 20px solid transparent;
-            border-right-color: $white;
             border-top-color: $white;
+            border-right-color: $white;
             border-left-color: $gray-dark;
             border-bottom-color: $gray-dark;
         }
@@ -476,17 +520,52 @@ export default {
         font-size: .875rem;
         margin-bottom: 1.5rem;
     }
+
+    &__burger {
+        display: none;
+        padding: 1rem;
+        position: absolute;
+        top: 0;
+        left: 100%;
+        z-index: 1;
+        font-size: 2.5rem;
+        line-height: 1;
+
+        @include breakpoint(tablet) {
+            display: block;
+        }
+    }
+
+    &--active {
+
+        @include breakpoint(tablet) {
+            transform: translateX(0%);
+        }
+    }
 }
 
 .constructor-preview {
+    $parent: &;
+
     display: flex;
     flex-flow: row nowrap;
     align-items: flex-start;
     width: calc(100% - 28.25rem);
+    height: 100vh;
     overflow: hidden;
-    padding: 2rem 0 4rem;
+    padding: 2rem 0;
     position: relative;
     background-color: $white;
+
+    @include breakpoint(tablet) {
+        width: 100%;
+        opacity: 1;
+        transition: opacity $transition;
+
+        &:not(#{$parent}--active) {
+            opacity: .25;
+        }
+    }
 
     &__title {
         width: 100%;
