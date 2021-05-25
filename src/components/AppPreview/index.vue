@@ -78,7 +78,6 @@ export default {
     flex-shrink: 0;
     width: $width;
     height: calc(#{$width}*#{$ratio});
-    max-height: 100vh;
     overflow: hidden;
     padding: 1px;
     position: relative;

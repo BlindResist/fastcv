@@ -20,9 +20,8 @@ export default {
     data () {
         return {
             desc: this.$t('mainpage.text'),
-            url: 'http://www.fastcv.online',
             title: this.$t('mainpage.title'),
-            image: ''
+            url: 'http://www.fastcv.digama.online'
         }
     },
     computed: {
@@ -38,7 +37,7 @@ export default {
                 },
                 {
                     name: 'vkontakte',
-                    link: `http://vk.com/share.php?url=${this.url}&title=${this.title}&description=${this.desc}&image=${this.image}&noparse=true`
+                    link: `http://vk.com/share.php?url=${this.url}&title=${this.title}&description=${this.desc}&noparse=true`
                 }
             ]
         }

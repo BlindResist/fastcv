@@ -145,18 +145,12 @@
                 </section>
             </div>
         </div>
-        <watermark />
     </div>
 </template>
 
 <script>
-import Watermark from '@/components/Watermark/index.vue'
-
 export default {
     name: 'theme-one',
-    components: {
-        Watermark
-    },
     props: {
         data: {
             type: Object,

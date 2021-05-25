@@ -2,7 +2,9 @@
     <footer :class="elClass">
         <div class="app-footer__inner">
             <span class="app-footer__text">
-                &#169;&nbsp;{{ currentYear }}&nbsp;{{ $t('mainpage.footer') }}
+                {{ $t('footer.name') }}&nbsp;{{ $t('footer.version') }}
+                <br>
+                &#169;&nbsp;{{ currentYear }}&nbsp;{{ $t('footer.created') }}
                 <app-link
                     blank
                     :href="href"
@@ -63,6 +65,7 @@ export default {
     }
 
     &__text {
+        line-height: 1.5;
         font-size: .875rem;
         pointer-events: auto;
         user-select: none;

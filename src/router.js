@@ -1,5 +1,4 @@
 import Vue from 'vue'
-import i18n from '@/utils/i18n'
 import VueRouter from 'vue-router'
 
 import MainPage from '@/pages/main/index.vue'
@@ -19,12 +18,6 @@ const router = new VueRouter({
             component: ConstructorPage
         }
     ]
-})
-
-router.afterEach((to, from) => {
-    Vue.nextTick(() => {
-        document.title = i18n.t('title')
-    })
 })
 
 export default router

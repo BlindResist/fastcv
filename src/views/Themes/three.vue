@@ -121,19 +121,13 @@
                     </section>
                 </div>
             </section>
-            <watermark />
         </div>
     </div>
 </template>
 
 <script>
-import Watermark from '@/components/Watermark/index.vue'
-
 export default {
     name: 'theme-three',
-    components: {
-        Watermark
-    },
     props: {
         data: {
             type: Object,

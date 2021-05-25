@@ -1,5 +1,11 @@
 export default {
     title: 'Fast!CV - Easy & fast CV constructor!',
+    meta: {
+        author: 'Artem Anpilov',
+        copyright: 'Artem Anpilov project',
+        description: 'Fast!CV is a tool for creating a simple CV containing only the most important information for a potential employer!',
+        keywords: 'resume, cv, constructor, builder, generator, simple, fast, online, free, without registration, pdf, create'
+    },
     buttons: {
         generate: 'Generate',
         addNew: '+ Add',
@@ -88,7 +94,11 @@ export default {
     mainpage: {
         share: 'Tell about us :)',
         title: 'Fast!CV - Easy & fast CV constructor!',
-        text: 'Fast!CV&nbsp;is a&nbsp;tool for creating a&nbsp;simple CV containing only the most important information for a&nbsp;potential employer!<br>Without registration and SMS :)',
-        footer: 'Created by'
+        text: 'Fast!CV&nbsp;is a&nbsp;tool for creating a&nbsp;simple CV containing only the most important information for a&nbsp;potential employer!<br>Without registration and SMS :)'
+    },
+    footer: {
+        name: 'Fast!CV',
+        version: 'v.1.0',
+        created: 'Created by'
     }
 }

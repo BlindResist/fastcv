@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import verge from 'verge'
+import metaInfo from '@/meta'
 import router from '@/router'
 import { TippyComponent } from 'vue-tippy'
 import importComponents from '@/utils/importComponents'
@@ -23,24 +24,24 @@ window.vm = new Vue({
     el: '#app',
     i18n,
     router,
+    metaInfo,
     data: {
         viewportW: 0,
         loaded: false,
         bus: new Vue({}),
         processing: false,
         langs: ['ru', 'en'],
-        lang: new Lang().get(),
-        brand: {
-            name: 'Fast!CV',
-            url: 'fastcv.digama.online'
-        }
+        lang: new Lang().get()
     },
     mounted () {
         this.loaded = true
         this.viewportW = verge.viewportW()
+
+        this.$bus.$on('change-lang', lang => { this.lang = lang })
         this.$bus.$on('processing', state => { this.processing = state })
     },
     beforeDestroy () {
+        this.$bus.$off('change-lang', lang => { this.lang = lang })
         this.$bus.$off('processing', state => { this.processing = state })
     }
 })

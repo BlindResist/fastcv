@@ -152,18 +152,12 @@
                 <p v-html="$options.filters.breakLine(data.skills)"></p>
             </div>
         </section>
-        <watermark />
     </div>
 </template>
 
 <script>
-import Watermark from '@/components/Watermark/index.vue'
-
 export default {
     name: 'theme-default',
-    components: {
-        Watermark
-    },
     props: {
         data: {
             type: Object,
