@@ -12,6 +12,38 @@ export default () => {
                 innerHTML: 'Fast!CV requires JavaScript!'
             }
         ],
+        link: [
+            {
+                rel: 'apple-touch-icon',
+                sizes: '180x180',
+                href: './images/favicon/apple-touch-icon.png'
+            },
+            {
+                rel: 'icon',
+                type: 'image/png',
+                sizes: '32x32',
+                href: './images/favicon/favicon-32x32.png'
+            },
+            {
+                rel: 'icon',
+                type: 'image/png',
+                sizes: '16x16',
+                href: './images/favicon/favicon-16x16.png'
+            },
+            {
+                rel: 'manifest',
+                href: './site.webmanifest'
+            },
+            {
+                rel: 'mask-icon',
+                href: './images/favicon/safari-pinned-tab.svg',
+                color: '#5bbad5'
+            },
+            {
+                rel: 'shortcut icon',
+                href: './images/favicon/favicon.ico'
+            }
+        ],
         meta: [
             {
                 name: 'robots',
@@ -36,6 +68,18 @@ export default () => {
             {
                 name: 'viewport',
                 content: 'width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no'
+            },
+            {
+                name: 'msapplication-TileColor',
+                content: '#da532c'
+            },
+            {
+                name: 'msapplication-config',
+                content: './browserconfig.xml'
+            },
+            {
+                name: 'theme-color',
+                content: '#ffffff'
             },
             {
                 vmid: 'og:title',
