@@ -105,7 +105,13 @@
                                 v-for="(item, index) in data.experience"
                             >
                                 <span class="block theme-three__info-block-caption">{{ item.position }}</span>
-                                <span class="block margin-top--xxs margin-bottom--xxs">{{ item.company }} | {{ item | period() }} | {{ item.country }}, {{ item.city }}</span>
+                                <span class="block margin-top--xxs margin-bottom--xxs">
+                                    {{ item.company }}
+                                    <span v-if="item.company && (item.from || item.to)">|</span>
+                                    {{ item | period() }}
+                                    <span v-if="(item.from || item.to) && item.country">|</span>
+                                    {{ item.country }}<span v-if="item.country && item.city">, </span>{{ item.city }}
+                                </span>
                                 <p
                                     v-if="item.about"
                                     v-html="$options.filters.breakLine(item.about)"
@@ -139,8 +145,6 @@ export default {
 
 <style lang="scss">
 .theme-three {
-    $width: 700px;
-    $ratio: 1.41;
     $col-left: 200px;
     $color1: #d3ecbc;
     $color2: #b1d697;
@@ -148,8 +152,8 @@ export default {
     $color4: #6db474;
     $color5: #8db670;
 
-    width: $width;
-    height: calc(#{$width}*#{$ratio});
+    width: 100%;
+    height: 100%;
     padding: 24px;
     position: relative;
     line-height: 1;

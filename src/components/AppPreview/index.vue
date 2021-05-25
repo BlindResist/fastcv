@@ -55,8 +55,8 @@ export default {
     methods: {
         fitPreview () {
             const parent = {
-                width: this.$parent.$el.offsetWidth,
-                height: this.$parent.$el.offsetHeight
+                width: this.$parent.$refs.preview.offsetWidth,
+                height: this.$parent.$refs.preview.offsetHeight
             }
 
             const width = parent.width / (this.$el.offsetWidth + this.padding)
@@ -71,9 +71,16 @@ export default {
 
 <style lang="scss">
 .app-preview {
+    $width: 700px;
+    $ratio: 1.41;
+
     display: inline-flex;
     flex-shrink: 0;
+    width: $width;
+    height: calc(#{$width}*#{$ratio});
+    max-height: 100vh;
     overflow: hidden;
+    padding: 1px;
     position: relative;
     left: 50%;
     top: 50%;
@@ -81,5 +88,9 @@ export default {
     background-color: $white;
     box-shadow: .5rem .5rem 0 0 rgba($black, .1);
     transform-origin: center center;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    -webkit-background-clip: content-box;
+    background-clip: content-box;
 }
 </style>

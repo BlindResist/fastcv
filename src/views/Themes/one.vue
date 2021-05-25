@@ -129,7 +129,13 @@
                             v-for="(item, index) in data.experience"
                         >
                             <span class="block theme-one__info-block-caption">{{ item.position }}</span>
-                            <span class="block margin-top--xxs margin-bottom--xxs">{{ item.company }} | {{ item | period() }} | {{ item.country }}, {{ item.city }}</span>
+                            <span class="block margin-top--xxs margin-bottom--xxs">
+                                {{ item.company }}
+                                <span v-if="item.company && (item.from || item.to)">|</span>
+                                {{ item | period() }}
+                                <span v-if="(item.from || item.to) && item.country">|</span>
+                                {{ item.country }}<span v-if="item.country && item.city">, </span>{{ item.city }}
+                            </span>
                             <p
                                 v-if="item.about"
                                 v-html="$options.filters.breakLine(item.about)"
@@ -162,8 +168,6 @@ export default {
 
 <style lang="scss">
 .theme-one {
-    $width: 700px;
-    $ratio: 1.412;
     $white: #fff;
     $black: #212121;
     $color1: #1c6fae;
@@ -176,8 +180,8 @@ export default {
     flex-flow: row nowrap;
     align-items: flex-start;
     justify-content: flex-start;
-    width: $width;
-    height: calc(#{$width}*#{$ratio});
+    width: 100%;
+    height: 100%;
     position: relative;
     line-height: 1;
     font-size: 12px;

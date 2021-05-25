@@ -1,6 +1,6 @@
 <template>
     <div :class="classObject">
-        <span class="app-logo--0">Fast</span>!<span class="app-logo--1"></span><span class="app-logo--2">CV</span>
+        <span class="app-logo--part-0">Fast</span><span class="app-logo--part-1">!</span><span class="app-logo--part-2">CV</span>
     </div>
 </template>
 
@@ -34,6 +34,14 @@ export default {
 
     &--big {
         font-size: 4em;
+    }
+
+    &--part {
+
+        &-1 {
+            color: $yellow-dark;
+            text-shadow: 2px 0px 0px $blue-dark;
+        }
     }
 }
 </style>

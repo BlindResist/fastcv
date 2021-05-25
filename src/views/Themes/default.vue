@@ -116,7 +116,9 @@
                                 <td>
                                     <span class="block">{{ item.company }}</span>
                                     <span class="block margin-top--xxs">{{ item | period() }}</span>
-                                    <span class="block">{{ item.country }}, {{ item.city }}</span>
+                                    <span class="block">
+                                        {{ item.country }}<span v-if="item.country && item.city">, </span>{{ item.city }}
+                                    </span>
                                     <span class="block margin-top--xxs">{{ item.position }}</span>
                                 </td>
                                 <td>
@@ -131,7 +133,10 @@
                 </div>
             </div>
         </section>
-        <section class="theme-default__section">
+        <section
+            class="theme-default__section"
+            v-if="data.qualities || data.skills"
+        >
             <div
                 v-if="data.qualities"
                 class="theme-default__col"
@@ -170,12 +175,10 @@ export default {
 
 <style lang="scss">
 .theme-default {
-    $width: 700px;
-    $ratio: 1.41;
     $black: #212121;
 
-    width: $width;
-    height: calc(#{$width}*#{$ratio});
+    width: 100%;
+    height: 100%;
     position: relative;
     color: $black;
     line-height: 1;

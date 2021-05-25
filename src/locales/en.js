@@ -52,6 +52,7 @@ export default {
         skills: 'Special skills'
     },
     helper: {
+        overflow: 'Error! Edit your CV&nbsp;so that all information fits on&nbsp;1&nbsp;page.',
         objective: 'At&nbsp;this point, you must indicate the purpose of&nbsp;the CV&nbsp;&mdash; the competition for the position for which you are applying. At&nbsp;the same time, you can not only write what position you are interested&nbsp;in, but also briefly justify why you should take&nbsp;it, what qualities will help you successfully realize yourself in&nbsp;this place.',
         qualities: 'This section of&nbsp;your&nbsp;CV might seem like the easiest to&nbsp;deal with, but in&nbsp;reality, you will need to&nbsp;find a&nbsp;balance between praising yourself and being overly humble. Our advice: try to&nbsp;put yourself in&nbsp;the shoes of&nbsp;the employer and think about what qualities the candidate should have for this position.',
         skills: 'It&nbsp;is&nbsp;in&nbsp;this section that you have the opportunity to&nbsp;open up&nbsp;and show your best side thanks to&nbsp;additional skills.'

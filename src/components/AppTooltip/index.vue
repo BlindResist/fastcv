@@ -1,7 +1,7 @@
 <template>
     <div
         v-if="update"
-        class="app-tooltip"
+        :class="elClass"
     >
         <tippy
             theme="light"
@@ -40,6 +40,10 @@ export default {
         trigger: {
             type: String,
             default: 'mouseenter'
+        },
+        theme: {
+            type: String,
+            default: 'default'
         }
     },
     data () {
@@ -55,12 +59,22 @@ export default {
                 this.update = true
             })
         }
+    },
+    computed: {
+        elClass () {
+            return [
+                'app-tooltip',
+                `app-tooltip--${this.theme}`
+            ]
+        }
     }
 }
 </script>
 
 <style lang="scss">
 .app-tooltip {
+    $parent: &;
+
     display: inline-flex;
 
     &__button {
@@ -82,8 +96,16 @@ export default {
             font-weight: 400;
             text-align: left;
             font-size: .75rem;
+            border-radius: .5rem;
             border: 1px solid currentColor;
             box-shadow: none;
+        }
+    }
+
+    &--error {
+
+        #{$parent}__button {
+            background-color: $red;
         }
     }
 }

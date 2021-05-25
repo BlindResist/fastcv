@@ -1,6 +1,9 @@
 <template>
     <div class="constructor">
-        <aside :class="asideClass">
+        <aside
+            ref="aside"
+            :class="asideClass"
+        >
             <div class="constructor-aside__header">
                 <app-lang-selector />
                 <router-link
@@ -17,9 +20,17 @@
                         <app-tabs-label id="options">{{ $t('constructor.aside.tabs.options') }}</app-tabs-label>
                     </template>
                     <template v-slot:additional>
+                        <app-tooltip
+                            theme="error"
+                            v-if="overflow"
+                            placement="left"
+                            class="margin-right--xs"
+                            :content="$t('helper.overflow')"
+                        />
                         <app-button
                             rounded
                             theme="yellow"
+                            :disabled="overflow"
                             v-processing="{ callback: createPDF }"
                         >{{ $t('buttons.generate') }}</app-button>
                     </template>
@@ -211,7 +222,10 @@
             ></div>
             <app-footer location="aside" />
         </aside>
-        <section :class="previewClass">
+        <section
+            ref="preview"
+            :class="previewClass"
+        >
             <app-preview
                 :type="theme"
                 ref="document"
@@ -278,7 +292,8 @@ export default {
                 education: [],
                 experience: []
             },
-            aside: false
+            aside: false,
+            overflow: false
         }
     },
     computed: {
@@ -345,6 +360,14 @@ export default {
             ]
         }
     },
+    watch: {
+        formData: {
+            deep: true,
+            handler (value) {
+                this.checkHeight()
+            }
+        }
+    },
     methods: {
         createPDF () {
             const content = this.$refs.document.$refs.page.$el
@@ -394,14 +417,27 @@ export default {
         },
         addComponent (type) {
             const id = `${type}-${this.counter++}`
+            const blanks = {
+                experience: {
+                    id,
+                    to: '',
+                    from: '',
+                    city: '',
+                    about: '',
+                    company: '',
+                    country: '',
+                    position: '',
+                    currently: false
+                },
+                education: {
+                    id,
+                    period: '',
+                    degree: '',
+                    university: ''
+                }
+            }
 
-            this.formData[type].push({
-                id,
-                period: '',
-                degree: '',
-                university: ''
-            })
-
+            this.formData[type].push(blanks[type])
             this.components[type].push(type)
         },
         removeComponent (data) {
@@ -426,7 +462,16 @@ export default {
                 const result = JSON.parse(e.target.result)
 
                 this.formData = result
+
+                if (result.education.length) this.components.education.push('education')
+                if (result.experience.length) this.components.experience.push('experience')
             }
+        },
+        checkHeight () {
+            const preview = this.$refs.document.$el
+            const page = this.$refs.document.$refs.page.$el
+
+            this.overflow = page.scrollHeight > preview.offsetHeight
         }
     }
 }
@@ -548,7 +593,6 @@ export default {
     width: calc(100% - 28.25rem);
     height: 100vh;
     overflow: hidden;
-    padding: 2rem 0;
     position: relative;
     background-color: $white;
 

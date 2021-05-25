@@ -91,6 +91,9 @@ export default {
     }
 
     &__additional {
+        display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
         padding: 0 1rem;
         margin-left: auto;
     }
