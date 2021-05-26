@@ -174,8 +174,8 @@ export default {
     flex-flow: row nowrap;
     align-items: flex-start;
     justify-content: flex-start;
-    width: 100%;
-    height: 100%;
+    width: $pdf-width;
+    height: calc(#{$pdf-width}*#{$pdf-ratio});
     position: relative;
     line-height: 1;
     font-size: 12px;

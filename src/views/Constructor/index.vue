@@ -216,10 +216,10 @@
                     </template>
                 </app-tabs>
             </div>
-            <div
+            <button
                 @click="aside = !aside"
-                class="constructor-aside__burger icon icon-menu"
-            ></div>
+                :class="asideTriggerClass"
+            ></button>
             <app-footer location="aside" />
         </aside>
         <section
@@ -296,6 +296,9 @@ export default {
             overflow: false
         }
     },
+    mounted () {
+        document.addEventListener('click', e => this.hideDropdown(e))
+    },
     computed: {
         pdfFormat () {
             return [
@@ -356,6 +359,14 @@ export default {
                 'constructor-preview',
                 {
                     'constructor-preview--active': !this.aside
+                }
+            ]
+        },
+        asideTriggerClass () {
+            return [
+                'constructor-aside__trigger icon icon-arrow-right2',
+                {
+                    'constructor-aside__trigger--active': this.aside
                 }
             ]
         }
@@ -472,6 +483,11 @@ export default {
             const page = this.$refs.document.$refs.page.$el
 
             this.overflow = page.scrollHeight > preview.offsetHeight
+        },
+        hideDropdown (e) {
+            const isOutside = this.$refs.aside !== e.target && !this.$refs.aside.contains(e.target)
+
+            if (isOutside) this.aside = false
         }
     }
 }
@@ -561,7 +577,7 @@ export default {
         margin-bottom: 1.5rem;
     }
 
-    &__burger {
+    &__trigger {
         display: none;
         padding: 1rem;
         position: absolute;
@@ -569,10 +585,19 @@ export default {
         left: 100%;
         z-index: 1;
         font-size: 2.5rem;
+        color: $blue-lite;
         line-height: 1;
+        border: none;
+        background-color: transparent;
+        transform: scale(1, 1);
+        transition: transform $transition;
 
         @include breakpoint(tablet) {
             display: block;
+        }
+
+        &--active {
+            transform: scale(-1, 1);
         }
     }
 

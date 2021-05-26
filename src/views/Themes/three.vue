@@ -146,8 +146,8 @@ export default {
     $color4: #6db474;
     $color5: #8db670;
 
-    width: 100%;
-    height: 100%;
+    width: $pdf-width;
+    height: calc(#{$pdf-width}*#{$pdf-ratio});
     padding: 24px;
     position: relative;
     line-height: 1;

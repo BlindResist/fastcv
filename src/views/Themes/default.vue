@@ -171,8 +171,8 @@ export default {
 .theme-default {
     $black: #212121;
 
-    width: 100%;
-    height: 100%;
+    width: $pdf-width;
+    height: calc(#{$pdf-width}*#{$pdf-ratio});
     position: relative;
     color: $black;
     line-height: 1;

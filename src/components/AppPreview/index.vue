@@ -71,13 +71,10 @@ export default {
 
 <style lang="scss">
 .app-preview {
-    $width: 700px;
-    $ratio: 1.41;
-
     display: inline-flex;
     flex-shrink: 0;
-    width: $width;
-    height: calc(#{$width}*#{$ratio});
+    width: $pdf-width;
+    height: calc(#{$pdf-width}*#{$pdf-ratio});
     overflow: hidden;
     padding: 1px;
     position: relative;

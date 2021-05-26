@@ -157,8 +157,8 @@ export default {
     $color3: #db880a;
     $color4: #e7c332;
 
-    width: 100%;
-    height: 100%;
+    width: $pdf-width;
+    height: calc(#{$pdf-width}*#{$pdf-ratio});
     position: relative;
     line-height: 1;
     font-size: 12px;
