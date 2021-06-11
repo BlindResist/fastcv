@@ -3,7 +3,11 @@
 module.exports = {
     root: true,
     parserOptions: {
-        parser: 'babel-eslint'
+        parser: 'babel-eslint',
+        ecmaVersion: 2015,
+        ecmaFeatures: {
+            legacyDecorators: true
+        }
     },
     env: {
         browser: true,
@@ -19,5 +23,9 @@ module.exports = {
         'indent': ['error', 4],
         'generator-star-spacing': 'off'
     },
+    extends: [
+        'plugin:vue/essential',
+        '@vue/typescript/recommended'
+    ],
     globals: {}
 }

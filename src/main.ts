@@ -14,19 +14,12 @@ importComponents()
 
 Vue.component('tippy', TippyComponent)
 
-Object.defineProperty(Vue.prototype, '$bus', {
-    get () {
-        return this.$root.bus
-    }
-})
-
-window.vm = new Vue({
+new Vue({
     el: '#app',
     i18n,
     router,
     metaInfo,
     data: {
-        bus: new Vue({}),
         langs: ['ru', 'en'],
         lang: new Lang().get()
     },

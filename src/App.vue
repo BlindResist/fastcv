@@ -9,28 +9,34 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import verge from 'verge'
+import AppPreloader from '@/components/AppPreloader/index.vue'
+import { Component, Vue } from 'vue-property-decorator'
 
-export default {
-    name: 'app',
-    data () {
-        return {
-            viewportW: 0,
-            loaded: false,
-            processing: false
-        }
-    },
-    mounted () {
+@Component({
+    components: {
+        AppPreloader
+    }
+})
+
+export default class App extends Vue {
+    lang: string
+    loaded: boolean
+    viewportW: number
+    processing: boolean
+
+    constructor() {
+        super()
+        this.lang = 'en'
+        this.loaded = false
+        this.viewportW = 0
+        this.processing = false
+    }
+
+    mounted (): void {
         this.loaded = true
         this.viewportW = verge.viewportW()
-
-        this.$bus.$on('change-lang', lang => { this.lang = lang })
-        this.$bus.$on('processing', state => { this.processing = state })
-    },
-    beforeDestroy () {
-        this.$bus.$off('change-lang', lang => { this.lang = lang })
-        this.$bus.$off('processing', state => { this.processing = state })
     }
 }
 </script>

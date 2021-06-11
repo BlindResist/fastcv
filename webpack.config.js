@@ -7,16 +7,17 @@ const mode = process.env.NODE_ENV === 'prod' ? 'production' : 'development'
 
 module.exports = {
     mode: mode,
+    devtool: 'inline-source-map',
     entry: [
-        './src/styles.js',
-        './src/main.js'
+        './src/styles.ts',
+        './src/main.ts'
     ],
     output: {
         path: path.resolve(__dirname, 'dist'),
         filename: 'build.js'
     },
     resolve: {
-        extensions: ['.js', '.vue', '.json', '.scss'],
+        extensions: ['.tsx', '.ts', '.js', '.vue', '.json', '.scss'],
         alias: {
             vue$: 'vue/dist/vue.esm.js',
             '@': path.resolve(__dirname, 'src/'),
@@ -26,6 +27,11 @@ module.exports = {
     },
     module: {
         rules: [
+            {
+                test: /\.tsx?$/,
+                loader: 'ts-loader',
+                exclude: /node_modules/
+            },
             {
                 test: /\.(js|vue)$/,
                 loader: 'eslint-loader',

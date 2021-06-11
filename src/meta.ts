@@ -4,7 +4,7 @@ import i18n from '@/utils/i18n'
 
 Vue.use(VueMeta)
 
-export default () => {
+export default (): {} => {
     return {
         title: i18n.t('title'),
         noscript: [

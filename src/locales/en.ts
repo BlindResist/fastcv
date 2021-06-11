@@ -1,4 +1,4 @@
-export default {
+const en: {} = {
     title: 'Fast!CV - Easy & fast CV constructor!',
     meta: {
         author: 'Artem Anpilov',
@@ -102,3 +102,5 @@ export default {
         created: 'Created by'
     }
 }
+
+export default en

@@ -1,11 +1,17 @@
 /* eslint-disable no-undef */
 import Vue from 'vue'
 
-Vue.filter('breakLine', string => {
+interface Period {
+    to: string,
+    from: string,
+    currently: boolean
+}
+
+Vue.filter('breakLine', (string: string): string => {
     return string.replace(/(?:\r\n|\r|\n)/g, '<br>')
 })
 
-Vue.filter('period', item => {
+Vue.filter('period', (item: Period): string => {
     let result = ''
 
     result += item.from ? item.from : ''

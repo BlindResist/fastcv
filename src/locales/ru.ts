@@ -1,4 +1,4 @@
-export default {
+const ru: {} = {
     title: 'Fast!CV - Простой и быстрый конструктор резюме!',
     meta: {
         author: 'Артём Анпилов',
@@ -102,3 +102,5 @@ export default {
         created: 'Создано'
     }
 }
+
+export default ru

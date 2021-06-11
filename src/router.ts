@@ -6,7 +6,7 @@ import ConstructorPage from '@/pages/constructor/index.vue'
 
 Vue.use(VueRouter)
 
-const router = new VueRouter({
+export default new VueRouter({
     linkActiveClass: 'is-current',
     routes: [
         {
@@ -19,5 +19,3 @@ const router = new VueRouter({
         }
     ]
 })
-
-export default router
