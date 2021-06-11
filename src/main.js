@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import verge from 'verge'
+import App from './App.vue'
 import metaInfo from '@/meta'
 import router from '@/router'
 import { TippyComponent } from 'vue-tippy'
@@ -26,22 +26,9 @@ window.vm = new Vue({
     router,
     metaInfo,
     data: {
-        viewportW: 0,
-        loaded: false,
         bus: new Vue({}),
-        processing: false,
         langs: ['ru', 'en'],
         lang: new Lang().get()
     },
-    mounted () {
-        this.loaded = true
-        this.viewportW = verge.viewportW()
-
-        this.$bus.$on('change-lang', lang => { this.lang = lang })
-        this.$bus.$on('processing', state => { this.processing = state })
-    },
-    beforeDestroy () {
-        this.$bus.$off('change-lang', lang => { this.lang = lang })
-        this.$bus.$off('processing', state => { this.processing = state })
-    }
-})
+    render: h => h(App)
+}).$mount('#app')

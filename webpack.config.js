@@ -9,7 +9,7 @@ module.exports = {
     mode: mode,
     entry: [
         './src/styles.js',
-        './src/app.js'
+        './src/main.js'
     ],
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -18,10 +18,10 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.vue', '.json', '.scss'],
         alias: {
-            'vue$': 'vue/dist/vue.esm.js',
+            vue$: 'vue/dist/vue.esm.js',
             '@': path.resolve(__dirname, 'src/'),
-            'fonts': path.resolve(__dirname, 'src/fonts/'),
-            'images': path.resolve(__dirname, 'images/')
+            fonts: path.resolve(__dirname, 'src/fonts/'),
+            images: path.resolve(__dirname, 'images/')
         }
     },
     module: {
@@ -76,7 +76,7 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loaders: 'style-loader!css-loader!postcss-loader'
+                loader: 'style-loader!css-loader!postcss-loader'
             },
             {
                 test: /\.scss$/,
