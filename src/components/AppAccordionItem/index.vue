@@ -21,47 +21,55 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import Velocity from 'velocity-animate'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 
-export default {
-    name: 'app-accordion-item',
-    props: {
-        id: {
-            type: String,
-            default: '',
-            required: true
-        }
-    },
-    data () {
-        return {
-            state: false,
-            duration: 300,
-            name: 'app-accordion-item',
-            itemId: `accordion-${this.id}`
-        }
-    },
-    methods: {
-        elementClass (classname) {
-            let result = classname
 
-            if (this.state) result += ` ${classname}--active`
+@Component
 
-            return result
-        },
-        toggleItem () {
-            this.state = !this.state
+export default class AppAccordionItem extends Vue {
+    @Prop({
+        type: String,
+        default: '',
+        required: true
+    }) readonly id!: string
 
-            this.$parent.$emit('toggle-item', {
-                itemId: this.itemId
-            })
-        },
-        animationEnter (el, done) {
-            Velocity(el, 'slideDown', { duration: this.duration })
-        },
-        animationLeave (el, done) {
-            Velocity(el, 'slideUp', { duration: this.duration })
-        }
+    name: string
+    state: boolean
+    itemId: string
+    duration: number
+
+    constructor () {
+        super()
+        this.state = false
+        this.duration = 300
+        this.name = 'app-accordion-item'
+        this.itemId = `accordion-${this.id}`
+    }
+
+    elementClass (classname: string): string {
+        let result = classname
+
+        if (this.state) result += ` ${classname}--active`
+
+        return result
+    }
+
+    toggleItem (): void {
+        this.state = !this.state
+
+        this.$parent.$emit('toggle-item', {
+            itemId: this.itemId
+        })
+    }
+
+    animationEnter (el: HTMLElement): void {
+        Velocity(el, 'slideDown', { duration: this.duration })
+    }
+
+    animationLeave (el: HTMLElement): void {
+        Velocity(el, 'slideUp', { duration: this.duration })
     }
 }
 </script>

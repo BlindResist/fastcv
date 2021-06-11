@@ -240,7 +240,7 @@ import JSPDF from 'jspdf'
 import 'jspdf/dist/polyfills.es.js'
 import html2canvas from 'html2canvas'
 import Personal from './personal.vue'
-import pdfFonts from '@/utils/pdfFonts'
+import pdfFonts from '@/utils/pdfFonts.ts'
 import Education from './education.vue'
 import Experience from './experience.vue'
 

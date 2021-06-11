@@ -1,31 +1,20 @@
-// https://eslint.org/docs/user-guide/configuring
-
 module.exports = {
     root: true,
-    parserOptions: {
-        parser: 'babel-eslint',
-        ecmaVersion: 2015,
-        ecmaFeatures: {
-            legacyDecorators: true
-        }
-    },
     env: {
-        browser: true,
+        node: true
     },
     extends: [
         'plugin:vue/essential',
-        'standard'
-    ],
-    plugins: [
-        'vue'
-    ],
-    rules: {
-        'indent': ['error', 4],
-        'generator-star-spacing': 'off'
-    },
-    extends: [
-        'plugin:vue/essential',
+        '@vue/standard',
         '@vue/typescript/recommended'
     ],
-    globals: {}
+    parserOptions: {
+        ecmaVersion: 2020
+    },
+    rules: {
+        indent: ['error', 4],
+        'generator-star-spacing': 'off',
+        'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+        'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
+    }
 }

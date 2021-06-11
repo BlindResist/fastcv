@@ -1,13 +1,9 @@
 {
   "compilerOptions": {
-    "outDir": "./dist/",
-    "target": "es5",
-    "module": "es6",
+    "target": "esnext",
+    "module": "esnext",
     "strict": true,
-    "allowJs": true,
-    "noImplicitAny": true,
     "jsx": "preserve",
-    "declaration": true,
     "importHelpers": true,
     "moduleResolution": "node",
     "experimentalDecorators": true,

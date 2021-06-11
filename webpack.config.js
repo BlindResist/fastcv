@@ -10,7 +10,7 @@ module.exports = {
     devtool: 'inline-source-map',
     entry: [
         './src/styles.ts',
-        './src/main.ts'
+        './src/Main.ts'
     ],
     output: {
         path: path.resolve(__dirname, 'dist'),

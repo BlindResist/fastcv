@@ -4,21 +4,21 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'app-logo',
-    props: {
-        big: Boolean
-    },
-    computed: {
-        classObject () {
-            return [
-                'app-logo',
-                {
-                    'app-logo--big': this.big
-                }
-            ]
-        }
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator'
+
+@Component
+
+export default class AppLogo extends Vue {
+    @Prop(Boolean) readonly big!: boolean
+
+    get classObject (): [string, { [elem: string]: boolean} ] {
+        return [
+            'app-logo',
+            {
+                'app-logo--big': this.big
+            }
+        ]
     }
 }
 </script>
@@ -40,7 +40,7 @@ export default {
 
         &-1 {
             color: $yellow-dark;
-            text-shadow: 2px 0px 0px $blue-dark;
+            text-shadow: 2px 0 0 $blue-dark;
         }
     }
 }
