@@ -15,7 +15,9 @@
 
 <script lang="ts">
 import Velocity from 'velocity-animate'
-import { Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, Vue } from 'vue-property-decorator'
+
+@Component
 
 export default class AppPreloader extends Vue {
     @Prop(Boolean) readonly active!: boolean

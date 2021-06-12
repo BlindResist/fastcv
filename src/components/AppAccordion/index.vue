@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Watch, Vue } from 'vue-property-decorator'
+import { Prop, Watch, Vue, Component } from 'vue-property-decorator'
 
 @Component
 

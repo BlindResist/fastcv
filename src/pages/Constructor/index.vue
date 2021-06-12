@@ -1,6 +1,6 @@
 <template>
     <main class="page">
-        <constructor :lang="lang" />
+        <constructor />
     </main>
 </template>
 
@@ -15,8 +15,8 @@ import { Component, Vue } from 'vue-property-decorator'
 })
 
 export default class ConstructorPage extends Vue {
-    get lang (): string {
-        return this.$store.state.lang
+    mounted (): void {
+        console.log(typeof Constructor)
     }
 }
 </script>

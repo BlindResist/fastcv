@@ -70,7 +70,7 @@ export default class AppInput extends Vue {
 
     @Prop({
         type: String,
-        default: 'text',
+        default: 'left',
         validator (value: string): boolean {
             return ['left', 'right'].includes(value)
         }

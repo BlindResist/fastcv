@@ -25,7 +25,7 @@ import { Component, Vue } from 'vue-property-decorator'
 })
 
 export default class AppLangSelector extends Vue {
-    langs: []
+    langs: string[]
     current: string
 
     constructor () {

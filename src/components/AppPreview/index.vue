@@ -12,59 +12,65 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import One from '@/views/Themes/one.vue'
 import Two from '@/views/Themes/two.vue'
 import Three from '@/views/Themes/three.vue'
 import Default from '@/views/Themes/default.vue'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 
-export default {
-    name: 'app-preview',
-    props: {
-        type: {
-            type: String,
-            default: 'default'
-        },
-        data: {
-            type: Object,
-            default: () => {}
+@Component
+
+export default class AppPreview extends Vue {
+    @Prop({
+        type: String,
+        default: 'default'
+    }) readonly type!: string
+
+    @Prop(Object) readonly data!: Component
+
+    themes: {
+        one: Component,
+        two: Component,
+        three: Component,
+        default: Component
+    }
+
+    padding: number
+    transform!: string
+
+    constructor () {
+        super()
+        this.themes = {
+            one: One,
+            two: Two,
+            three: Three,
+            default: Default
         }
-    },
-    data () {
-        return {
-            themes: {
-                one: One,
-                two: Two,
-                three: Three,
-                default: Default
-            },
-            padding: 128,
-            transform: ''
-        }
-    },
+        this.padding = 128
+    }
+
     mounted () {
         this.fitPreview()
 
         window.addEventListener('resize', () => this.fitPreview())
-    },
-    computed: {
-        component () {
-            return this.themes[this.type]
-        }
-    },
-    methods: {
-        fitPreview () {
-            const parent = {
-                width: this.$parent.$refs.preview.offsetWidth,
-                height: this.$parent.$refs.preview.offsetHeight
-            }
+    }
 
-            const width = parent.width / (this.$el.offsetWidth + this.padding)
-            const height = parent.height / (this.$el.offsetHeight + this.padding)
-            const scale = Math.min(width, height)
+    get component (): Component {
+        return this.themes[this.type]
+    }
 
-            this.transform = `translate(-50%, -50%) scale(${scale})`
+    fitPreview (): void {
+        const parent: {width: number, height: number} = {
+            width: (this.$parent.$refs.preview as HTMLElement).offsetWidth,
+            height: (this.$parent.$refs.preview as HTMLElement).offsetHeight
         }
+
+        const width: number = parent.width / ((this.$el as HTMLElement).offsetWidth + this.padding)
+        const height: number = parent.height / ((this.$el as HTMLElement).offsetHeight + this.padding)
+        const scale: number = Math.min(width, height)
+
+        this.transform = `translate(-50%, -50%) scale(${scale})`
     }
 }
 </script>

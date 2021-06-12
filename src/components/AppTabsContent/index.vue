@@ -7,22 +7,28 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'app-tabs-content',
-    props: {
-        id: {
-            type: String,
-            default: '',
-            required: true
-        }
-    },
-    data () {
-        return {
-            state: false,
-            name: 'app-tabs-content',
-            itemId: `tabs-${this.id}`
-        }
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator'
+
+@Component
+
+export default class AppTabsContent extends Vue {
+    @Prop({
+        type: String,
+        required: true
+    }) readonly id!: string
+
+    name: string
+    itemId: string
+
+    constructor () {
+        super()
+        this.name = 'app-tabs-content'
+        this.itemId = `tabs-${this.id}`
+    }
+
+    get state (): boolean {
+        return this.$store.state.tabAsideActive === this.itemId
     }
 }
 </script>

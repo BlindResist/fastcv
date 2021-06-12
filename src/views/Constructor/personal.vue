@@ -63,68 +63,71 @@
     </div>
 </template>
 
-<script>
-import componentEmitters from '@/mixins/componentEmitters'
+<script lang="ts">
+import { mixins } from 'vue-class-component'
+import AppInput from '@/components/AppInput/index.vue'
+import AppSelect from '@/components/AppSelect/index.vue'
+import { Component, Prop } from 'vue-property-decorator'
+import AppInputFile from '@/components/AppInputFile/index.vue'
+import AppDatePicker from '@/components/AppDatePicker/index.vue'
+import { ComponentEmitters, Data } from '@/mixins/componentEmitters.ts'
 
-export default {
-    name: 'personal',
-    mixins: [componentEmitters('personal')],
-    props: {
-        type: {
-            type: String,
-            default: '',
-            required: true
-        },
-        data: {
-            type: Object,
-            default: () => ({
-                site: '',
-                name: '',
-                photo: '',
-                phone: '',
-                email: '',
-                address: '',
-                dateOfBirth: '',
-                maritalStatus: ''
-            })
-        }
-    },
-    data () {
-        return {
-            innerData: this.data
-        }
-    },
-    computed: {
-        maritalStatus () {
-            return [
-                {
-                    id: 'married',
-                    disabled: false,
-                    selected: false,
-                    text: this.$t('selects.maritalStatus[0]')
-                },
-                {
-                    id: 'single',
-                    disabled: false,
-                    selected: false,
-                    text: this.$t('selects.maritalStatus[1]')
-                },
-                {
-                    id: 'divorced',
-                    disabled: false,
-                    selected: false,
-                    text: this.$t('selects.maritalStatus[2]')
-                }
-            ].map(item => {
-                if (this.innerData.maritalStatus.length) {
-                    if (item.text === this.innerData.maritalStatus) {
-                        item.selected = true
-                    }
-                }
+@Component({
+    components: {
+        AppInput,
+        AppSelect,
+        AppInputFile,
+        AppDatePicker
+    }
+})
 
-                return item
-            })
-        }
+export default class Personal extends mixins(ComponentEmitters) {
+    @Prop({
+        type: String,
+        required: true
+    }) readonly type!: string
+
+    @Prop({
+        type: Object,
+        default: Data
+    }) readonly data!: Data
+
+    innerData: Data
+
+    constructor () {
+        super()
+        this.innerData = this.data
+    }
+
+    get maritalStatus (): {id: string, text: string, disabled: boolean, selected: boolean}[] {
+        return [
+            {
+                id: 'married',
+                disabled: false,
+                selected: false,
+                text: this.$t('selects.maritalStatus[0]')
+            },
+            {
+                id: 'single',
+                disabled: false,
+                selected: false,
+                text: this.$t('selects.maritalStatus[1]')
+            },
+            {
+                id: 'divorced',
+                disabled: false,
+                selected: false,
+                text: this.$t('selects.maritalStatus[2]')
+            }
+        ].map(item => {
+            if (this.innerData.maritalStatus.length) {
+                if (item.text === this.innerData.maritalStatus) {
+                    item.selected = true
+                }
+            }
+
+            return item
+        })
     }
 }
 </script>

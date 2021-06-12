@@ -34,56 +34,56 @@
     </label>
 </template>
 
-<script>
-export default {
-    name: 'app-textarea',
-    model: {
-        prop: 'value',
-        event: 'input'
-    },
-    props: {
-        name: {
-            type: String,
-            required: true
-        },
-        disabled: Boolean,
-        resize: Boolean,
-        required: Boolean,
-        placeholder: String,
-        value: [Number, String]
-    },
-    data () {
-        return {
-            error: false,
-            focus: false,
-            text: {
-                errors: {
-                    required: this.$root.lang === 'ru' ? 'Поле обязательно для заполнения' : 'Required field'
-                }
-            },
-            val: this.value,
-            parsedValue: ''
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator'
+
+@Component
+
+export default class AppTextarea extends Vue {
+    @Prop(Boolean) readonly disabled!: boolean
+    @Prop(Boolean) readonly resize!: boolean
+    @Prop(Boolean) readonly required!: boolean
+    @Prop(String) readonly placeholder!: string
+    @Prop([Number, String]) readonly value!: number | string
+    @Prop({
+        type: String,
+        required: true
+    }) readonly name!: string
+
+    error: boolean
+    focus: boolean
+    val!: number | string
+    text: {
+        errors: {
+            required: string
         }
-    },
-    methods: {
-        input (value) {
-            if (this.required && !value) {
-                this.error = true
-            } else {
-                this.error = false
+    }
+
+    constructor () {
+        super()
+        this.error = false
+        this.focus = false
+        this.text = {
+            errors: {
+                required: this.lang === 'ru' ? 'Поле обязательно для заполнения' : 'Required field'
             }
-            this.val = value
-            this.$emit('input', value)
-        },
-        change (value) {
-            if (this.required && !value) {
-                this.error = true
-            } else {
-                this.error = false
-            }
-            this.val = value
-            this.$emit('change', value)
         }
+    }
+
+    get lang (): string {
+        return this.$store.state.lang
+    }
+
+    input (value: string): void {
+        this.error = this.required && !value
+        this.val = value
+        this.$emit('input', value)
+    }
+
+    change (value: string): void {
+        this.error = this.required && !value
+        this.val = value
+        this.$emit('change', value)
     }
 }
 

@@ -31,96 +31,115 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'app-select',
-    props: {
-        data: {
-            type: Array,
-            required: true,
-            default: () => []
-        },
-        name: String,
-        placeholder: String
-    },
-    data () {
-        return {
-            selected: {
-                id: '',
-                text: ''
-            },
-            opened: false,
-            options: this.data
-        }
-    },
-    mounted () {
+<script lang="ts">
+import { Watch, Prop, Vue, Component } from 'vue-property-decorator'
+
+@Component
+
+interface Option {
+    id: string,
+    text: string,
+    selected: boolean,
+    disabled: boolean
+}
+
+export default class AppSelect extends Vue {
+    @Prop(String) readonly placeholder!: string
+    @Prop({
+        type: String,
+        required: true
+    }) readonly name!: string
+
+    @Prop({
+        type: Array,
+        required: true
+    }) readonly data!: Option[]
+
+    opened: boolean
+    options: Option[]
+    selected!: {
+        id: string,
+        text: string
+    }
+
+    constructor () {
+        super()
+        this.opened = false
+        this.options = this.data
+    }
+
+    mounted (): void {
         this.onLoad()
 
-        document.addEventListener('click', e => this.hideDropdown(e))
-    },
-    beforeDestroy () {
-        document.removeEventListener('click', e => this.hideDropdown(e))
-    },
-    watch: {
-        data (newData) {
-            this.options = newData
+        document.addEventListener('click', (e: {[elem: string]: any}) => this.hideDropdown(e))
+    }
+
+    @Watch('data')
+    onDataChanged (newData: Option[]): void {
+        this.options = newData
+    }
+
+    onLoad (): void {
+        for (let i = 0; i < this.options.length; i++) {
+            if (this.options[i].selected) this.initSelected(this.options[i])
         }
-    },
-    methods: {
-        onLoad () {
-            for (let i = 0; i < this.options.length; i++) {
-                if (this.options[i].selected === true) this.initSelected(this.options[i])
+    }
+
+    elementClass (classname: string): string {
+        let result = classname
+
+        if (this.opened) result += ` ${classname}--opened`
+
+        return result
+    }
+
+    optionClass (option: Option): [string, {[elem: string]: boolean}] {
+        return [
+            'app-select__option',
+            {
+                'app-select__option--selected': option.selected,
+                'app-select__option--disabled': option.disabled
             }
-        },
-        elementClass (classname) {
-            let result = classname
+        ]
+    }
 
-            if (this.opened) result += ` ${classname}--opened`
+    hideDropdown (e: {[elem: string]: any}): void {
+        const aside = (this.$refs.aside as Vue).$el as HTMLElement
+        const isOutside: boolean = this.$refs.aside !== e.target && !aside.contains(e.target)
 
-            return result
-        },
-        optionClass (option) {
-            return [
-                'app-select__option',
-                {
-                    'app-select__option--selected': option.selected,
-                    'app-select__option--disabled': option.disabled
-                }
-            ]
-        },
-        hideDropdown (e) {
-            const isOutside = this.$el !== e.target && !this.$el.contains(e.target)
+        if (isOutside) this.opened = false
+    }
 
-            if (isOutside) this.opened = false
-        },
-        changeSelected (option) {
-            option.selected ? this.removeSelected() : this.addSelected(option)
-            this.opened = false
-            this.$emit('input', this.selected.text)
-        },
-        initSelected (option) {
-            this.selected.id = option.id
-            this.selected.text = option.text
+    changeSelected (option: Option): void {
+        option.selected ? this.removeSelected() : this.addSelected(option)
+        this.opened = false
+        this.$emit('input', this.selected.text)
+    }
 
-            for (let i = 0; i < this.options.length; i++) {
-                this.options[i].selected = this.options[i].id === option.id
-            }
-        },
-        addSelected (option) {
-            this.selected.id = option.id
-            this.selected.text = option.text
+    initSelected (option: Option): void {
+        this.selected.id = option.id
+        this.selected.text = option.text
 
-            for (let i = 0; i < this.options.length; i++) {
-                this.options[i].selected = this.options[i].id === option.id
-            }
-        },
-        removeSelected () {
-            this.opened = false
-            this.selected.id = ''
-            this.selected.text = ''
-
-            for (let i = 0; i < this.options.length; i++) this.options[i].selected = false
+        for (let i = 0; i < this.options.length; i++) {
+            this.options[i].selected = this.options[i].id === option.id
         }
+    }
+
+    addSelected (option: Option): void {
+        this.selected.id = option.id
+        this.selected.text = option.text
+
+        for (let i = 0; i < this.options.length; i++) {
+            this.options[i].selected = this.options[i].id === option.id
+        }
+    }
+
+    removeSelected (): void {
+        this.opened = false
+        this.selected.id = ''
+        this.selected.text = ''
+
+        for (let i = 0; i < this.options.length; i++) this.options[i].selected = false
     }
 }
 </script>

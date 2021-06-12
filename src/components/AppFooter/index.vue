@@ -1,5 +1,5 @@
 <template>
-    <footer :class="elClass">
+    <footer :class="elementClass">
         <div class="app-footer__inner">
             <span class="app-footer__text">
                 {{ $t('footer.name') }}&nbsp;{{ $t('footer.version') }}
@@ -36,7 +36,7 @@ export default class AppFooter extends Vue {
         this.currentYear = new Date().getFullYear()
     }
 
-    get elClass (): [string, {[elem: string]: boolean}] {
+    get elementClass (): [string, {[elem: string]: boolean}] {
         return [
             'app-footer',
             {

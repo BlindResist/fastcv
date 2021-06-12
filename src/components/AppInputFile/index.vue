@@ -27,6 +27,8 @@
 </template>
 
 <script lang="ts">
+import VueI18n from 'vue-i18n'
+import TranslateResult = VueI18n.TranslateResult
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component
@@ -63,17 +65,17 @@ export default class AppInputFile extends Vue {
     mb: number
     message: string
     error: boolean
-    file: {
+    file!: {
         blob: string,
         name: string,
-        itself: unknown
+        itself: {[elem: string]: any}
     }
 
     text: {
         empty: string,
         error: {
-            size: string,
-            format: string
+            size: TranslateResult,
+            format: TranslateResult
         }
     }
 
@@ -92,11 +94,6 @@ export default class AppInputFile extends Vue {
         this.mb = 1048576
         this.message = ''
         this.error = false
-        this.file = {
-            blob: '',
-            name: '',
-            itself: Object
-        }
         this.text = {
             empty: '...',
             error: {
@@ -116,17 +113,18 @@ export default class AppInputFile extends Vue {
     }
 
     get fileText (): string {
-        return this.file.name.length ? this.file.name : this.text.empty
+        return this.file && this.file.name.length ? this.file.name : this.text.empty
     }
 
     get fileSize (): string {
-        const size: number = parseFloat(this.acceptSize / this.mb).toFixed(2)
+        const parse: number = this.acceptSize / this.mb
+        const size: number = parseInt(parse.toFixed(2))
 
         return size < 1 ? `${size}Kb` : `${size}Mb`
     }
 
-    change (event: Event | null): void {
-        const file: { size: number, name: string } | null = event.target.files[0]
+    change (event: {target: {files: {[elem: string]: any}[]}}): void {
+        const file = event.target.files[0]
 
         if (!this.validate(file)) return
 
@@ -134,18 +132,20 @@ export default class AppInputFile extends Vue {
         this.file.name = file.name
         this.file.blob = URL.createObjectURL(file)
 
-        let data: { blob: unknown, name: string, itself: unknown} = this.file
+        let data: any
 
         if (this.emit === 'blob') {
             data = this.file.blob
         } else if (this.emit === 'file') {
             data = this.file.itself
+        } else {
+            data = this.file
         }
 
         this.$emit('input', data)
     }
 
-    validate (file: { size: number, name: string }): void | boolean {
+    validate (file: {[elem: string]: any}): void | boolean {
         if (this.checkFormat(file)) {
             this.error = false
         } else {
@@ -165,13 +165,15 @@ export default class AppInputFile extends Vue {
         return true
     }
 
-    checkSize (file: { size: number, name: string }): boolean {
+    checkSize (file: {[elem: string]: any}): boolean {
         return file.size <= this.acceptSize
     }
 
-    checkFormat (file: { size: number, name: string }): boolean {
+    checkFormat (file: {[elem: string]: any}): boolean {
         const regexp = /(?:\.([^.]+))?$/
-        const extension = regexp.exec(file.name.toLowerCase())[1]
+        const name: string = file.name.toLowerCase()
+        // eslint-disable-next-line @typescript-eslint/ban-types
+        const extension: Object | null = regexp.exec(name)[1]
 
         return this.formats[this.acceptType].includes(extension)
     }

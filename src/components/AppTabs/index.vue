@@ -15,57 +15,25 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'app-tabs',
-    props: {
-        inverted: Boolean,
-        theme: {
-            type: String,
-            default: 'light'
-        }
-    },
-    data () {
-        return {
-            openedItem: {
-                id: {
-                    type: String,
-                    default: ''
-                }
-            }
-        }
-    },
-    mounted () {
-        this.defaultState()
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator'
 
-        this.$on('toggle-item', data => this.openHandler(data))
-    },
-    beforeDestroy () {
-        this.$off('toggle-item', data => this.openHandler(data))
-    },
-    methods: {
-        openHandler (data) {
-            this.openedItem.id = data
+@Component
 
-            for (let i = 0; i < this.$children.length; i++) {
-                if (this.$children[i].itemId === this.openedItem.id) {
-                    this.$children[i].state = true
-                } else {
-                    this.$children[i].state = false
-                };
-            };
-        },
-        defaultState () {
-            const label = this.$children.filter(item => item.name === 'app-tabs-label')[0]
-            const content = this.$children.filter(item => item.name === 'app-tabs-content')[0]
+export default class AppTabs extends Vue {
+    @Prop({
+        type: String,
+        default: 'light'
+    }) readonly theme!: string
 
-            label.state = true
-            content.state = true
-        },
-        closeAll () {
-            for (let i = 0; i < this.$children.length; i++) {
-                this.$children[i].state = false
-            };
+    openedItem: {
+        id: string
+    }
+
+    constructor () {
+        super()
+        this.openedItem = {
+            id: ''
         }
     }
 }

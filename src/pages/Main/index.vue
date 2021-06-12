@@ -44,10 +44,6 @@ import AppLangSelector from '@/components/AppLangSelector/index.vue'
 })
 
 export default class Main extends Vue {
-    get lang (): string {
-        return this.$store.state.lang
-    }
-
     goToConstructor (): void {
         this.$router.push('constructor')
     }

@@ -14,33 +14,40 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'share',
-    data () {
-        return {
-            desc: this.$t('mainpage.text'),
-            title: this.$t('mainpage.title'),
-            url: 'http://www.fastcv.digama.online'
-        }
-    },
-    computed: {
-        share () {
-            return [
-                {
-                    name: 'facebook',
-                    link: `https://www.facebook.com/sharer/sharer.php?u=${this.url}`
-                },
-                {
-                    name: 'twitter',
-                    link: `https://twitter.com/share?url=${this.url}&text=${this.desc}`
-                },
-                {
-                    name: 'vkontakte',
-                    link: `http://vk.com/share.php?url=${this.url}&title=${this.title}&description=${this.desc}&noparse=true`
-                }
-            ]
-        }
+<script lang="ts">
+import VueI18n from 'vue-i18n'
+import TranslateResult = VueI18n.TranslateResult
+import { Component, Vue } from 'vue-property-decorator'
+
+@Component
+
+export default class Share extends Vue {
+    url: string
+    desc: TranslateResult
+    title: TranslateResult
+
+    constructor () {
+        super()
+        this.desc = this.$t('mainpage.text')
+        this.title = this.$t('mainpage.title')
+        this.url = 'http://www.fastcv.digama.online'
+    }
+
+    share (): {name: string, link: string}[] {
+        return [
+            {
+                name: 'facebook',
+                link: `https://www.facebook.com/sharer/sharer.php?u=${this.url}`
+            },
+            {
+                name: 'twitter',
+                link: `https://twitter.com/share?url=${this.url}&text=${this.desc}`
+            },
+            {
+                name: 'vkontakte',
+                link: `http://vk.com/share.php?url=${this.url}&title=${this.title}&description=${this.desc}&noparse=true`
+            }
+        ]
     }
 }
 </script>
