@@ -1,11 +1,17 @@
 {
-  "name": "hst",
-  "version": "0.1.0",
-  "private": true,
+  "name": "Fast!CV",
+  "version": "1.1.0",
+  "author": "Anpilov Artem",
+  "description": "Fast!CV - Easy & fast CV constructor!",
+  "license": "ISC",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BlindResist/fastcv.git"
   },
   "dependencies": {
     "core-js": "^3.6.5",

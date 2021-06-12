@@ -14,23 +14,31 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'app-lang-selector',
-    data () {
-        return {
-            langs: this.$root.langs,
-            current: this.$root.lang,
-            storage: window.localStorage
-        }
-    },
-    methods: {
-        change (lang) {
-            this.current = lang
-            this.$i18n.locale = lang
-            this.storage.setItem('lang', lang)
-            this.$bus.$emit('change-lang', lang)
-        }
+<script lang="ts">
+import AppLink from '@/components/AppLink/index.vue'
+import { Component, Vue } from 'vue-property-decorator'
+
+@Component({
+    components: {
+        AppLink
+    }
+})
+
+export default class AppLangSelector extends Vue {
+    langs: []
+    current: string
+
+    constructor () {
+        super()
+        this.langs = this.$store.state.langs
+        this.current = this.$store.state.lang
+    }
+
+    change (lang: string): void {
+        this.current = lang
+        this.$i18n.locale = lang
+        window.localStorage.setItem('lang', lang)
+        this.$store.commit('changeLang', lang)
     }
 }
 </script>

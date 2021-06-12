@@ -13,30 +13,31 @@
     </transition>
 </template>
 
-<script>
+<script lang="ts">
 import Velocity from 'velocity-animate'
+import { Prop, Vue } from 'vue-property-decorator'
 
-export default {
-    name: 'app-preloader',
-    props: {
-        active: Boolean
-    },
-    data () {
-        return {
-            duration: 300
-        }
-    },
-    methods: {
-        appearAnimationBefore (el) {
-            el.style.opacity = 0
-        },
-        appearAnimationEnter (el, done) {
-            Velocity(el, { opacity: 1 }, { duration: this.duration }, { complete: done })
-        },
-        appearAnimationLeave (el, done) {
-            Velocity(el, { opacity: 0 }, { duration: this.duration })
-            Velocity(el, { display: 'none' }, { complete: done })
-        }
+export default class AppPreloader extends Vue {
+    @Prop(Boolean) readonly active!: boolean
+
+    duration: number
+
+    constructor () {
+        super()
+        this.duration = 300
+    }
+
+    appearAnimationBefore (el: {style: {opacity: number}}): void {
+        el.style.opacity = 0
+    }
+
+    appearAnimationEnter (el: HTMLElement, done: () => unknown): void {
+        Velocity(el, { opacity: 1 }, { duration: this.duration }, { complete: done })
+    }
+
+    appearAnimationLeave (el: HTMLElement, done: () => unknown): void {
+        Velocity(el, { opacity: 0 }, { duration: this.duration })
+        Velocity(el, { display: 'none' }, { complete: done })
     }
 }
 </script>

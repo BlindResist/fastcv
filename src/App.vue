@@ -4,8 +4,8 @@
         :class="{ loaded }"
         class="page-wrapper content"
     >
-        <router-view></router-view>
-        <app-preloader :active="processing"></app-preloader>
+        <router-view />
+        <app-preloader :active="processing" />
     </div>
 </template>
 
@@ -21,22 +21,22 @@ import { Component, Vue } from 'vue-property-decorator'
 })
 
 export default class App extends Vue {
-    lang: string
     loaded: boolean
     viewportW: number
-    processing: boolean
 
     constructor () {
         super()
-        this.lang = 'en'
         this.loaded = false
         this.viewportW = 0
-        this.processing = false
     }
 
     mounted (): void {
         this.loaded = true
         this.viewportW = verge.viewportW()
+    }
+
+    get processing (): boolean {
+        return this.$store.state.processing
     }
 }
 </script>

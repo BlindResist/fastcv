@@ -235,7 +235,7 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import JSPDF from 'jspdf'
 import 'jspdf/dist/polyfills.es.js'
 import html2canvas from 'html2canvas'
@@ -244,12 +244,25 @@ import pdfFonts from '@/utils/pdfFonts.ts'
 import Education from './education.vue'
 import Experience from './experience.vue'
 
+import AppLogo from '@/components/AppLogo/index.vue'
+import AppFooter from '@/components/AppFooter/index.vue'
+import AppButton from '@/components/AppButton/index.vue'
+import AppAccordion from '@/components/AppAccordion/index.vue'
+import AppLangSelector from '@/components/AppLangSelector/index.vue'
+import AppAccordionItem from '@/components/AppAccordionItem/index.vue'
+
 export default {
     name: 'constructor',
     components: {
         Personal,
         Education,
-        Experience
+        Experience,
+        AppLogo,
+        AppFooter,
+        AppButton,
+        AppAccordion,
+        AppLangSelector,
+        AppAccordionItem
     },
     props: {
         lang: {

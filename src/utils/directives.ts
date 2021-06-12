@@ -1,17 +1,18 @@
-// import Vue, { VNode } from 'vue'
-// import { DirectiveBinding, DirectiveFunction } from 'vue/types/options'
-//
-// Vue.directive('processing', {
-//     bind (el: HTMLElement, binding: DirectiveBinding, vnode: VNode) {
-//         el.addEventListener('click', (): void => {
-//             const data = binding.value.data
-//
-//             vnode.componentInstance.$bus.$emit('processing', true)
-//
-//             setTimeout((): void => {
-//                 binding.value.callback(data)
-//                 vnode.componentInstance.$bus.$emit('processing', false)
-//             }, 2000)
-//         })
-//     }
-// })
+import Vue from 'vue'
+
+Vue.directive('processing', {
+    bind (el, binding, vnode): void {
+        el.addEventListener('click', (): void => {
+            const data = binding.value.data
+
+            // eslint-disable-next-line no-unused-expressions
+            vnode.context?.$store.commit('processing', true)
+
+            setTimeout((): void => {
+                binding.value.callback(data)
+                // eslint-disable-next-line no-unused-expressions
+                vnode.context?.$store.commit('processing', false)
+            }, 2000)
+        })
+    }
+})

@@ -7,42 +7,43 @@
     ><slot /></a>
 </template>
 
-<script>
-export default {
-    name: 'app-link',
-    props: {
-        link: {
-            type: String,
-            default: '#'
-        },
-        hover: {
-            type: String,
-            default: 'yellow'
-        },
-        blank: Boolean,
-        prevent: Boolean,
-        underline: {
-            type: Boolean,
-            default: true
-        }
-    },
-    computed: {
-        classObject () {
-            return [
-                'app-link',
-                `app-link--hover-${this.hover}`,
-                {
-                    'app-link--underline': this.underline
-                }
-            ]
-        }
-    },
-    methods: {
-        click (e) {
-            if (this.prevent) e.preventDefault()
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator'
 
-            this.$emit('click')
-        }
+@Component
+
+export default class AppLink extends Vue {
+    @Prop(Boolean) readonly blank!: boolean
+    @Prop(Boolean) readonly prevent!: boolean
+    @Prop({
+        type: String,
+        default: '#'
+    }) readonly link!: string
+
+    @Prop({
+        type: String,
+        default: 'yellow'
+    }) readonly hover!: string
+
+    @Prop({
+        type: Boolean,
+        default: true
+    }) readonly underline!: boolean
+
+    get classObject (): [string, string, {[elem: string]: boolean}] {
+        return [
+            'app-link',
+            `app-link--hover-${this.hover}`,
+            {
+                'app-link--underline': this.underline
+            }
+        ]
+    }
+
+    click (e: Event): void {
+        if (this.prevent) e.preventDefault()
+
+        this.$emit('click')
     }
 }
 </script>
@@ -55,7 +56,6 @@ export default {
     &:visited,
     &:focus,
     &:active {
-        outline: none;
         outline: 0 none;
     }
 

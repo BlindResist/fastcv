@@ -16,61 +16,66 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import 'vue2-datepicker/index.css'
 import DatePicker from 'vue2-datepicker'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 
-export default {
-    name: 'app-date-picker',
+@Component({
     components: {
         DatePicker
-    },
-    props: {
-        range: Boolean,
-        disabled: Boolean,
-        type: {
-            type: String,
-            default: 'date',
-            validator: prop => ['date', 'datetime', 'year', 'month', 'time', 'week'].includes(prop)
-        },
-        valueType: {
-            type: String,
-            default: 'timestamp'
-        },
-        placeholder: {
-            type: String,
-            default: ''
-        },
-        format: {
-            type: String,
-            default: 'DD.MM.YYYY'
-        },
-        lang: {
-            type: String,
-            default: 'en'
-        },
-        value: [Array, String]
-    },
-    data () {
-        return {
-            date: this.value
+    }
+})
+
+export default class AppDatePicker extends Vue {
+    @Prop(Boolean) readonly range!: boolean
+    @Prop(Boolean) readonly disabled!: boolean
+    @Prop([Array, String]) readonly value!: [] | string
+
+    @Prop({
+        type: String,
+        default: 'date',
+        validator (value: string): boolean {
+            return ['date', 'datetime', 'year', 'month', 'time', 'week'].includes(value)
         }
-    },
-    computed: {
-        elementClass () {
-            return [
-                'app-date-picker',
-                {
-                    'app-date-picker--disabled': this.disabled
-                }
-            ]
-        }
-    },
-    methods: {
-        change (data) {
-            this.$emit('input', data)
-            this.$emit('change', data)
-        }
+    }) readonly type!: string
+
+    @Prop({
+        type: String,
+        default: 'timestamp'
+    }) readonly valueType!: string
+
+    @Prop({
+        type: String,
+        default: ''
+    }) readonly placeholder!: string
+
+    @Prop({
+        type: String,
+        default: 'DD.MM.YYYY'
+    }) readonly format!: string
+
+    lang: string
+    date: string | []
+
+    constructor () {
+        super()
+        this.date = this.value
+        this.lang = this.$store.state.lang
+    }
+
+    get elementClass (): [string, {[elem: string]: boolean | string}] {
+        return [
+            'app-date-picker',
+            {
+                'app-date-picker--disabled': this.disabled
+            }
+        ]
+    }
+
+    change (data: string): void {
+        this.$emit('input', data)
+        this.$emit('change', data)
     }
 }
 </script>

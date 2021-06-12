@@ -25,23 +25,31 @@
     </main>
 </template>
 
-<script>
+<script lang="ts">
 import Share from '@/components/Share/index.vue'
+import AppLogo from '@/components/AppLogo/index.vue'
+import { Component, Vue } from 'vue-property-decorator'
+import AppFooter from '@/components/AppFooter/index.vue'
+import AppButton from '@/components/AppButton/index.vue'
+import AppLangSelector from '@/components/AppLangSelector/index.vue'
 
-export default {
-    name: 'main-page',
+@Component({
     components: {
-        Share
-    },
-    computed: {
-        lang () {
-            return this.$root.lang
-        }
-    },
-    methods: {
-        goToConstructor () {
-            this.$router.push('constructor')
-        }
+        Share,
+        AppLogo,
+        AppFooter,
+        AppButton,
+        AppLangSelector
+    }
+})
+
+export default class Main extends Vue {
+    get lang (): string {
+        return this.$store.state.lang
+    }
+
+    goToConstructor (): void {
+        this.$router.push('constructor')
     }
 }
 </script>

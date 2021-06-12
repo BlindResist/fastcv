@@ -26,7 +26,7 @@ export default class AppAccordion extends Vue {
         this.$on('toggle-item', (data: { itemId: string }) => this.openHandler(data))
     }
 
-    @Watch
+    @Watch('initial')
     onInitialChanged (): void {
         this.defaultState()
     }
@@ -38,9 +38,9 @@ export default class AppAccordion extends Vue {
 
         if (this.multiple) return null
 
-        for (let i = 0; i < this.$children.length; i++) {
-            if (this.$children[i].itemId !== this.openedItemID) this.$children[i].state = false
-        }
+        // for (let i = 0; i < this.$children.length; i++) {
+        //     if (this.$children[i].itemId !== this.openedItemID) this.$children[i].state = false
+        // }
     }
 
     defaultState (): void {
@@ -50,17 +50,17 @@ export default class AppAccordion extends Vue {
     }
 
     toggleAll (state: boolean): void {
-        for (let i = 0; i < this.$children.length; i++) {
-            this.$children[i].state = state
-        }
+        // for (let i = 0; i < this.$children.length; i++) {
+        //     this.$children[i].state = state
+        // }
     }
 
     openByIndex (index: number): void {
         this.toggleAll(false)
-        this.$nextTick((): void => {
-            this.$children[index].state = true
-            this.openedItemID = this.$children[index].itemId
-        })
+        // this.$nextTick((): void => {
+        //     this.$children[index].state = true
+        //     this.openedItemID = this.$children[index].itemId
+        // })
     }
 }
 </script>

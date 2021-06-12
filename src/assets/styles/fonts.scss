@@ -1,32 +1,34 @@
+$path: '~@/assets/fonts/';
+
 // jetbrains
 @font-face {
     font-family: 'jb';
-    src: url('~@/assets/fonts/jb-bold.woff2') format('woff2'),
-    url('~@/assets/fonts/jb-bold.ttf') format('truetype');
+    src: url($path + 'jb-bold.woff2') format('woff2'),
+    url($path + 'jb-bold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'jb';
-    src: url('~@/assets/fonts/jb-italic.woff2') format('woff2'),
-        url('~@/assets/fonts/jb-italic.ttf') format('truetype');
+    src: url($path + 'jb-italic.woff2') format('woff2'),
+        url($path + 'jb-italic.ttf') format('truetype');
     font-weight: 400;
     font-style: italic;
 }
 
 @font-face {
     font-family: 'jb';
-    src: url('~@/assets/fonts/jb-light.woff2') format('woff2'),
-        url('~@/assets/fonts/jb-light.ttf') format('truetype');
+    src: url($path + 'jb-light.woff2') format('woff2'),
+        url($path + 'jb-light.ttf') format('truetype');
     font-weight: 300;
     font-style: normal;
 }
 
 @font-face {
     font-family: 'jb';
-    src: url('~@/assets/fonts/jb-regular.woff2') format('woff2'),
-        url('~@/assets/fonts/jb-regular.ttf') format('truetype');
+    src: url($path + 'jb-regular.woff2') format('woff2'),
+        url($path + 'jb-regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
 }
@@ -34,27 +36,27 @@
 // roboto
 @font-face {
     font-family: Roboto-Regular;
-    src: url('~@/assets/fonts/roboto-regular.woff2') format('woff2'),
-        url('~@/assets/fonts/roboto-regular.woff') format('woff'),
-        url('~@/assets/fonts/roboto-regular.ttf') format('truetype');
+    src: url($path + 'roboto-regular.woff2') format('woff2'),
+        url($path + 'roboto-regular.woff') format('woff'),
+        url($path + 'roboto-regular.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
 }
 
 @font-face {
     font-family: Roboto-Bold;
-    src: url('~@/assets/fonts/roboto-bold.woff2') format('woff2'),
-        url('~@/assets/fonts/roboto-bold.woff') format('woff'),
-        url('~@/assets/fonts/roboto-bold.ttf') format('truetype');
+    src: url($path + 'roboto-bold.woff2') format('woff2'),
+        url($path + 'roboto-bold.woff') format('woff'),
+        url($path + 'roboto-bold.ttf') format('truetype');
     font-weight: 700;
     font-style: normal;
 }
 
 @font-face {
     font-family: Roboto-Light;
-    src: url('~@/assets/fonts/roboto-light.woff2') format('woff2'),
-        url('~@/assets/fonts/roboto-light.woff') format('woff'),
-        url('~@/assets/fonts/roboto-light.ttf') format('truetype');
+    src: url($path + 'roboto-light.woff2') format('woff2'),
+        url($path + 'roboto-light.woff') format('woff'),
+        url($path + 'roboto-light.ttf') format('truetype');
     font-weight: 300;
     font-style: normal;
 }
@@ -62,7 +64,7 @@
 // icon font
 @font-face {
     font-family: 'icon-font';
-    src: url('~@/assets/fonts/icon-font.ttf') format('truetype');
+    src: url($path + 'icon-font.ttf') format('truetype');
     font-weight: 400;
     font-style: normal;
 }
