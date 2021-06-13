@@ -14,9 +14,5 @@ import { Component, Vue } from 'vue-property-decorator'
     }
 })
 
-export default class ConstructorPage extends Vue {
-    mounted (): void {
-        console.log(typeof Constructor)
-    }
-}
+export default class ConstructorPage extends Vue {}
 </script>

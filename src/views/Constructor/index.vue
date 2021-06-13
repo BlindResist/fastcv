@@ -298,8 +298,8 @@ type FormData = {
         dateOfBirth: string,
         maritalStatus: string,
     },
-    education: Object[],
-        experience: Object[],
+    education: ObjectConstructor[],
+        experience: ObjectConstructor[],
         skills: string,
         qualities: string
 }
@@ -333,14 +333,14 @@ export default class Constructor extends Vue {
     counter: number
     overflow: boolean
     formData: FormData
-    uploadedJSON!: Blob | []
+    uploadedJSON: Blob | []
 
     dimensions: {
         width: number,
         ratio: number
     }
 
-    components!: {
+    components: {
         education: [],
         experience: []
     }
@@ -396,26 +396,30 @@ export default class Constructor extends Vue {
         return `${this.formData.personal.name.split(' ').join('-')}-${date}`
     }
 
-    get themes (): {id: string, disabled: boolean, text: TranslateResult}[] {
+    get themes (): {id: string, disabled: boolean, selected: boolean, text: TranslateResult}[] {
         return [
             {
                 id: 'default',
                 disabled: false,
+                selected: true,
                 text: this.$t('radios.themes[0]')
             },
             {
                 id: 'one',
                 disabled: false,
+                selected: false,
                 text: this.$t('radios.themes[1]')
             },
             {
                 id: 'two',
                 disabled: false,
+                selected: false,
                 text: this.$t('radios.themes[2]')
             },
             {
                 id: 'three',
                 disabled: false,
+                selected: false,
                 text: this.$t('radios.themes[3]')
             }
         ]
@@ -454,11 +458,11 @@ export default class Constructor extends Vue {
         this.$store.commit('setFormData', data)
     }
 
-    createPDF (): void {
+    createPDF (target = 'save'): void {
         const document = this.$refs.document as Vue
         const page = document.$refs.page as Vue
         const content = page.$el as HTMLElement
-        const jsPDF = new JSPDF({
+        const jsPDF: JSPDF = new JSPDF({
             unit: 'mm',
             format: this.pdfFormat,
             orientation: 'portrait'
@@ -478,14 +482,23 @@ export default class Constructor extends Vue {
             allowTaint: true,
             width: this.pdfFormat[0],
             height: this.pdfFormat[1]
-        }).then(canvas => {
+        }).then(() => {
             jsPDF.html(content, {
                 callback: pdf => {
-                    // pdf.output('dataurlnewwindow')
-                    pdf.save(`${this.cvName}.pdf`)
+                    if (target === 'save') {
+                        pdf.save(`${this.cvName}.pdf`)
+                    } else if (target === 'window') {
+                        pdf.output('dataurlnewwindow')
+                    } else {
+                        console.warn('Target type is undefined!')
+                    }
                 }
             })
         })
+    }
+
+    previewPDF (): void {
+        this.createPDF('window')
     }
 
     addComponent (type: string): void {

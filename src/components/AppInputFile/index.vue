@@ -32,7 +32,6 @@ import TranslateResult = VueI18n.TranslateResult
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component
-
 export default class AppInputFile extends Vue {
     @Prop(Boolean) readonly multiple!: boolean
     @Prop([Array, String]) readonly description!: [] | string
@@ -105,10 +104,14 @@ export default class AppInputFile extends Vue {
             image: '.jpg,.jpeg,.png,.bmp,image/bmp,image/png,image/x-png',
             json: 'application/json'
         }
-
         this.formats = {
             image: ['jpg', 'jpeg', 'png', 'bmp'],
             json: ['json', 'jsonp']
+        }
+        this.file = {
+            blob: '',
+            name: '',
+            itself: {}
         }
     }
 
@@ -172,9 +175,10 @@ export default class AppInputFile extends Vue {
     checkFormat (file: {[elem: string]: any}): boolean {
         const regexp = /(?:\.([^.]+))?$/
         const name: string = file.name.toLowerCase()
-        const extension: Object = regexp.exec(name)[1]
+        const extension: string = regexp.exec(name)[1]
+        const type: string[] = this.formats[this.acceptType]
 
-        return this.formats[this.acceptType].includes(extension)
+        return type.includes(extension)
     }
 }
 

@@ -17,7 +17,6 @@
 </template>
 
 <script lang="ts">
-import 'vue2-datepicker/index.css'
 import DatePicker from 'vue2-datepicker'
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
@@ -81,6 +80,8 @@ export default class AppDatePicker extends Vue {
 </script>
 
 <style lang="scss">
+@import './vendor.scss';
+
 .app-date-picker {
     $padding: 1rem;
 

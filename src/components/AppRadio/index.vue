@@ -8,10 +8,10 @@
             <input
                 type="radio"
                 :name="name"
-                v-model="val"
                 :value="item.id"
                 class="app-radio__input"
                 :id="`${name}-${index}`"
+                :checked="item.selected"
                 :disabled="item.disabled"
                 @input="onInput($event.target.value)"
                 @change="onChange($event.target.value)"
@@ -26,12 +26,6 @@
                 ></span>
             </label>
         </div>
-        <span
-            class="app-radio__error"
-            v-if="required && error"
-        >
-            <span v-if="!val">{{ text.error }}</span>
-        </span>
     </div>
 </template>
 
@@ -45,7 +39,6 @@ type Option = {
 }
 
 @Component
-
 export default class AppRadio extends Vue {
     @Prop(Boolean) readonly required!: boolean
     @Prop({
@@ -77,10 +70,6 @@ export default class AppRadio extends Vue {
 
     get lang (): string {
         return this.$store.state.lang
-    }
-
-    get val (): string {
-        return this.$attrs.value
     }
 
     @Watch('data')

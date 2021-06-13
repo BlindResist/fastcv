@@ -32,7 +32,7 @@
 </template>
 
 <script lang="ts">
-import { Watch, Prop, Vue, Component } from 'vue-property-decorator'
+import { Prop, Vue, Component, PropSync } from 'vue-property-decorator'
 
 type Option = {
     id: string,
@@ -42,7 +42,6 @@ type Option = {
 }
 
 @Component
-
 export default class AppSelect extends Vue {
     @Prop(String) readonly placeholder!: string
     @Prop({
@@ -50,14 +49,13 @@ export default class AppSelect extends Vue {
         required: true
     }) readonly name!: string
 
-    @Prop({
+    @PropSync('data', {
         type: Array,
-        required: true
-    }) readonly data!: Option[]
+        default: ''
+    }) readonly options!: Option[]
 
     opened: boolean
-    options: Option[]
-    selected!: {
+    selected: {
         id: string,
         text: string
     }
@@ -65,7 +63,6 @@ export default class AppSelect extends Vue {
     constructor () {
         super()
         this.opened = false
-        this.options = this.data
         this.selected = {
             id: '',
             text: ''
@@ -76,11 +73,6 @@ export default class AppSelect extends Vue {
         this.onLoad()
 
         document.addEventListener('click', (e: {[elem: string]: any}) => this.hideDropdown(e))
-    }
-
-    @Watch('data')
-    onDataChanged (newData: Option[]): void {
-        this.options = newData
     }
 
     onLoad (): void {

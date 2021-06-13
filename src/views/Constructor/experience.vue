@@ -82,7 +82,7 @@ import AppButton from '@/components/AppButton/index.vue'
 import AppCheckbox from '@/components/AppCheckbox/index.vue'
 import AppTextarea from '@/components/AppTextarea/index.vue'
 import AppDatePicker from '@/components/AppDatePicker/index.vue'
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Component, Prop, PropSync, Vue } from 'vue-property-decorator'
 
 type Data = {
     to: string
@@ -107,11 +107,11 @@ type Data = {
 
 export default class Experience extends Vue {
     @Prop({
-        type: String,
+        type: [String, Number],
         default: 0
     }) readonly id!: string
 
-    @Prop({
+    @PropSync('data', {
         type: Object,
         default: {
             to: '',
@@ -123,23 +123,13 @@ export default class Experience extends Vue {
             position: '',
             currently: ''
         }
-    }) readonly data!: Data
+    }) readonly innerData!: Data
 
     type: string
-    innerData: Data
 
     constructor () {
         super()
         this.type = 'experience'
-        this.innerData = this.data
-    }
-
-    @Watch('innerData', { deep: true })
-    onInnerDataChanged (data: {[elem: string]: string}): void {
-        this.$emit('input', {
-            ...data,
-            id: `${this.type}-${this.id}`
-        })
     }
 
     remove (): void {

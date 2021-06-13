@@ -43,7 +43,7 @@
 import AppInput from '@/components/AppInput/index.vue'
 import AppButton from '@/components/AppButton/index.vue'
 import AppDatePicker from '@/components/AppDatePicker/index.vue'
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Component, Prop, PropSync, Vue } from 'vue-property-decorator'
 
 type Data = {
     period: string
@@ -61,34 +61,24 @@ type Data = {
 
 export default class Education extends Vue {
     @Prop({
-        type: String,
+        type: [String, Number],
         default: 0
     }) readonly id!: string
 
-    @Prop({
+    @PropSync('data', {
         type: Object,
         default: {
             period: '',
             degree: '',
             university: ''
         }
-    }) readonly data!: Data
+    }) readonly innerData!: Data
 
     type: string
-    innerData: Data
 
     constructor () {
         super()
         this.type = 'education'
-        this.innerData = this.data
-    }
-
-    @Watch('innerData', { deep: true })
-    onInnerDataChanged (data: {[elem: string]: string}): void {
-        this.$emit('input', {
-            ...data,
-            id: `${this.type}-${this.id}`
-        })
     }
 
     remove (): void {

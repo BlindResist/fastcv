@@ -34,7 +34,6 @@
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
 @Component
-
 export default class AppCheckbox extends Vue {
     @Prop(Boolean) readonly checked!: boolean
     @Prop(Boolean) readonly disabled!: boolean

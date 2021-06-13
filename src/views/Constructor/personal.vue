@@ -68,7 +68,7 @@ import AppInput from '@/components/AppInput/index.vue'
 import AppSelect from '@/components/AppSelect/index.vue'
 import AppInputFile from '@/components/AppInputFile/index.vue'
 import AppDatePicker from '@/components/AppDatePicker/index.vue'
-import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import { Component, Prop, PropSync, Vue } from 'vue-property-decorator'
 import VueI18n from 'vue-i18n'
 import TranslateResult = VueI18n.TranslateResult
 
@@ -105,7 +105,7 @@ export default class Personal extends Vue {
         required: true
     }) readonly type!: string
 
-    @Prop({
+    @PropSync('data', {
         type: Object,
         default: {
             site: '',
@@ -117,22 +117,7 @@ export default class Personal extends Vue {
             dateOfBirth: '',
             maritalStatus: ''
         }
-    }) readonly data!: Data
-
-    innerData: Data
-
-    constructor () {
-        super()
-        this.innerData = this.data
-    }
-
-    @Watch('innerData', { deep: true })
-    onInnerDataChanged (data: {[elem: string]: string}): void {
-        this.$emit('input', {
-            ...data,
-            type: this.type
-        })
-    }
+    }) readonly innerData!: Data
 
     get maritalStatus (): MaritalStatus[] {
         return [

@@ -1,4 +1,5 @@
 import Vue from 'vue'
+import i18n from '@/i18n'
 import App from '@/App.vue'
 import store from '@/store'
 import router from '@/router'
@@ -7,7 +8,6 @@ import { TippyComponent } from 'vue-tippy'
 
 import '@/utils/filters'
 import '@/utils/directives'
-import i18n from '@/utils/i18n'
 
 Vue.component('tippy', TippyComponent)
 

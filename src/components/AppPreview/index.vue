@@ -19,21 +19,41 @@ import Three from '@/views/Themes/three.vue'
 import Default from '@/views/Themes/default.vue'
 import { Component, Prop, Vue } from 'vue-property-decorator'
 
-@Component
+type FormData = {
+    objective: {
+        position: string,
+        about: string
+    },
+    personal: {
+        site: string,
+        photo: string,
+        name: string,
+        phone: string,
+        email: string,
+        address: string,
+        dateOfBirth: string,
+        maritalStatus: string,
+    },
+    education: ObjectConstructor[],
+    experience: ObjectConstructor[],
+    skills: string,
+    qualities: string
+}
 
+@Component
 export default class AppPreview extends Vue {
     @Prop({
         type: String,
         default: 'default'
     }) readonly type!: string
 
-    @Prop(Object) readonly data!: any
+    @Prop(Object) readonly data!: FormData
 
     themes: {
-        one: Object,
-        two: Object,
-        three: Object,
-        default: Object
+        one: typeof One,
+        two: typeof Two,
+        three: typeof Three,
+        default: typeof Default
     }
 
     padding: number
@@ -57,7 +77,7 @@ export default class AppPreview extends Vue {
         window.addEventListener('resize', () => this.fitPreview())
     }
 
-    get component (): Object {
+    get component (): ObjectConstructor {
         return this.themes[this.type]
     }
 

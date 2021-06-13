@@ -1,10 +1,14 @@
 import Vue from 'vue'
+import i18n from '@/i18n'
 import VueMeta from 'vue-meta'
-import i18n from '@/utils/i18n'
+import VueI18n from 'vue-i18n'
+import TranslateResult = VueI18n.TranslateResult
 
 Vue.use(VueMeta)
 
-export default (): {} => {
+type Meta = {[elem: string]: string | TranslateResult }
+
+export default (): Meta => {
     return {
         title: i18n.t('title'),
         noscript: [

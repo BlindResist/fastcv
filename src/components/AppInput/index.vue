@@ -34,10 +34,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, PropSync, Vue } from 'vue-property-decorator'
 
 @Component
-
 export default class AppInput extends Vue {
     @Prop(Boolean) readonly disabled!: boolean
     @Prop(Boolean) readonly required!: boolean
@@ -76,6 +75,11 @@ export default class AppInput extends Vue {
         }
     }) readonly position!: string
 
+    @PropSync('value', {
+        type: [Number, String],
+        default: ''
+    }) readonly val!: number | string
+
     error: boolean
     focus: boolean
     text: {
@@ -93,14 +97,6 @@ export default class AppInput extends Vue {
         }
     }
 
-    get val (): string {
-        return this.$attrs.value
-    }
-
-    set val (value: string) {
-        this.$emit('input', value)
-    }
-
     get objectClass (): {[elem: string]: boolean | string} {
         return {
             'app-input--filled': this.val,
@@ -113,7 +109,6 @@ export default class AppInput extends Vue {
 
     resetVal (): void {
         if (this.val.length > 0) {
-            this.val = ''
             this.change('')
         }
     }

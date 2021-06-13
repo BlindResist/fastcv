@@ -35,24 +35,26 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, Prop, PropSync, Vue } from 'vue-property-decorator'
 
 @Component
-
 export default class AppTextarea extends Vue {
     @Prop(Boolean) readonly disabled!: boolean
     @Prop(Boolean) readonly resize!: boolean
     @Prop(Boolean) readonly required!: boolean
     @Prop(String) readonly placeholder!: string
-    @Prop([Number, String]) readonly value!: number | string
     @Prop({
         type: String,
         required: true
     }) readonly name!: string
 
+    @PropSync('value', {
+        type: [Number, String],
+        default: ''
+    }) readonly val!: number | string
+
     error: boolean
     focus: boolean
-    val!: number | string
     text: {
         errors: {
             required: string
@@ -61,7 +63,6 @@ export default class AppTextarea extends Vue {
 
     constructor () {
         super()
-        this.val = ''
         this.error = false
         this.focus = false
         this.text = {
@@ -77,13 +78,11 @@ export default class AppTextarea extends Vue {
 
     input (value: string): void {
         this.error = this.required && !value
-        this.val = value
         this.$emit('input', value)
     }
 
     change (value: string): void {
         this.error = this.required && !value
-        this.val = value
         this.$emit('change', value)
     }
 }
