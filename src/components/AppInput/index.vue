@@ -97,7 +97,7 @@ export default class AppInput extends Vue {
         }
     }
 
-    get objectClass (): {[elem: string]: boolean | string} {
+    get objectClass (): {[elem: string]: boolean | string | number} {
         return {
             'app-input--filled': this.val,
             'app-input--error': this.error,
@@ -108,7 +108,7 @@ export default class AppInput extends Vue {
     }
 
     resetVal (): void {
-        if (this.val.length > 0) {
+        if (this.val) {
             this.change('')
         }
     }

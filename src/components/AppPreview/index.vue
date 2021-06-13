@@ -71,14 +71,14 @@ export default class AppPreview extends Vue {
         this.padding = 128
     }
 
-    mounted () {
+    mounted (): void {
         this.fitPreview()
 
         window.addEventListener('resize', () => this.fitPreview())
     }
 
-    get component (): ObjectConstructor {
-        return this.themes[this.type]
+    get component (): unknown {
+        return (this.themes as unknown as Record<string, unknown>)[this.type]
     }
 
     fitPreview (): void {

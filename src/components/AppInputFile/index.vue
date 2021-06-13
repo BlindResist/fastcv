@@ -67,7 +67,7 @@ export default class AppInputFile extends Vue {
     file!: {
         blob: string,
         name: string,
-        itself: {[elem: string]: any}
+        itself?: File
     }
 
     text: {
@@ -79,13 +79,11 @@ export default class AppInputFile extends Vue {
     }
 
     acceptSettings: {
-        image: string,
-        json: string
+        [elem: string]: string
     }
 
     formats: {
-        image: string[],
-        json: string[]
+        [elem: string]: string[]
     }
 
     constructor () {
@@ -110,8 +108,7 @@ export default class AppInputFile extends Vue {
         }
         this.file = {
             blob: '',
-            name: '',
-            itself: {}
+            name: ''
         }
     }
 
@@ -126,7 +123,7 @@ export default class AppInputFile extends Vue {
         return size < 1 ? `${size}Kb` : `${size}Mb`
     }
 
-    change (event: {target: {files: {[elem: string]: any}[]}}): void {
+    change (event: {target: {files: File[]}}): void {
         const file = event.target.files[0]
 
         if (!this.validate(file)) return
@@ -135,7 +132,7 @@ export default class AppInputFile extends Vue {
         this.file.name = file.name
         this.file.blob = URL.createObjectURL(file)
 
-        let data: any
+        let data
 
         if (this.emit === 'blob') {
             data = this.file.blob
@@ -148,8 +145,8 @@ export default class AppInputFile extends Vue {
         this.$emit('input', data)
     }
 
-    validate (file: {[elem: string]: any}): void | boolean {
-        if (this.checkFormat(file)) {
+    validate (file: File): void | boolean {
+        if (this.checkFormat(file.name)) {
             this.error = false
         } else {
             this.error = true
@@ -157,7 +154,7 @@ export default class AppInputFile extends Vue {
             return false
         }
 
-        if (this.checkSize(file)) {
+        if (this.checkSize(file.size)) {
             this.error = false
         } else {
             this.error = true
@@ -168,17 +165,17 @@ export default class AppInputFile extends Vue {
         return true
     }
 
-    checkSize (file: {[elem: string]: any}): boolean {
-        return file.size <= this.acceptSize
+    checkSize (fileSize: number): boolean {
+        return fileSize <= this.acceptSize
     }
 
-    checkFormat (file: {[elem: string]: any}): boolean {
+    checkFormat (fileName: string): boolean {
         const regexp = /(?:\.([^.]+))?$/
-        const name: string = file.name.toLowerCase()
-        const extension: string = regexp.exec(name)[1]
-        const type: string[] = this.formats[this.acceptType]
+        const name: string = fileName.toLowerCase()
+        const extension = regexp.exec(name)
+        const types: string[] = this.formats[this.acceptType]
 
-        return type.includes(extension)
+        return extension !== null ? types.includes(extension[1] as unknown as string) : false
     }
 }
 

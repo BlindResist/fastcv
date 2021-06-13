@@ -2,7 +2,10 @@
     <div class="theme-two">
         <section class="theme-two__section theme-two__section--header">
             <div class="theme-two__photo">
-                <img :src="data.personal.photo" />
+                <img
+                    :src="data.personal.photo"
+                    :alt="data.personal.name"
+                />
             </div>
             <div class="theme-two__info">
                 <h1 :data-text="data.personal.name">{{ data.personal.name }}</h1>
@@ -137,15 +140,33 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'theme-two',
-    props: {
-        data: {
-            type: Object,
-            default: () => {}
-        }
-    }
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator'
+
+type FormData = {
+    objective: {
+        position: string,
+        about: string
+    },
+    personal: {
+        site: string,
+        photo: string,
+        name: string,
+        phone: string,
+        email: string,
+        address: string,
+        dateOfBirth: string,
+        maritalStatus: string,
+    },
+    education: ObjectConstructor[],
+    experience: ObjectConstructor[],
+    skills: string,
+    qualities: string
+}
+
+@Component
+export default class Two extends Vue {
+    @Prop(Object) readonly data!: FormData
 }
 </script>
 
@@ -168,7 +189,6 @@ export default {
     @mixin h1 {
         width: 100%;
         margin-bottom: 8px;
-        line-height: 1;
         font-size: 32px;
         font-weight: 700;
         line-height: 1.2;

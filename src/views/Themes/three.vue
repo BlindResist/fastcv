@@ -11,7 +11,10 @@
             </section>
             <section class="theme-three__section">
                 <div class="theme-three__photo">
-                    <img :src="data.personal.photo" />
+                    <img
+                        :src="data.personal.photo"
+                        :alt="data.personal.name"
+                    />
                 </div>
                 <div class="theme-three__info">
                     <div class="theme-three__table">
@@ -125,15 +128,33 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'theme-three',
-    props: {
-        data: {
-            type: Object,
-            default: () => {}
-        }
-    }
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator'
+
+type FormData = {
+    objective: {
+        position: string,
+        about: string
+    },
+    personal: {
+        site: string,
+        photo: string,
+        name: string,
+        phone: string,
+        email: string,
+        address: string,
+        dateOfBirth: string,
+        maritalStatus: string,
+    },
+    education: ObjectConstructor[],
+    experience: ObjectConstructor[],
+    skills: string,
+    qualities: string
+}
+
+@Component
+export default class Three extends Vue {
+    @Prop(Object) readonly data!: FormData
 }
 </script>
 
@@ -155,11 +176,11 @@ export default {
     letter-spacing: .5px;
     font-family: Roboto-Regular, Arial, sans-serif;
     background-color: $color1;
+    box-sizing: border-box;
 
     h1 {
         width: 100%;
         margin-bottom: 8px;
-        line-height: 1;
         color: $color5;
         font-size: 28px;
         font-weight: 700;
@@ -211,6 +232,7 @@ export default {
         overflow: hidden;
         position: relative;
         border: 1px solid $color2;
+        box-sizing: border-box;
 
         img {
             // max-width: 100%;
