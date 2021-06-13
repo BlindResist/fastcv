@@ -55,30 +55,20 @@ export default class AppSelect extends Vue {
     }) readonly options!: Option[]
 
     opened: boolean
-    selected: {
-        id: string,
-        text: string
-    }
 
     constructor () {
         super()
         this.opened = false
-        this.selected = {
-            id: '',
-            text: ''
-        }
+    }
+
+    get selected (): Option {
+        const selected = this.options.find(item => item.selected) as Option
+
+        return selected || { id: '', text: '', selected: false, disabled: false }
     }
 
     mounted (): void {
-        this.onLoad()
-
         document.addEventListener('click', (e: {[elem: string]: any}) => this.hideDropdown(e))
-    }
-
-    onLoad (): void {
-        for (let i = 0; i < this.options.length; i++) {
-            if (this.options[i].selected) this.initSelected(this.options[i])
-        }
     }
 
     elementClass (classname: string): string {
@@ -106,36 +96,9 @@ export default class AppSelect extends Vue {
         if (isOutside) this.opened = false
     }
 
-    changeSelected (option: Option): void {
-        option.selected ? this.removeSelected() : this.addSelected(option)
+    changeSelected (): void {
         this.opened = false
         this.$emit('input', this.selected.text)
-    }
-
-    initSelected (option: Option): void {
-        this.selected.id = option.id
-        this.selected.text = option.text
-
-        for (let i = 0; i < this.options.length; i++) {
-            this.options[i].selected = this.options[i].id === option.id
-        }
-    }
-
-    addSelected (option: Option): void {
-        this.selected.id = option.id
-        this.selected.text = option.text
-
-        for (let i = 0; i < this.options.length; i++) {
-            this.options[i].selected = this.options[i].id === option.id
-        }
-    }
-
-    removeSelected (): void {
-        this.opened = false
-        this.selected.id = ''
-        this.selected.text = ''
-
-        for (let i = 0; i < this.options.length; i++) this.options[i].selected = false
     }
 }
 </script>

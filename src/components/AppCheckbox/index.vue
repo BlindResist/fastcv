@@ -31,17 +31,19 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
+import { Component, ModelSync, Prop, Vue } from 'vue-property-decorator'
 
 @Component
 export default class AppCheckbox extends Vue {
-    @Prop(Boolean) readonly checked!: boolean
     @Prop(Boolean) readonly disabled!: boolean
     @Prop(Boolean) readonly required!: boolean
     @Prop({
         type: String,
         required: true
     }) readonly name!: string
+
+    @ModelSync('checked', 'change', { type: Boolean })
+    readonly check!: boolean
 
     error: boolean
     focus: boolean
@@ -58,16 +60,7 @@ export default class AppCheckbox extends Vue {
         }
     }
 
-    get check (): boolean {
-        return this.checked
-    }
-
-    set check (value: boolean) {
-        this.$emit('change', value)
-    }
-
     change (value: boolean): void {
-        this.check = value
         this.validate()
         this.$emit('change', value)
     }
