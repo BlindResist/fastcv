@@ -34,14 +34,14 @@
 <script lang="ts">
 import { Watch, Prop, Vue, Component } from 'vue-property-decorator'
 
-@Component
-
-interface Option {
+type Option = {
     id: string,
     text: string,
     selected: boolean,
     disabled: boolean
 }
+
+@Component
 
 export default class AppSelect extends Vue {
     @Prop(String) readonly placeholder!: string
@@ -66,6 +66,10 @@ export default class AppSelect extends Vue {
         super()
         this.opened = false
         this.options = this.data
+        this.selected = {
+            id: '',
+            text: ''
+        }
     }
 
     mounted (): void {
@@ -104,8 +108,8 @@ export default class AppSelect extends Vue {
     }
 
     hideDropdown (e: {[elem: string]: any}): void {
-        const aside = (this.$refs.aside as Vue).$el as HTMLElement
-        const isOutside: boolean = this.$refs.aside !== e.target && !aside.contains(e.target)
+        const el = this.$el as HTMLElement
+        const isOutside: boolean = el !== e.target && !el.contains(e.target)
 
         if (isOutside) this.opened = false
     }
@@ -155,7 +159,6 @@ export default class AppSelect extends Vue {
     user-select: none;
 
     &__container {
-        width: 100%;
         overflow: hidden;
         padding: 1rem 2rem 1rem 1rem;
         position: relative;

@@ -1,6 +1,6 @@
 <template>
     <div class="app-lang-selector">
-        <template v-for="lang in langs">
+        <template v-for="lang in languages">
             <app-link
                 prevent
                 hover="no"
@@ -25,13 +25,13 @@ import { Component, Vue } from 'vue-property-decorator'
 })
 
 export default class AppLangSelector extends Vue {
-    langs: string[]
+    languages: string[]
     current: string
 
     constructor () {
         super()
-        this.langs = this.$store.state.langs
         this.current = this.$store.state.lang
+        this.languages = this.$store.state.languages
     }
 
     change (lang: string): void {

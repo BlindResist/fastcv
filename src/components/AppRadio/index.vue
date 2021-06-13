@@ -38,13 +38,13 @@
 <script lang="ts">
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
-@Component
-
-interface Option {
+type Option = {
     id: string,
     text: string,
     disabled: boolean
 }
+
+@Component
 
 export default class AppRadio extends Vue {
     @Prop(Boolean) readonly required!: boolean

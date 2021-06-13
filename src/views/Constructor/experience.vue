@@ -76,35 +76,77 @@
     </div>
 </template>
 
-<script>
-import dynamicComponentEmitters from '@/mixins/dynamicComponentEmitters'
+<script lang="ts">
+import AppInput from '@/components/AppInput/index.vue'
+import AppButton from '@/components/AppButton/index.vue'
+import AppCheckbox from '@/components/AppCheckbox/index.vue'
+import AppTextarea from '@/components/AppTextarea/index.vue'
+import AppDatePicker from '@/components/AppDatePicker/index.vue'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
-export default {
-    name: 'experience',
-    mixins: [dynamicComponentEmitters('experience')],
-    props: {
-        id: {
-            type: Number,
-            default: 0
-        },
-        data: {
-            type: Object,
-            default: () => ({
-                to: '',
-                from: '',
-                city: '',
-                about: '',
-                company: '',
-                country: '',
-                position: '',
-                currently: ''
-            })
+type Data = {
+    to: string
+    from: string
+    city: string
+    about: string
+    company: string
+    country: string
+    position: string
+    currently: string
+}
+
+@Component({
+    components: {
+        AppInput,
+        AppButton,
+        AppCheckbox,
+        AppTextarea,
+        AppDatePicker
+    }
+})
+
+export default class Experience extends Vue {
+    @Prop({
+        type: String,
+        default: 0
+    }) readonly id!: string
+
+    @Prop({
+        type: Object,
+        default: {
+            to: '',
+            from: '',
+            city: '',
+            about: '',
+            company: '',
+            country: '',
+            position: '',
+            currently: ''
         }
-    },
-    data () {
-        return {
-            innerData: this.data
-        }
+    }) readonly data!: Data
+
+    type: string
+    innerData: Data
+
+    constructor () {
+        super()
+        this.type = 'experience'
+        this.innerData = this.data
+    }
+
+    @Watch('innerData', { deep: true })
+    onInnerDataChanged (data: {[elem: string]: string}): void {
+        this.$emit('input', {
+            ...data,
+            id: `${this.type}-${this.id}`
+        })
+    }
+
+    remove (): void {
+        this.$emit('remove', {
+            type: this.type,
+            id: `${this.type}-${this.id}`
+        })
     }
 }
 </script>

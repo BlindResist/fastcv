@@ -245,9 +245,12 @@ import Education from './education.vue'
 import Experience from './experience.vue'
 import AppTabs from '@/components/AppTabs/index.vue'
 import AppLogo from '@/components/AppLogo/index.vue'
+import AppRadio from '@/components/AppRadio/index.vue'
 import AppButton from '@/components/AppButton/index.vue'
 import AppFooter from '@/components/AppFooter/index.vue'
 import AppPreview from '@/components/AppPreview/index.vue'
+import AppTooltip from '@/components/AppTooltip/index.vue'
+import AppTextarea from '@/components/AppTextarea/index.vue'
 import AppTabsLabel from '@/components/AppTabsLabel/index.vue'
 import AppAccordion from '@/components/AppAccordion/index.vue'
 import AppTabsContent from '@/components/AppTabsContent/index.vue'
@@ -260,7 +263,7 @@ import { Component, Watch, Vue } from 'vue-property-decorator'
 import VueI18n from 'vue-i18n'
 import TranslateResult = VueI18n.TranslateResult
 
-interface BlankComponentsData {
+type BlankComponentsData = {
     experience: {
         id: string,
         to: string,
@@ -280,7 +283,7 @@ interface BlankComponentsData {
     }
 }
 
-interface Data {
+type FormData = {
     objective: {
         position: string,
         about: string
@@ -293,12 +296,12 @@ interface Data {
         email: string,
         address: string,
         dateOfBirth: string,
-        maritalStatus: string
+        maritalStatus: string,
     },
-    education: [],
-    experience: [],
-    skills: string,
-    qualities: string
+    education: Object[],
+        experience: Object[],
+        skills: string,
+        qualities: string
 }
 
 @Component({
@@ -308,10 +311,13 @@ interface Data {
         Experience,
         AppLogo,
         AppTabs,
+        AppRadio,
         AppInput,
         AppFooter,
         AppButton,
+        AppTooltip,
         AppPreview,
+        AppTextarea,
         AppAccordion,
         AppTabsLabel,
         AppInputFile,
@@ -326,7 +332,8 @@ export default class Constructor extends Vue {
     aside: boolean
     counter: number
     overflow: boolean
-    uploadedJSON!: {[elem: string]: any}
+    formData: FormData
+    uploadedJSON!: Blob | []
 
     dimensions: {
         width: number,
@@ -349,14 +356,15 @@ export default class Constructor extends Vue {
             width: 700,
             ratio: 1.4142
         }
+        this.components = {
+            education: [],
+            experience: []
+        }
+        this.formData = this.$store.state.formData
     }
 
     mounted (): void {
         document.addEventListener('click', (e: {[elem: string]: any}) => this.hideDropdown(e))
-    }
-
-    get formData (): Data {
-        return this.$store.state.formData
     }
 
     get lang (): string {
@@ -441,8 +449,9 @@ export default class Constructor extends Vue {
     }
 
     @Watch('formData', { deep: true })
-    onFormDataCHanged (): void {
+    onFormDataChanged (data: FormData): void {
         this.checkHeight()
+        this.$store.commit('setFormData', data)
     }
 
     createPDF (): void {
@@ -524,10 +533,10 @@ export default class Constructor extends Vue {
 
         fileReader.readAsText(this.uploadedJSON)
 
-        fileReader.onload = (e: {target: {result: string}}) => {
-            const result: BlankComponentsData = JSON.parse(e.target.result)
+        fileReader.onload = (e) => {
+            const result: FormData = JSON.parse(e.target.result)
 
-            this.$store.commit('setData', result)
+            this.formData = result
 
             if (result.education.length) this.components.education.push('education')
             if (result.experience.length) this.components.experience.push('experience')
@@ -543,8 +552,8 @@ export default class Constructor extends Vue {
     }
 
     hideDropdown (e: {[elem: string]: any}): void {
-        const aside = (this.$refs.aside as Vue).$el as HTMLElement
-        const isOutside: boolean = this.$refs.aside !== e.target && !aside.contains(e.target)
+        const aside = this.$refs.aside as HTMLElement
+        const isOutside: boolean = aside !== e.target && !aside.contains(e.target)
 
         if (isOutside) this.aside = false
     }

@@ -39,30 +39,63 @@
     </div>
 </template>
 
-<script>
-import dynamicComponentEmitters from '@/mixins/dynamicComponentEmitters'
+<script lang="ts">
+import AppInput from '@/components/AppInput/index.vue'
+import AppButton from '@/components/AppButton/index.vue'
+import AppDatePicker from '@/components/AppDatePicker/index.vue'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
-export default {
-    name: 'education',
-    mixins: [dynamicComponentEmitters('education')],
-    props: {
-        id: {
-            type: Number,
-            default: 0
-        },
-        data: {
-            type: Object,
-            default: () => ({
-                period: '',
-                degree: '',
-                university: ''
-            })
+type Data = {
+    period: string
+    degree: string
+    university: string
+}
+
+@Component({
+    components: {
+        AppInput,
+        AppButton,
+        AppDatePicker
+    }
+})
+
+export default class Education extends Vue {
+    @Prop({
+        type: String,
+        default: 0
+    }) readonly id!: string
+
+    @Prop({
+        type: Object,
+        default: {
+            period: '',
+            degree: '',
+            university: ''
         }
-    },
-    data () {
-        return {
-            innerData: this.data
-        }
+    }) readonly data!: Data
+
+    type: string
+    innerData: Data
+
+    constructor () {
+        super()
+        this.type = 'education'
+        this.innerData = this.data
+    }
+
+    @Watch('innerData', { deep: true })
+    onInnerDataChanged (data: {[elem: string]: string}): void {
+        this.$emit('input', {
+            ...data,
+            id: `${this.type}-${this.id}`
+        })
+    }
+
+    remove (): void {
+        this.$emit('remove', {
+            type: this.type,
+            id: `${this.type}-${this.id}`
+        })
     }
 }
 </script>

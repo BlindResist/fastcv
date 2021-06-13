@@ -64,13 +64,31 @@
 </template>
 
 <script lang="ts">
-import { mixins } from 'vue-class-component'
 import AppInput from '@/components/AppInput/index.vue'
 import AppSelect from '@/components/AppSelect/index.vue'
-import { Component, Prop } from 'vue-property-decorator'
 import AppInputFile from '@/components/AppInputFile/index.vue'
 import AppDatePicker from '@/components/AppDatePicker/index.vue'
-import { ComponentEmitters, Data } from '@/mixins/componentEmitters.ts'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
+import VueI18n from 'vue-i18n'
+import TranslateResult = VueI18n.TranslateResult
+
+type MaritalStatus = {
+    id: string,
+    disabled: boolean,
+    selected: boolean,
+    text:TranslateResult
+}
+
+type Data = {
+    site: string
+    name: string
+    photo: string
+    phone: string
+    email: string
+    address: string
+    dateOfBirth: string
+    maritalStatus: string
+}
 
 @Component({
     components: {
@@ -81,7 +99,7 @@ import { ComponentEmitters, Data } from '@/mixins/componentEmitters.ts'
     }
 })
 
-export default class Personal extends mixins(ComponentEmitters) {
+export default class Personal extends Vue {
     @Prop({
         type: String,
         required: true
@@ -89,7 +107,16 @@ export default class Personal extends mixins(ComponentEmitters) {
 
     @Prop({
         type: Object,
-        default: Data
+        default: {
+            site: '',
+            name: '',
+            photo: '',
+            phone: '',
+            email: '',
+            address: '',
+            dateOfBirth: '',
+            maritalStatus: ''
+        }
     }) readonly data!: Data
 
     innerData: Data
@@ -99,7 +126,15 @@ export default class Personal extends mixins(ComponentEmitters) {
         this.innerData = this.data
     }
 
-    get maritalStatus (): {id: string, text: string, disabled: boolean, selected: boolean}[] {
+    @Watch('innerData', { deep: true })
+    onInnerDataChanged (data: {[elem: string]: string}): void {
+        this.$emit('input', {
+            ...data,
+            type: this.type
+        })
+    }
+
+    get maritalStatus (): MaritalStatus[] {
         return [
             {
                 id: 'married',
@@ -119,7 +154,7 @@ export default class Personal extends mixins(ComponentEmitters) {
                 selected: false,
                 text: this.$t('selects.maritalStatus[2]')
             }
-        ].map(item => {
+        ].map((item: MaritalStatus): MaritalStatus => {
             if (this.innerData.maritalStatus.length) {
                 if (item.text === this.innerData.maritalStatus) {
                     item.selected = true

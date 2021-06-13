@@ -27,13 +27,13 @@ export default class AppPreview extends Vue {
         default: 'default'
     }) readonly type!: string
 
-    @Prop(Object) readonly data!: Component
+    @Prop(Object) readonly data!: any
 
     themes: {
-        one: Component,
-        two: Component,
-        three: Component,
-        default: Component
+        one: Object,
+        two: Object,
+        three: Object,
+        default: Object
     }
 
     padding: number
@@ -47,6 +47,7 @@ export default class AppPreview extends Vue {
             three: Three,
             default: Default
         }
+        this.transform = ''
         this.padding = 128
     }
 
@@ -56,7 +57,7 @@ export default class AppPreview extends Vue {
         window.addEventListener('resize', () => this.fitPreview())
     }
 
-    get component (): Component {
+    get component (): Object {
         return this.themes[this.type]
     }
 

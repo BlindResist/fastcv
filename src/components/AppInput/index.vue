@@ -167,7 +167,6 @@ export default class AppInput extends Vue {
     display: flex;
     align-items: center;
     flex-flow: row nowrap;
-    width: 100%;
     padding: $padding;
     position: relative;
     background-color: $gray-lite;

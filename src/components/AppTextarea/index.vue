@@ -61,6 +61,7 @@ export default class AppTextarea extends Vue {
 
     constructor () {
         super()
+        this.val = ''
         this.error = false
         this.focus = false
         this.text = {
@@ -96,7 +97,6 @@ export default class AppTextarea extends Vue {
     display: flex;
     align-items: center;
     flex-flow: row nowrap;
-    width: 100%;
     height: 8rem;
     padding: $padding;
     position: relative;
@@ -113,6 +113,11 @@ export default class AppTextarea extends Vue {
         border: none;
         resize: none;
         background-color: transparent;
+
+        &:focus,
+        &:hover {
+            outline: 0 none;
+        }
     }
 
     textarea,

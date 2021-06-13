@@ -35,16 +35,18 @@ export default class AppAccordionItem extends Vue {
     }) readonly id!: string
 
     name: string
-    state: boolean
     itemId: string
     duration: number
 
     constructor () {
         super()
-        this.state = false
         this.duration = 300
         this.name = 'app-accordion-item'
         this.itemId = `accordion-${this.id}`
+    }
+
+    get state (): boolean {
+        return this.$store.state.accordionAsideActive === this.itemId
     }
 
     elementClass (classname: string): string {
@@ -56,11 +58,9 @@ export default class AppAccordionItem extends Vue {
     }
 
     toggleItem (): void {
-        this.state = !this.state
+        const id: string = this.state ? '' : this.itemId
 
-        this.$parent.$emit('toggle-item', {
-            itemId: this.itemId
-        })
+        this.$store.commit('activateAsideAccordion', id)
     }
 
     animationEnter (el: HTMLElement): void {

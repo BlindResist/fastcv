@@ -33,7 +33,7 @@ export default class Share extends Vue {
         this.url = 'http://www.fastcv.digama.online'
     }
 
-    share (): {name: string, link: string}[] {
+    get share (): {name: string, link: string}[] {
         return [
             {
                 name: 'facebook',

@@ -7,9 +7,10 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         processing: false,
-        langs: ['ru', 'en'],
         lang: new Lang().get(),
+        languages: ['ru', 'en'],
         tabAsideActive: 'tabs-cv',
+        accordionAsideActive: '',
         formData: {
             objective: {
                 position: '',
@@ -41,7 +42,10 @@ export default new Vuex.Store({
         activateTab (state, id: string): void {
             state.tabAsideActive = id
         },
-        setData (state, data): void {
+        activateAsideAccordion (state, id: string): void {
+            state.accordionAsideActive = id
+        },
+        setFormData (state, data): void {
             state.formData = data
         }
     }

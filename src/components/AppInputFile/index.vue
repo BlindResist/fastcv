@@ -172,8 +172,7 @@ export default class AppInputFile extends Vue {
     checkFormat (file: {[elem: string]: any}): boolean {
         const regexp = /(?:\.([^.]+))?$/
         const name: string = file.name.toLowerCase()
-        // eslint-disable-next-line @typescript-eslint/ban-types
-        const extension: Object | null = regexp.exec(name)[1]
+        const extension: Object = regexp.exec(name)[1]
 
         return this.formats[this.acceptType].includes(extension)
     }
