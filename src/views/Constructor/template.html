@@ -1,0 +1,238 @@
+<div class="constructor">
+    <aside
+        ref="aside"
+        :class="asideClass"
+    >
+        <div class="constructor-aside__header">
+            <app-lang-selector/>
+            <router-link
+                to="/"
+                class="inline-block"
+            >
+                <app-logo/>
+            </router-link>
+        </div>
+        <div class="constructor-aside__body">
+            <app-tabs>
+                <template v-slot:label>
+                    <app-tabs-label id="cv">{{ $t('constructor.aside.tabs.cv') }}</app-tabs-label>
+                    <app-tabs-label id="options">{{ $t('constructor.aside.tabs.options') }}</app-tabs-label>
+                </template>
+                <template v-slot:additional>
+                    <app-tooltip
+                        theme="error"
+                        v-if="overflow"
+                        placement="left"
+                        class="margin-right--xs"
+                        :content="$t('helper.overflow')"
+                    />
+                    <app-button
+                        rounded
+                        theme="yellow"
+                        :disabled="overflow"
+                        v-processing="{ callback: createPDF }"
+                    >{{ $t('buttons.generate') }}</app-button>
+                </template>
+                <template v-slot:content>
+                    <app-tabs-content id="cv">
+                        <app-accordion>
+                            <app-accordion-item id="personal-information">
+                                <template v-slot:header>{{ $t('infoBlocks.personal') }}</template>
+                                <template v-slot:body>
+                                    <personal
+                                        type="personal"
+                                        :data="formData.personal"
+                                        v-model="formData.personal"
+                                    />
+                                </template>
+                            </app-accordion-item>
+                            <app-accordion-item id="objective">
+                                <template v-slot:header>
+                                    {{ $t('infoBlocks.objective') }}
+                                    <app-tooltip :content="$t('helper.objective')"/>
+                                </template>
+                                <template v-slot:body>
+                                    <div class="row">
+                                        <div class="col-default-12">
+                                            <app-input
+                                                name="objective"
+                                                v-model="formData.objective.position"
+                                                :placeholder="$t('fields.objective')"
+                                            />
+                                        </div>
+                                        <div class="col-default-12">
+                                            <app-textarea
+                                                name="aboutObjective"
+                                                v-model="formData.objective.about"
+                                                :placeholder="$t('fields.aboutObjective')"
+                                            />
+                                        </div>
+                                    </div>
+                                </template>
+                            </app-accordion-item>
+                            <app-accordion-item id="education">
+                                <template v-slot:header>{{ $t('infoBlocks.education') }}</template>
+                                <template v-slot:body>
+                                    <div
+                                        class="row"
+                                        v-if="components.education.length"
+                                    >
+                                        <div class="col-default-12">
+                                            <component
+                                                :id="index"
+                                                :key="index"
+                                                :is="component"
+                                                @remove="removeComponent"
+                                                :data="formData.education[index]"
+                                                v-model="formData.education[index]"
+                                                v-for="(component, index) in components.education"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-default-12">
+                                            <app-button
+                                                rounded
+                                                theme="yellow"
+                                                @click="addComponent('education')"
+                                            >{{ $t('buttons.addNew') }}</app-button>
+                                        </div>
+                                    </div>
+                                </template>
+                            </app-accordion-item>
+                            <app-accordion-item id="work-experience">
+                                <template v-slot:header>{{ $t('infoBlocks.work') }}</template>
+                                <template v-slot:body>
+                                    <div
+                                        class="row"
+                                        v-if="components.experience.length"
+                                    >
+                                        <div class="col-default-12">
+                                            <component
+                                                :id="index"
+                                                :key="index"
+                                                :is="component"
+                                                @remove="removeComponent"
+                                                :data="formData.experience[index]"
+                                                v-model="formData.experience[index]"
+                                                v-for="(component, index) in components.experience"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-default-12">
+                                            <app-button
+                                                rounded
+                                                theme="yellow"
+                                                @click="addComponent('experience')"
+                                            >{{ $t('buttons.addNew') }}</app-button>
+                                        </div>
+                                    </div>
+                                </template>
+                            </app-accordion-item>
+                            <app-accordion-item id="personal-qualities">
+                                <template v-slot:header>
+                                    {{ $t('infoBlocks.qualities') }}
+                                    <app-tooltip :content="$t('helper.qualities')"/>
+                                </template>
+                                <template v-slot:body>
+                                    <div class="row">
+                                        <div class="col-default-12">
+                                            <app-textarea
+                                                name="qualities"
+                                                v-model="formData.qualities"
+                                                :placeholder="$t('fields.qualities')"
+                                            />
+                                        </div>
+                                    </div>
+                                </template>
+                            </app-accordion-item>
+                            <app-accordion-item id="special-skills">
+                                <template v-slot:header>
+                                    {{ $t('infoBlocks.skills') }}
+                                    <app-tooltip :content="$t('helper.skills')"/>
+                                </template>
+                                <template v-slot:body>
+                                    <div class="row">
+                                        <div class="col-default-12">
+                                            <app-textarea
+                                                name="skills"
+                                                v-model="formData.skills"
+                                                :placeholder="$t('fields.skills')"
+                                            />
+                                        </div>
+                                    </div>
+                                </template>
+                            </app-accordion-item>
+                        </app-accordion>
+                    </app-tabs-content>
+                    <app-tabs-content id="options">
+                        <div class="constructor-aside__option">
+                            <span class="constructor-aside__caption">{{ $t('constructor.aside.options.theme') }}:</span>
+                            <app-radio
+                                name="theme"
+                                :data="themes"
+                                v-model="theme"
+                            />
+                        </div>
+                        <div class="constructor-aside__option">
+                                <span class="constructor-aside__caption">
+                                    {{ $t('constructor.aside.options.download') }}
+                                    <app-tooltip :content="$t('descriptions.downloadJSON')"/>
+                                </span>
+                            <app-button
+                                rounded
+                                tag="a"
+                                download
+                                theme="yellow"
+                                :href="JSONUrl"
+                                :download-name="`${cvName}.json`"
+                            >{{ $t('buttons.download') }}</app-button>
+                        </div>
+                        <div class="constructor-aside__option">
+                                <span class="constructor-aside__caption">
+                                    {{ $t('constructor.aside.options.upload') }}
+                                    <app-tooltip :content="$t('descriptions.uploadJSON')"/>
+                                </span>
+                            <app-input-file
+                                emit="file"
+                                name="json"
+                                accept-type="json"
+                                :accept-size="512000"
+                                v-model="uploadedJSON"
+                                :description="$t('fields.uploadFile')"
+                                :button-text="$t('buttons.uploadJSON')"
+                            />
+                            <app-button
+                                rounded
+                                theme="yellow"
+                                class="margin-top--s"
+                                @click="applyUploadedData"
+                                :disabled="Object.getOwnPropertyNames(uploadedJSON).length !== 0"
+                            >{{ $t('buttons.apply') }}</app-button>
+                        </div>
+                    </app-tabs-content>
+                </template>
+            </app-tabs>
+        </div>
+        <button
+            @click="aside = !aside"
+            :class="asideTriggerClass"
+        >Menu</button>
+        <app-footer location="aside"/>
+    </aside>
+    <section
+        ref="preview"
+        :class="previewClass"
+    >
+        <app-title
+            tag="h3"
+            weight="thin"
+        >{{ $t('constructor.preview.title') }}</app-title>
+        <app-preview
+            :type="theme"
+            ref="document"
+            :data="formData"
+        />
+    </section>
+</div>

@@ -1,0 +1,151 @@
+.constructor {
+    display: flex;
+    flex-flow: row nowrap;
+    height: 100%;
+}
+
+.constructor-aside {
+    display: flex;
+    flex-flow: column nowrap;
+    width: 28.25rem;
+    flex-shrink: 0;
+    background-color: $gray-dark;
+
+    @include breakpoint(tablet) {
+        min-height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 11;
+        transform: translateX(-100%);
+        transition: transform $transition;
+    }
+
+    @include breakpoint(mobile) {
+        width: 24rem;
+    }
+
+    &__header {
+        padding: 2rem;
+        position: relative;
+        text-align: center;
+        user-select: none;
+        background-color: $gray-lite;
+
+        &:after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 0;
+            position: absolute;
+            top: 0;
+            right: 0;
+            z-index: 1;
+            border: 20px solid transparent;
+            border-top-color: $white;
+            border-right-color: $white;
+            border-left-color: $gray-dark;
+            border-bottom-color: $gray-dark;
+        }
+
+        .app-lang-selector {
+            position: absolute;
+            top: 50%;
+            left: 2rem;
+            z-index: 1;
+            transform: translateY(-50%);
+        }
+    }
+
+    &__caption {
+        display: block;
+        margin-bottom: 1rem;
+        font-size: 1rem;
+        line-height: 1.4;
+        font-weight: 700;
+        color: $blue-dark;
+        user-select: none;
+    }
+
+    &__option {
+        padding: 2rem;
+
+        &+& {
+            border-top: 1px solid rgba($blue-dark, .2);
+        }
+    }
+
+    &__desc {
+        line-height: 1.5;
+        font-size: .875rem;
+        margin-bottom: 1.5rem;
+    }
+
+    &__trigger {
+        display: none;
+        padding: .5rem 1rem;
+        position: absolute;
+        top: 0;
+        left: 100%;
+        z-index: 1;
+        font-size: 1.5rem;
+        color: $blue-lite;
+        line-height: 1.25;
+        border: none;
+        background-color: $white;
+        //transform: scale(1, 1);
+        box-shadow: 0 0 1rem $white;
+        transition: transform $transition;
+        cursor: pointer;
+
+        @include breakpoint(tablet) {
+            display: block;
+        }
+
+        &--active {
+            //transform: scale(-1, 1);
+        }
+    }
+
+    &--active {
+
+        @include breakpoint(tablet) {
+            transform: translateX(0%);
+        }
+    }
+}
+
+.constructor-preview {
+    $parent: &;
+
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-start;
+    width: calc(100% - 28.25rem);
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    background-color: $white;
+
+    @include breakpoint(tablet) {
+        width: 100%;
+        opacity: 1;
+        transition: opacity $transition;
+        pointer-events: auto;
+
+        &:not(#{$parent}--active) {
+            opacity: .25;
+            pointer-events: none;
+        }
+    }
+
+    .app-title {
+        width: 100%;
+        padding: .5rem 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        text-align: center;
+    }
+}
