@@ -10,6 +10,7 @@
             @change="change"
             range-separator=" — "
             :value-type="valueType"
+            :append-to-body="toBody"
             :placeholder="placeholder"
             popup-class="app-date-picker__popup"
         />
@@ -28,6 +29,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator'
 
 export default class AppDatePicker extends Vue {
     @Prop(Boolean) readonly range!: boolean
+    @Prop(Boolean) readonly toBody!: boolean
     @Prop(Boolean) readonly disabled!: boolean
     @Prop([Array, String]) readonly value!: [] | string
 

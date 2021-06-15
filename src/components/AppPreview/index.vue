@@ -78,7 +78,14 @@ export default class AppPreview extends Vue {
     }
 
     get component (): unknown {
-        return (this.themes as unknown as Record<string, unknown>)[this.type]
+        if (
+            this.type === 'one' ||
+            this.type === 'two' ||
+            this.type === 'three' ||
+            this.type === 'default'
+        ) {
+            return this.themes[this.type]
+        }
     }
 
     fitPreview (): void {

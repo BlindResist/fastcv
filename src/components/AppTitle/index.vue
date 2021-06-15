@@ -66,6 +66,10 @@ export default class AppTitle extends Vue {
         text-transform: uppercase;
     }
 
+    &--thin {
+        font-weight: 300;
+    }
+
     &--normal {
         font-weight: 400;
     }

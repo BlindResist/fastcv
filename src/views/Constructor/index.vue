@@ -219,13 +219,17 @@
             <button
                 @click="aside = !aside"
                 :class="asideTriggerClass"
-            ></button>
+            >Menu</button>
             <app-footer location="aside" />
         </aside>
         <section
             ref="preview"
             :class="previewClass"
         >
+            <app-title
+                tag="h3"
+                weight="thin"
+            >{{ $t('constructor.preview.title') }}</app-title>
             <app-preview
                 :type="theme"
                 ref="document"
@@ -246,6 +250,7 @@ import Experience from './experience.vue'
 import AppTabs from '@/components/AppTabs/index.vue'
 import AppLogo from '@/components/AppLogo/index.vue'
 import AppRadio from '@/components/AppRadio/index.vue'
+import AppTitle from '@/components/AppTitle/index.vue'
 import AppButton from '@/components/AppButton/index.vue'
 import AppFooter from '@/components/AppFooter/index.vue'
 import AppPreview from '@/components/AppPreview/index.vue'
@@ -298,8 +303,8 @@ type FormData = {
         dateOfBirth: string,
         maritalStatus: string,
     },
-    education: ObjectConstructor[],
-        experience: ObjectConstructor[],
+    education: any[],
+        experience: any[],
         skills: string,
         qualities: string
 }
@@ -311,6 +316,7 @@ type FormData = {
         Experience,
         AppLogo,
         AppTabs,
+        AppTitle,
         AppRadio,
         AppInput,
         AppFooter,
@@ -341,8 +347,8 @@ export default class Constructor extends Vue {
     }
 
     components: {
-        education: [],
-        experience: []
+        education: any[],
+        experience: any[]
     }
 
     constructor () {
@@ -445,7 +451,7 @@ export default class Constructor extends Vue {
 
     get asideTriggerClass (): [string, {[elem: string]: boolean}] {
         return [
-            'constructor-aside__trigger icon icon-arrow-right2',
+            'constructor-aside__trigger',
             {
                 'constructor-aside__trigger--active': this.aside
             }
@@ -523,20 +529,24 @@ export default class Constructor extends Vue {
             }
         }
 
-        this.formData[type].push(blanks[type])
-        this.components[type].push(type)
+        if (type === 'experience' || type === 'education') {
+            this.formData[type].push(blanks[type])
+            this.components[type].push(type)
+        }
     }
 
     removeComponent (data: {type: string, id: string}): void {
-        const formData = this.formData[data.type]
-        const components = this.components[data.type]
+        if (data.type === 'experience' || data.type === 'education') {
+            const formData = this.formData[data.type]
+            const components = this.components[data.type]
 
-        for (let i = 0; i < formData.length; i++) {
-            if (formData[i].id === data.id) {
-                const index: number = formData.indexOf(formData[i])
+            for (let i = 0; i < formData.length; i++) {
+                if (formData[i].id === data.id) {
+                    const index: number = formData.indexOf(formData[i])
 
-                formData.splice(index, 1)
-                components.splice(index, 1)
+                    formData.splice(index, 1)
+                    components.splice(index, 1)
+                }
             }
         }
     }
@@ -544,9 +554,9 @@ export default class Constructor extends Vue {
     applyUploadedData (): void {
         const fileReader: FileReader = new FileReader()
 
-        fileReader.readAsText(this.uploadedJSON)
+        fileReader.readAsText(this.uploadedJSON as Blob)
 
-        fileReader.onload = (e) => {
+        fileReader.onload = (e: any) => {
             const result: FormData = JSON.parse(e.target.result)
 
             this.formData = result
@@ -592,7 +602,7 @@ export default class Constructor extends Vue {
         position: absolute;
         top: 0;
         left: 0;
-        z-index: 10;
+        z-index: 11;
         transform: translateX(-100%);
         transition: transform $transition;
     }
@@ -659,25 +669,27 @@ export default class Constructor extends Vue {
 
     &__trigger {
         display: none;
-        padding: 1rem;
+        padding: .5rem 1rem;
         position: absolute;
         top: 0;
         left: 100%;
         z-index: 1;
-        font-size: 2.5rem;
+        font-size: 1.5rem;
         color: $blue-lite;
-        line-height: 1;
+        line-height: 1.25;
         border: none;
-        background-color: transparent;
-        transform: scale(1, 1);
+        background-color: $white;
+        //transform: scale(1, 1);
+        box-shadow: 0 0 1rem $white;
         transition: transform $transition;
+        cursor: pointer;
 
         @include breakpoint(tablet) {
             display: block;
         }
 
         &--active {
-            transform: scale(-1, 1);
+            //transform: scale(-1, 1);
         }
     }
 
@@ -705,15 +717,17 @@ export default class Constructor extends Vue {
         width: 100%;
         opacity: 1;
         transition: opacity $transition;
+        pointer-events: auto;
 
         &:not(#{$parent}--active) {
             opacity: .25;
+            pointer-events: none;
         }
     }
 
-    &__title {
+    .app-title {
         width: 100%;
-        padding: 1.5rem;
+        padding: .5rem 0;
         position: absolute;
         top: 0;
         left: 0;

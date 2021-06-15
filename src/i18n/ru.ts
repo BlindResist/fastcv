@@ -88,7 +88,8 @@ const ru: {} = {
             }
         },
         preview: {
-            theme: 'Тема'
+            theme: 'Тема',
+            title: 'Предпросмотр'
         }
     },
     mainpage: {

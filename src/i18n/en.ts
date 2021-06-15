@@ -88,7 +88,8 @@ const en: {} = {
             }
         },
         preview: {
-            theme: 'Theme'
+            theme: 'Theme',
+            title: 'Preview'
         }
     },
     mainpage: {
