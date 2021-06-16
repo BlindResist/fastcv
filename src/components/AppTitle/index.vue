@@ -3,7 +3,7 @@
         :is="tag"
         :class="classObject"
     >
-        <slot />
+        <slot>{{ text }}</slot>
     </component>
 </template>
 
