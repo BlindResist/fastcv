@@ -1,13 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import Lang from '@/utils/lang'
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+    plugins: [createPersistedState()],
     state: {
+        lang: 'en',
+        theme: 'default',
         processing: false,
-        lang: new Lang().get(),
         languages: ['ru', 'en'],
         tabAsideActive: 'tabs-cv',
         accordionAsideActive: '',
@@ -47,6 +49,23 @@ export default new Vuex.Store({
         },
         setFormData (state, data): void {
             state.formData = data
+        },
+        setTheme (state, theme): void {
+            state.theme = theme
+        }
+    },
+    getters: {
+        cvName (state): string {
+            const currentDate: Date = new Date()
+            const year: number = currentDate.getFullYear()
+            const day: string = String(currentDate.getDate()).padStart(2, '0')
+            const month: string = String(currentDate.getMonth() + 1).padStart(2, '0')
+            const date: string = state.lang === 'ru' ? `${day}-${month}-${year}` : `${month}-${day}-${year}`
+
+            return `${state.formData.personal.name.split(' ').join('-')}-${date}`
+        },
+        JSONUrl (state): string {
+            return `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(state.formData))}`
         }
     }
 })

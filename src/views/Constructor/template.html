@@ -168,7 +168,10 @@
                     </app-tabs-content>
                     <app-tabs-content id="options">
                         <div class="constructor-aside__option">
-                            <span class="constructor-aside__caption">{{ $t('constructor.aside.options.theme') }}:</span>
+                            <app-title
+                                tag="h6"
+                                class="margin-bottom--xs"
+                            >{{ $t('constructor.aside.options.theme') }}:</app-title>
                             <app-radio
                                 name="theme"
                                 :data="themes"
@@ -176,10 +179,13 @@
                             />
                         </div>
                         <div class="constructor-aside__option">
-                                <span class="constructor-aside__caption">
-                                    {{ $t('constructor.aside.options.download') }}
-                                    <app-tooltip :content="$t('descriptions.downloadJSON')"/>
-                                </span>
+                            <app-title
+                                tag="h6"
+                                class="margin-bottom--xs"
+                            >
+                                {{ $t('constructor.aside.options.download') }}
+                                <app-tooltip :content="$t('descriptions.downloadJSON')"/>
+                            </app-title>
                             <app-button
                                 rounded
                                 tag="a"
@@ -190,10 +196,13 @@
                             >{{ $t('buttons.download') }}</app-button>
                         </div>
                         <div class="constructor-aside__option">
-                                <span class="constructor-aside__caption">
-                                    {{ $t('constructor.aside.options.upload') }}
-                                    <app-tooltip :content="$t('descriptions.uploadJSON')"/>
-                                </span>
+                            <app-title
+                                tag="h6"
+                                class="margin-bottom--xs"
+                            >
+                                {{ $t('constructor.aside.options.upload') }}
+                                <app-tooltip :content="$t('descriptions.uploadJSON')"/>
+                            </app-title>
                             <app-input-file
                                 emit="file"
                                 name="json"
@@ -215,10 +224,11 @@
                 </template>
             </app-tabs>
         </div>
-        <button
+        <app-button
+            theme="text"
             @click="aside = !aside"
-            :class="asideTriggerClass"
-        >Menu</button>
+            class="constructor-aside__trigger"
+        >{{ $t('buttons.menu') }}</app-button>
         <app-footer location="aside"/>
     </aside>
     <section

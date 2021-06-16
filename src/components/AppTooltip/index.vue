@@ -28,7 +28,6 @@ import 'tippy.js/themes/light.css'
 import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
 @Component
-
 export default class AppTooltip extends Vue {
     @Prop({
         type: String,
@@ -54,7 +53,7 @@ export default class AppTooltip extends Vue {
 
     constructor () {
         super()
-        this.update = false
+        this.update = true
     }
 
     @Watch('content')

@@ -89,21 +89,10 @@
         left: 100%;
         z-index: 1;
         font-size: 1.5rem;
-        color: $blue-lite;
         line-height: 1.25;
-        border: none;
-        background-color: $white;
-        //transform: scale(1, 1);
-        box-shadow: 0 0 1rem $white;
-        transition: transform $transition;
-        cursor: pointer;
 
         @include breakpoint(tablet) {
             display: block;
-        }
-
-        &--active {
-            //transform: scale(-1, 1);
         }
     }
 

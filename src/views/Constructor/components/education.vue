@@ -67,11 +67,11 @@ export default class Education extends Vue {
 
     @PropSync('data', {
         type: Object,
-        default: {
+        default: () => ({
             period: '',
             degree: '',
             university: ''
-        }
+        })
     }) readonly innerData!: Data
 
     type: string

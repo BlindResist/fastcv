@@ -16,7 +16,7 @@
                     >{{ $t('buttons.build') }}</app-button>
                 </div>
                 <div class="main-page__block">
-                    <share />
+                    <app-share />
                 </div>
             </div>
             <app-lang-selector />
@@ -26,7 +26,7 @@
 </template>
 
 <script lang="ts">
-import Share from '@/components/Share/index.vue'
+import AppShare from '@/components/AppShare/index.vue'
 import AppLogo from '@/components/AppLogo/index.vue'
 import { Component, Vue } from 'vue-property-decorator'
 import AppFooter from '@/components/AppFooter/index.vue'
@@ -35,7 +35,7 @@ import AppLangSelector from '@/components/AppLangSelector/index.vue'
 
 @Component({
     components: {
-        Share,
+        AppShare,
         AppLogo,
         AppFooter,
         AppButton,

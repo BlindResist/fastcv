@@ -7,6 +7,7 @@ const en: {} = {
         keywords: 'resume, cv, constructor, builder, generator, simple, fast, online, free, without registration, pdf, create'
     },
     buttons: {
+        menu: 'Menu',
         generate: 'Generate',
         addNew: '+ Add',
         download: 'Download',

@@ -9,6 +9,7 @@ import AppTabs from '@/components/AppTabs/index.vue'
 import AppLogo from '@/components/AppLogo/index.vue'
 import AppRadio from '@/components/AppRadio/index.vue'
 import AppTitle from '@/components/AppTitle/index.vue'
+import AppInput from '@/components/AppInput/index.vue'
 import AppButton from '@/components/AppButton/index.vue'
 import AppFooter from '@/components/AppFooter/index.vue'
 import AppPreview from '@/components/AppPreview/index.vue'
@@ -16,12 +17,11 @@ import AppTooltip from '@/components/AppTooltip/index.vue'
 import AppTextarea from '@/components/AppTextarea/index.vue'
 import AppTabsLabel from '@/components/AppTabsLabel/index.vue'
 import AppAccordion from '@/components/AppAccordion/index.vue'
+import AppInputFile from '@/components/AppInputFile/index.vue'
 import AppTabsContent from '@/components/AppTabsContent/index.vue'
 import AppLangSelector from '@/components/AppLangSelector/index.vue'
 import AppAccordionItem from '@/components/AppAccordionItem/index.vue'
-import AppInput from '@/components/AppInput/index.vue'
-import AppInputFile from '@/components/AppInputFile/index.vue'
-import { Component, Watch, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 
 import VueI18n from 'vue-i18n'
 import TranslateResult = VueI18n.TranslateResult
@@ -66,6 +66,15 @@ type FormData = {
     skills: string,
     qualities: string
 }
+
+type Theme = {
+    id: string,
+    disabled: boolean,
+    selected: boolean,
+    text: TranslateResult
+}
+
+type ComputedClass = [string, {[elem: string]: boolean}]
 
 @Component({
     components: {
@@ -115,7 +124,6 @@ export default class Constructor extends Vue {
         this.aside = false
         this.overflow = false
         this.uploadedJSON = []
-        this.theme = 'default'
         this.dimensions = {
             width: 700,
             ratio: 1.4142
@@ -124,15 +132,20 @@ export default class Constructor extends Vue {
             education: [],
             experience: []
         }
+        this.theme = this.$store.state.theme
         this.formData = this.$store.state.formData
-    }
-
-    mounted (): void {
-        document.addEventListener('click', (e: {[elem: string]: any}) => this.hideDropdown(e))
     }
 
     get lang (): string {
         return this.$store.state.lang
+    }
+
+    get JSONUrl (): string {
+        return this.$store.getters.JSONUrl
+    }
+
+    get cvName (): string {
+        return this.$store.getters.cvName
     }
 
     get pdfFormat (): number[] {
@@ -142,25 +155,7 @@ export default class Constructor extends Vue {
         ]
     }
 
-    get selectedTheme (): string[] {
-        return this.themes.find(item => item.id === this.theme)?.text
-    }
-
-    get JSONUrl (): string {
-        return `data:text/json;charset=utf-8,${encodeURIComponent(JSON.stringify(this.formData))}`
-    }
-
-    get cvName (): string {
-        const currentDate: Date = new Date()
-        const year: number = currentDate.getFullYear()
-        const day: string = String(currentDate.getDate()).padStart(2, '0')
-        const month: string = String(currentDate.getMonth() + 1).padStart(2, '0')
-        const date: string = this.lang === 'ru' ? `${day}-${month}-${year}` : `${month}-${day}-${year}`
-
-        return `${this.formData.personal.name.split(' ').join('-')}-${date}`
-    }
-
-    get themes (): {id: string, disabled: boolean, selected: boolean, text: TranslateResult}[] {
+    get themes (): Theme[] {
         return [
             {
                 id: 'default',
@@ -186,10 +181,16 @@ export default class Constructor extends Vue {
                 selected: false,
                 text: this.$t('radios.themes[3]')
             }
-        ]
+        ].map((item: Theme): Theme => {
+            if (item.id === this.theme) {
+                item.selected = true
+            }
+
+            return item
+        })
     }
 
-    get asideClass (): [string, {[elem: string]: boolean}] {
+    get asideClass (): ComputedClass {
         return [
             'constructor-aside',
             {
@@ -198,7 +199,7 @@ export default class Constructor extends Vue {
         ]
     }
 
-    get previewClass (): [string, {[elem: string]: boolean}] {
+    get previewClass (): ComputedClass {
         return [
             'constructor-preview',
             {
@@ -207,19 +208,35 @@ export default class Constructor extends Vue {
         ]
     }
 
-    get asideTriggerClass (): [string, {[elem: string]: boolean}] {
-        return [
-            'constructor-aside__trigger',
-            {
-                'constructor-aside__trigger--active': this.aside
-            }
-        ]
-    }
-
     @Watch('formData', { deep: true })
     onFormDataChanged (data: FormData): void {
         this.checkHeight()
         this.$store.commit('setFormData', data)
+    }
+
+    @Watch('theme')
+    onThemeChanged (theme: string): void {
+        this.$store.commit('setTheme', theme)
+    }
+
+    mounted (): void {
+        this.update()
+        document.addEventListener('click', (e: {[elem: string]: any}) => this.hideDropdown(e))
+    }
+
+    update (): void {
+        if (this.formData.education.length) {
+            this.components.education = []
+            for (let i = 0; i < this.formData.education.length; i++) {
+                this.components.education.push('education')
+            }
+        }
+        if (this.formData.experience.length) {
+            this.components.experience = []
+            for (let i = 0; i < this.formData.experience.length; i++) {
+                this.components.experience.push('experience')
+            }
+        }
     }
 
     createPDF (target = 'save'): void {
@@ -315,13 +332,11 @@ export default class Constructor extends Vue {
         fileReader.readAsText(this.uploadedJSON as Blob)
 
         fileReader.onload = (e: any) => {
-            const result: FormData = JSON.parse(e.target.result)
-
-            this.formData = result
-
-            if (result.education.length) this.components.education.push('education')
-            if (result.experience.length) this.components.experience.push('experience')
+            this.formData = JSON.parse(e.target.result)
+            this.update()
         }
+
+        this.uploadedJSON = []
     }
 
     checkHeight (): void {

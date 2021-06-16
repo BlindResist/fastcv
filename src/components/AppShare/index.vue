@@ -20,7 +20,6 @@ import TranslateResult = VueI18n.TranslateResult
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component
-
 export default class Share extends Vue {
     url: string
     desc: TranslateResult

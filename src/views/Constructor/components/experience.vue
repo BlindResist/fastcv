@@ -113,7 +113,7 @@ export default class Experience extends Vue {
 
     @PropSync('data', {
         type: Object,
-        default: {
+        default: () => ({
             to: '',
             from: '',
             city: '',
@@ -122,7 +122,7 @@ export default class Experience extends Vue {
             country: '',
             position: '',
             currently: ''
-        }
+        })
     }) readonly innerData!: Data
 
     type: string
