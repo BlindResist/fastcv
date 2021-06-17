@@ -12,59 +12,93 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import One from '@/views/Themes/one.vue'
 import Two from '@/views/Themes/two.vue'
 import Three from '@/views/Themes/three.vue'
 import Default from '@/views/Themes/default.vue'
+import { Component, Prop, Vue } from 'vue-property-decorator'
 
-export default {
-    name: 'app-preview',
-    props: {
-        type: {
-            type: String,
-            default: 'default'
-        },
-        data: {
-            type: Object,
-            default: () => {}
-        }
+type FormData = {
+    objective: {
+        position: string,
+        about: string
     },
-    data () {
-        return {
-            themes: {
-                one: One,
-                two: Two,
-                three: Three,
-                default: Default
-            },
-            padding: 128,
-            transform: ''
-        }
+    personal: {
+        site: string,
+        photo: string,
+        name: string,
+        phone: string,
+        email: string,
+        address: string,
+        dateOfBirth: string,
+        maritalStatus: string,
     },
-    mounted () {
+    education: ObjectConstructor[],
+    experience: ObjectConstructor[],
+    skills: string,
+    qualities: string
+}
+
+@Component
+export default class AppPreview extends Vue {
+    @Prop({
+        type: String,
+        default: 'default'
+    }) readonly type!: string
+
+    @Prop(Object) readonly data!: FormData
+
+    themes: {
+        one: typeof One,
+        two: typeof Two,
+        three: typeof Three,
+        default: typeof Default
+    }
+
+    padding: number
+    transform!: string
+
+    constructor () {
+        super()
+        this.themes = {
+            one: One,
+            two: Two,
+            three: Three,
+            default: Default
+        }
+        this.transform = ''
+        this.padding = 128
+    }
+
+    mounted (): void {
         this.fitPreview()
 
         window.addEventListener('resize', () => this.fitPreview())
-    },
-    computed: {
-        component () {
+    }
+
+    get component (): unknown {
+        if (
+            this.type === 'one' ||
+            this.type === 'two' ||
+            this.type === 'three' ||
+            this.type === 'default'
+        ) {
             return this.themes[this.type]
         }
-    },
-    methods: {
-        fitPreview () {
-            const parent = {
-                width: this.$parent.$refs.preview.offsetWidth,
-                height: this.$parent.$refs.preview.offsetHeight
-            }
+    }
 
-            const width = parent.width / (this.$el.offsetWidth + this.padding)
-            const height = parent.height / (this.$el.offsetHeight + this.padding)
-            const scale = Math.min(width, height)
-
-            this.transform = `translate(-50%, -50%) scale(${scale})`
+    fitPreview (): void {
+        const parent: {width: number, height: number} = {
+            width: (this.$parent.$refs.preview as HTMLElement).offsetWidth,
+            height: (this.$parent.$refs.preview as HTMLElement).offsetHeight
         }
+
+        const width: number = parent.width / ((this.$el as HTMLElement).offsetWidth + this.padding)
+        const height: number = parent.height / ((this.$el as HTMLElement).offsetHeight + this.padding)
+        const scale: number = Math.min(width, height)
+
+        this.transform = `translate(-50%, -50%) scale(${scale})`
     }
 }
 </script>

@@ -5,7 +5,10 @@
                 <h1>{{ data.personal.name }}</h1>
             </div>
             <div class="theme-one__photo">
-                <img :src="data.personal.photo" />
+                <img
+                    :src="data.personal.photo"
+                    :alt="data.personal.name"
+                />
             </div>
             <div class="theme-one__inner">
                 <section class="theme-one__section">
@@ -148,15 +151,33 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'theme-one',
-    props: {
-        data: {
-            type: Object,
-            default: () => {}
-        }
-    }
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator'
+
+type FormData = {
+    objective: {
+        position: string,
+        about: string
+    },
+    personal: {
+        site: string,
+        photo: string,
+        name: string,
+        phone: string,
+        email: string,
+        address: string,
+        dateOfBirth: string,
+        maritalStatus: string,
+    },
+    education: ObjectConstructor[],
+    experience: ObjectConstructor[],
+    skills: string,
+    qualities: string
+}
+
+@Component
+export default class One extends Vue {
+    @Prop(Object) readonly data!: FormData
 }
 </script>
 
@@ -186,7 +207,6 @@ export default {
         color: $white;
         line-height: 1;
         font-weight: 700;
-        line-height: 1;
         font-size: 24px;
         letter-spacing: .25px;
         font-family: Roboto-Bold, Arial, sans-serif;

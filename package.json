@@ -1,67 +1,65 @@
 {
   "name": "Fast!CV",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "Anpilov Artem",
   "description": "Fast!CV - Easy & fast CV constructor!",
-  "main": "app.js",
   "license": "ISC",
   "scripts": {
-    "build": "webpack",
-    "watch": "webpack --watch",
-    "lint": "eslint --ext .js,.vue src",
-    "prod": "NODE_ENV=prod webpack"
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/BlindResist/resume-constructor.git"
+    "url": "git+https://github.com/BlindResist/fastcv.git"
   },
-  "browserslist": [
-    "> 1%",
-    "last 4 versions",
-    "ie > 9",
-    "Opera > 30",
-    "Firefox > 40.0",
-    "Safari > 5.1.7",
-    "Chrome > 43.0"
-  ],
-  "devDependencies": {
-    "@babel/core": "^7.11.1",
-    "autoprefixer": "^9.8.6",
-    "babel-eslint": "^10.1.0",
-    "babel-loader": "^8.1.0",
-    "css-loader": "^1.0.1",
-    "dayjs": "^1.10.4",
-    "eslint": "^7.12.1",
-    "eslint-config-standard": "^15.0.0",
-    "eslint-friendly-formatter": "^4.0.1",
-    "eslint-loader": "^4.0.2",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.2",
-    "eslint-plugin-vue": "^7.1.0",
-    "file-loader": "^6.1.1",
-    "html2canvas": "^1.0.0-rc.7",
-    "jspdf": "^2.3.1",
-    "mini-css-extract-plugin": "^0.10.0",
-    "node-sass": "^4.10.0",
-    "postcss-loader": "^3.0.0",
-    "sass-loader": "^7.1.0",
-    "sass-resources-loader": "^2.1.0",
-    "style-loader": "^0.23.1",
-    "url-loader": "^4.1.1",
-    "velocity-animate": "^1.5.2",
+  "dependencies": {
+    "core-js": "^3.6.5",
     "verge": "^1.10.2",
     "vue": "^2.6.11",
+    "vue-class-component": "^7.2.3",
+    "vue-property-decorator": "^9.1.2",
+    "vue-router": "^3.2.0",
+    "vuex": "^3.6.2",
+    "vuex-persistedstate": "^4.0.0-beta.3"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.18.0",
+    "@typescript-eslint/parser": "^4.18.0",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "~4.5.0",
+    "@vue/cli-plugin-router": "~4.5.0",
+    "@vue/cli-plugin-typescript": "~4.5.0",
+    "@vue/cli-plugin-vuex": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/eslint-config-standard": "^5.1.2",
+    "@vue/eslint-config-typescript": "^7.0.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-import": "^2.20.2",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0",
+    "eslint-plugin-vue": "^6.2.2",
+    "html2canvas": "^1.0.0-rc.7",
+    "jspdf": "^2.3.1",
+    "lint-staged": "^9.5.0",
+    "node-sass": "^4.12.0",
+    "sass-loader": "^8.0.2",
+    "typescript": "~4.1.5",
+    "velocity-animate": "^1.5.2",
     "vue-i18n": "^8.24.4",
-    "vue-loader": "^15.9.3",
     "vue-meta": "^2.4.0",
-    "vue-router": "^3.4.3",
-    "vue-style-loader": "^4.1.2",
     "vue-template-compiler": "^2.6.11",
     "vue-tippy": "^4.10.1",
-    "vue2-datepicker": "^3.9.0",
-    "webpack": "^4.27.0",
-    "webpack-cli": "^3.1.2"
+    "vue2-datepicker": "^3.9.1"
+  },
+  "gitHooks": {
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.{js,jsx,vue,ts,tsx,scss}": [
+      "vue-cli-service lint",
+      "git add"
+    ]
   }
 }

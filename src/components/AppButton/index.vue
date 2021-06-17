@@ -25,46 +25,59 @@
     </component>
 </template>
 
-<script>
-export default {
-    name: 'app-button',
-    props: {
-        href: String,
-        theme: String,
-        tag: {
-            type: String,
-            default: 'button'
-        },
-        size: {
-            type: String,
-            default: 'l',
-            validator: prop => ['s', 'm', 'l'].includes(prop)
-        },
-        downloadName: {
-            type: String,
-            default: 'file'
-        },
-        blank: Boolean,
-        rounded: Boolean,
-        disabled: Boolean,
-        download: Boolean,
-        autoWidth: Boolean
-    },
-    computed: {
-        classObject () {
-            const array = [
-                {
-                    'app-button--rounded': this.rounded,
-                    'app-button--disabled': this.disabled,
-                    'app-button--auto-width': this.autoWidth
-                }
-            ]
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator'
 
-            if (this.size) array.push(`app-button--size-${this.size}`)
-            if (this.theme) array.push(`app-button--theme-${this.theme}`)
+@Component
 
-            return array
+export default class AppButton extends Vue {
+    @Prop(Boolean) readonly blank!: boolean
+    @Prop(Boolean) readonly rounded!: boolean
+    @Prop(Boolean) readonly disabled!: boolean
+    @Prop(Boolean) readonly download!: boolean
+    @Prop(Boolean) readonly autoWidth!: boolean
+
+    @Prop({
+        type: String,
+        default: '#'
+    }) readonly href!: string
+
+    @Prop({
+        type: String,
+        default: 'button'
+    }) readonly tag!: string
+
+    @Prop({
+        type: String,
+        default: 'file'
+    }) readonly downloadName!: string
+
+    @Prop({
+        type: String,
+        default: 'l',
+        validator (value: string): boolean {
+            return ['s', 'm', 'l'].includes(value)
         }
+    }) readonly size!: string
+
+    @Prop({
+        type: String,
+        default: 'yellow',
+        validator (value: string): boolean {
+            return ['yellow', 'red', 'blue', 'text'].includes(value)
+        }
+    }) readonly theme!: string
+
+    get classObject (): [{[elem: string]: boolean}, string, string] {
+        return [
+            {
+                'app-button--rounded': this.rounded,
+                'app-button--disabled': this.disabled,
+                'app-button--auto-width': this.autoWidth
+            },
+            `app-button--size-${this.size}`,
+            `app-button--theme-${this.theme}`
+        ]
     }
 }
 </script>
@@ -129,6 +142,12 @@ export default {
             &:hover {
                 background-color: $gray-darkerer;
             }
+        }
+
+        &-text {
+            width: auto;
+            color: $blue-lite;
+            background-color: $white;
         }
     }
 }

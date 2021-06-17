@@ -1,21 +1,18 @@
 <template>
     <main class="page">
-        <constructor :lang="lang" />
+        <constructor />
     </main>
 </template>
 
-<script>
+<script lang="ts">
 import Constructor from '@/views/Constructor/index.vue'
+import { Component, Vue } from 'vue-property-decorator'
 
-export default {
-    name: 'constructor-page',
+@Component({
     components: {
         Constructor
-    },
-    computed: {
-        lang () {
-            return this.$root.lang
-        }
     }
-}
+})
+
+export default class ConstructorPage extends Vue {}
 </script>

@@ -8,37 +8,40 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'app-tabs-label',
-    props: {
-        id: {
-            type: String,
-            default: '',
-            required: true
-        },
-        rightSide: Boolean
-    },
-    data () {
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator'
+
+@Component
+
+export default class AppTabsLabel extends Vue {
+    @Prop(Boolean) readonly rightSide!: boolean
+    @Prop({
+        type: String,
+        required: true
+    }) readonly id!: string
+
+    name: string
+    itemId: string
+
+    constructor () {
+        super()
+        this.name = 'app-tabs-label'
+        this.itemId = `tabs-${this.id}`
+    }
+
+    get classObject (): {[elem: string]: boolean} {
         return {
-            state: false,
-            name: 'app-tabs-label',
-            itemId: `tabs-${this.id}`,
-            itemChildrens: this.$children
+            'app-tabs-label--opened': this.state,
+            'app-tabs-label--right': this.rightSide
         }
-    },
-    computed: {
-        classObject () {
-            return {
-                'app-tabs-label--opened': this.state,
-                'app-tabs-label--right': this.rightSide
-            }
-        }
-    },
-    methods: {
-        toggleItem () {
-            this.$parent.$emit('toggle-item', this.itemId)
-        }
+    }
+
+    get state (): boolean {
+        return this.$store.state.tabAsideActive === this.itemId
+    }
+
+    toggleItem (): void {
+        this.$store.commit('activateTab', this.itemId)
     }
 }
 </script>

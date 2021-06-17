@@ -26,120 +26,156 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'app-input-file',
-    props: {
-        multiple: Boolean,
-        name: {
-            type: String,
-            required: true
-        },
-        acceptType: {
-            type: String,
-            default: 'image'
-        },
-        acceptSize: {
-            type: Number,
-            default: 1048576
-        },
-        buttonText: {
-            type: String,
-            default: 'Upload photo'
-        },
-        emit: {
-            type: String,
-            default: 'blob'
-        },
-        description: {
-            type: [Array, String]
+<script lang="ts">
+import VueI18n from 'vue-i18n'
+import TranslateResult = VueI18n.TranslateResult
+import { Component, Prop, Vue } from 'vue-property-decorator'
+
+@Component
+export default class AppInputFile extends Vue {
+    @Prop(Boolean) readonly multiple!: boolean
+    @Prop([Array, String]) readonly description!: [] | string
+
+    @Prop({
+        type: String,
+        required: true
+    }) readonly name!: string
+
+    @Prop({
+        type: String,
+        default: 'image'
+    }) readonly acceptType!: string
+
+    @Prop({
+        type: Number,
+        default: 1048576
+    }) readonly acceptSize!: number
+
+    @Prop({
+        type: String,
+        default: 'Upload photo'
+    }) readonly buttonText!: string
+
+    @Prop({
+        type: String,
+        default: 'blob'
+    }) readonly emit!: string
+
+    mb: number
+    message: string
+    error: boolean
+    file!: {
+        blob: string,
+        name: string,
+        itself?: File
+    }
+
+    text: {
+        empty: string,
+        error: {
+            size: TranslateResult,
+            format: TranslateResult
         }
-    },
-    data () {
-        return {
-            mb: 1048576,
-            message: '',
-            error: false,
-            file: {
-                blob: '',
-                name: '',
-                itself: Object
-            },
-            text: {
-                empty: '...',
-                error: {
-                    size: this.$t('error.fileSize'),
-                    format: this.$t('error.fileFormat')
-                }
-            },
-            acceptSettings: {
-                image: '.jpg,.jpeg,.png,.bmp,image/bmp,image/png,image/x-png',
-                json: 'application/json'
-            },
-            formats: {
-                image: ['jpg', 'jpeg', 'png', 'bmp'],
-                json: ['json', 'jsonp']
+    }
+
+    acceptSettings: {
+        [elem: string]: string
+    }
+
+    formats: {
+        [elem: string]: string[]
+    }
+
+    constructor () {
+        super()
+        this.mb = 1048576
+        this.message = ''
+        this.error = false
+        this.text = {
+            empty: '...',
+            error: {
+                size: this.$t('error.fileSize'),
+                format: this.$t('error.fileFormat')
             }
         }
-    },
-    computed: {
-        fileText () {
-            return this.file.name.length ? this.file.name : this.text.empty
-        },
-        fileSize () {
-            const size = parseFloat(this.acceptSize / this.mb).toFixed(2)
-
-            return size < 1 ? `${size}Kb` : `${size}Mb`
+        this.acceptSettings = {
+            image: '.jpg,.jpeg,.png,.bmp,image/bmp,image/png,image/x-png',
+            json: 'application/json'
         }
-    },
-    methods: {
-        change (event) {
-            const file = event.target.files[0]
-
-            if (!this.validate(file)) return
-
-            this.file.itself = file
-            this.file.name = file.name
-            this.file.blob = URL.createObjectURL(file)
-
-            let data = this.file
-
-            if (this.emit === 'blob') {
-                data = this.file.blob
-            } else if (this.emit === 'file') {
-                data = this.file.itself
-            }
-
-            this.$emit('input', data)
-        },
-        validate (file) {
-            if (this.checkFormat(file)) {
-                this.error = false
-            } else {
-                this.error = true
-                this.message = this.text.error.format
-                return false
-            }
-
-            if (this.checkSize(file)) {
-                this.error = false
-            } else {
-                this.error = true
-                this.message = this.text.error.size
-                return false
-            }
-
-            return true
-        },
-        checkSize (file) {
-            return file.size <= this.acceptSize
-        },
-        checkFormat (file) {
-            const regex = /(?:\.([^.]+))?$/
-            const extension = regex.exec(file.name.toLowerCase())[1]
-
-            return this.formats[this.acceptType].includes(extension)
+        this.formats = {
+            image: ['jpg', 'jpeg', 'png', 'bmp'],
+            json: ['json', 'jsonp']
         }
+        this.file = {
+            blob: '',
+            name: ''
+        }
+    }
+
+    get fileText (): string {
+        return this.file && this.file.name.length ? this.file.name : this.text.empty
+    }
+
+    get fileSize (): string {
+        const parse: number = this.acceptSize / this.mb
+        const size: number = parseInt(parse.toFixed(2))
+
+        return size < 1 ? `${size}Kb` : `${size}Mb`
+    }
+
+    change (event: {target: {files: File[]}}): void {
+        const file = event.target.files[0]
+
+        if (!this.validate(file)) return
+
+        this.file.itself = file
+        this.file.name = file.name
+        this.file.blob = URL.createObjectURL(file)
+
+        let data
+
+        if (this.emit === 'blob') {
+            data = this.file.blob
+        } else if (this.emit === 'file') {
+            data = this.file.itself
+        } else {
+            data = this.file
+        }
+
+        this.$emit('input', data)
+    }
+
+    validate (file: File): void | boolean {
+        if (this.checkFormat(file.name)) {
+            this.error = false
+        } else {
+            this.error = true
+            this.message = this.text.error.format
+            return false
+        }
+
+        if (this.checkSize(file.size)) {
+            this.error = false
+        } else {
+            this.error = true
+            this.message = this.text.error.size
+            return false
+        }
+
+        return true
+    }
+
+    checkSize (fileSize: number): boolean {
+        return fileSize <= this.acceptSize
+    }
+
+    checkFormat (fileName: string): boolean {
+        const regexp = /(?:\.([^.]+))?$/
+        const name: string = fileName.toLowerCase()
+        const extension = regexp.exec(name)
+        const types: string[] = this.formats[this.acceptType]
+
+        return extension !== null ? types.includes(extension[1] as unknown as string) : false
     }
 }
 

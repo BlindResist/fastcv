@@ -1,23 +1,20 @@
-// https://eslint.org/docs/user-guide/configuring
-
 module.exports = {
     root: true,
-    parserOptions: {
-        parser: 'babel-eslint'
-    },
     env: {
-        browser: true,
+        node: true
     },
     extends: [
         'plugin:vue/essential',
-        'standard'
+        '@vue/standard',
+        '@vue/typescript/recommended'
     ],
-    plugins: [
-        'vue'
-    ],
-    rules: {
-        'indent': ['error', 4],
-        'generator-star-spacing': 'off'
+    parserOptions: {
+        ecmaVersion: 2020
     },
-    globals: {}
+    rules: {
+        indent: ['error', 4],
+        'generator-star-spacing': 'off',
+        'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+        'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
+    }
 }

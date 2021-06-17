@@ -8,10 +8,10 @@
             <input
                 type="radio"
                 :name="name"
-                v-model="val"
                 :value="item.id"
                 class="app-radio__input"
                 :id="`${name}-${index}`"
+                :checked="item.selected"
                 :disabled="item.disabled"
                 @input="onInput($event.target.value)"
                 @change="onChange($event.target.value)"
@@ -26,85 +26,78 @@
                 ></span>
             </label>
         </div>
-        <span
-            class="app-radio__error"
-            v-if="required && error"
-        >
-            <span v-if="!val">{{ text.error }}</span>
-        </span>
     </div>
 </template>
 
-<script>
-export default {
-    name: 'app-radio',
-    props: {
-        data: {
-            type: Array,
-            required: true,
-            default: () => []
-        },
-        name: {
-            type: String,
-            required: true
-        },
-        required: Boolean
-    },
-    data () {
-        return {
-            error: false,
-            focus: false,
-            options: this.data,
-            text: {
-                error: this.$root.lang === 'ru' ? 'Поле обязательно для заполнения' : 'Required field'
-            }
-        }
-    },
-    computed: {
-        val: {
-            get () {
-                return this.$attrs.value
-            },
-            set (value) {
-                const optionsVal = this.options.map(item => item.id)
+<script lang="ts">
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
-                if (optionsVal.includes(value)) {
-                    this.$emit('input', value)
-                } else {
-                    console.error(`error value: ${value}`)
-                }
+type Option = {
+    id: string,
+    text: string,
+    disabled: boolean
+}
+
+@Component
+export default class AppRadio extends Vue {
+    @Prop(Boolean) readonly required!: boolean
+    @Prop({
+        type: Array,
+        required: true
+    }) readonly data!: Option[]
+
+    @Prop({
+        type: String,
+        required: true
+    }) readonly name!: string
+
+    error: boolean
+    focus: boolean
+    options: Option[]
+    text: {
+        error: string
+    }
+
+    constructor () {
+        super()
+        this.error = false
+        this.focus = false
+        this.options = this.data
+        this.text = {
+            error: this.lang === 'ru' ? 'Поле обязательно для заполнения' : 'Required field'
+        }
+    }
+
+    get lang (): string {
+        return this.$store.state.lang
+    }
+
+    @Watch('data')
+    onDataChanged (newData: Option[]): void {
+        this.options = newData
+    }
+
+    elementClass (state: boolean): [string, {[elem: string]: boolean}] {
+        return [
+            'app-radio',
+            {
+                'app-radio--disabled': state
             }
-        }
-    },
-    watch: {
-        data (newData) {
-            this.options = newData
-        }
-    },
-    methods: {
-        elementClass (state) {
-            return [
-                'app-radio',
-                {
-                    'app-radio--disabled': state
-                }
-            ]
-        },
-        onChange (value) {
-            this.validate(value)
-            this.$emit('input', value)
-        },
-        onInput (value) {
-            this.validate(value)
-            this.$emit('input', value)
-        },
-        validate () {
-            if (this.required && !this.val) {
-                this.error = true
-            } else {
-                this.error = false
-            }
-        }
+        ]
+    }
+
+    onChange (value: string): void {
+        this.validate(value)
+        this.$emit('input', value)
+    }
+
+    onInput (value: string): void {
+        this.validate(value)
+        this.$emit('input', value)
+    }
+
+    validate (value: string): void {
+        this.error = this.required && !value
     }
 }
 </script>

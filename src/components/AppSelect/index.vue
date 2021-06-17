@@ -31,96 +31,74 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'app-select',
-    props: {
-        data: {
-            type: Array,
-            required: true,
-            default: () => []
-        },
-        name: String,
-        placeholder: String
-    },
-    data () {
-        return {
-            selected: {
-                id: '',
-                text: ''
-            },
-            opened: false,
-            options: this.data
-        }
-    },
-    mounted () {
-        this.onLoad()
+<script lang="ts">
+import { Prop, Vue, Component, PropSync } from 'vue-property-decorator'
 
-        document.addEventListener('click', e => this.hideDropdown(e))
-    },
-    beforeDestroy () {
-        document.removeEventListener('click', e => this.hideDropdown(e))
-    },
-    watch: {
-        data (newData) {
-            this.options = newData
-        }
-    },
-    methods: {
-        onLoad () {
-            for (let i = 0; i < this.options.length; i++) {
-                if (this.options[i].selected === true) this.initSelected(this.options[i])
+type Option = {
+    id: string,
+    text: string,
+    selected: boolean,
+    disabled: boolean
+}
+
+@Component
+export default class AppSelect extends Vue {
+    @Prop(String) readonly placeholder!: string
+    @Prop({
+        type: String,
+        required: true
+    }) readonly name!: string
+
+    @PropSync('data', {
+        type: Array,
+        default: ''
+    }) readonly options!: Option[]
+
+    opened: boolean
+
+    constructor () {
+        super()
+        this.opened = false
+    }
+
+    get selected (): Option {
+        const selected = this.options.find(item => item.selected) as Option
+
+        return selected || { id: '', text: '', selected: false, disabled: false }
+    }
+
+    mounted (): void {
+        document.addEventListener('click', (e: {[elem: string]: any}) => this.hideDropdown(e))
+    }
+
+    elementClass (classname: string): string {
+        let result = classname
+
+        if (this.opened) result += ` ${classname}--opened`
+
+        return result
+    }
+
+    optionClass (option: Option): [string, {[elem: string]: boolean}] {
+        return [
+            'app-select__option',
+            {
+                'app-select__option--selected': option.selected,
+                'app-select__option--disabled': option.disabled
             }
-        },
-        elementClass (classname) {
-            let result = classname
+        ]
+    }
 
-            if (this.opened) result += ` ${classname}--opened`
+    hideDropdown (e: {[elem: string]: any}): void {
+        const el = this.$el as HTMLElement
+        const isOutside: boolean = el !== e.target && !el.contains(e.target)
 
-            return result
-        },
-        optionClass (option) {
-            return [
-                'app-select__option',
-                {
-                    'app-select__option--selected': option.selected,
-                    'app-select__option--disabled': option.disabled
-                }
-            ]
-        },
-        hideDropdown (e) {
-            const isOutside = this.$el !== e.target && !this.$el.contains(e.target)
+        if (isOutside) this.opened = false
+    }
 
-            if (isOutside) this.opened = false
-        },
-        changeSelected (option) {
-            option.selected ? this.removeSelected() : this.addSelected(option)
-            this.opened = false
-            this.$emit('input', this.selected.text)
-        },
-        initSelected (option) {
-            this.selected.id = option.id
-            this.selected.text = option.text
-
-            for (let i = 0; i < this.options.length; i++) {
-                this.options[i].selected = this.options[i].id === option.id
-            }
-        },
-        addSelected (option) {
-            this.selected.id = option.id
-            this.selected.text = option.text
-
-            for (let i = 0; i < this.options.length; i++) {
-                this.options[i].selected = this.options[i].id === option.id
-            }
-        },
-        removeSelected () {
-            this.opened = false
-            this.selected.id = ''
-            this.selected.text = ''
-
-            for (let i = 0; i < this.options.length; i++) this.options[i].selected = false
-        }
+    changeSelected (): void {
+        this.opened = false
+        this.$emit('input', this.selected.text)
     }
 }
 </script>
@@ -136,7 +114,6 @@ export default {
     user-select: none;
 
     &__container {
-        width: 100%;
         overflow: hidden;
         padding: 1rem 2rem 1rem 1rem;
         position: relative;

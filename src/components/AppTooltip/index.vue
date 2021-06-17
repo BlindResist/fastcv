@@ -23,50 +23,53 @@
     </div>
 </template>
 
-<script>
+<script lang="ts">
 import 'tippy.js/themes/light.css'
+import { Component, Prop, Vue, Watch } from 'vue-property-decorator'
 
-export default {
-    name: 'app-tooltip',
-    props: {
-        content: {
-            type: String,
-            default: ''
-        },
-        placement: {
-            type: String,
-            default: 'right'
-        },
-        trigger: {
-            type: String,
-            default: 'mouseenter'
-        },
-        theme: {
-            type: String,
-            default: 'default'
-        }
-    },
-    data () {
-        return {
-            update: true
-        }
-    },
-    watch: {
-        content () {
-            this.update = false
+@Component
+export default class AppTooltip extends Vue {
+    @Prop({
+        type: String,
+        default: ''
+    }) readonly content!: string
 
-            this.$nextTick(() => {
-                this.update = true
-            })
-        }
-    },
-    computed: {
-        elClass () {
-            return [
-                'app-tooltip',
-                `app-tooltip--${this.theme}`
-            ]
-        }
+    @Prop({
+        type: String,
+        default: 'right'
+    }) readonly placement!: string
+
+    @Prop({
+        type: String,
+        default: 'mouseenter'
+    }) readonly trigger!: string
+
+    @Prop({
+        type: String,
+        default: 'default'
+    }) readonly theme!: string
+
+    update: boolean
+
+    constructor () {
+        super()
+        this.update = true
+    }
+
+    @Watch('content')
+    onContentChanged (): void {
+        this.update = false
+
+        this.$nextTick(() => {
+            this.update = true
+        })
+    }
+
+    get elClass (): string[] {
+        return [
+            'app-tooltip',
+            `app-tooltip--${this.theme}`
+        ]
     }
 }
 </script>

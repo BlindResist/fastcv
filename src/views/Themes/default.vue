@@ -6,7 +6,10 @@
                     class="theme-default__photo"
                     v-if="data.personal.photo"
                 >
-                    <img :src="data.personal.photo" />
+                    <img
+                        :src="data.personal.photo"
+                        :alt="data.personal.name"
+                    />
                 </div>
             </div>
             <div class="theme-default__col theme-default__col--right">
@@ -155,15 +158,33 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'theme-default',
-    props: {
-        data: {
-            type: Object,
-            default: () => {}
-        }
-    }
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator'
+
+type FormData = {
+    objective: {
+        position: string,
+        about: string
+    },
+    personal: {
+        site: string,
+        photo: string,
+        name: string,
+        phone: string,
+        email: string,
+        address: string,
+        dateOfBirth: string,
+        maritalStatus: string,
+    },
+    education: ObjectConstructor[],
+    experience: ObjectConstructor[],
+    skills: string,
+    qualities: string
+}
+
+@Component
+export default class Default extends Vue {
+    @Prop(Object) readonly data!: FormData
 }
 </script>
 

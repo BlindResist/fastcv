@@ -30,57 +30,45 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'app-checkbox',
-    model: {
-        prop: 'checked',
-        event: 'change'
-    },
-    props: {
-        name: {
-            type: String,
-            required: true
-        },
-        checked: Boolean,
-        disabled: Boolean,
-        required: Boolean
-    },
-    data () {
-        return {
-            error: false,
-            focus: false,
-            text: {
-                error: 'Required field'
-            }
-        }
-    },
-    computed: {
-        check: {
-            get () {
-                return this.checked
-            },
-            set (value) {
-                this.$emit('change', value)
-            }
-        }
-    },
-    methods: {
-        change (value) {
-            this.check = value
-            this.validate()
-            this.$emit('change', value)
-        },
-        validate () {
-            if (this.required && !this.check) {
-                this.error = true
-            } else {
-                this.error = false
-            }
+<script lang="ts">
+import { Component, ModelSync, Prop, Vue } from 'vue-property-decorator'
+
+@Component
+export default class AppCheckbox extends Vue {
+    @Prop(Boolean) readonly disabled!: boolean
+    @Prop(Boolean) readonly required!: boolean
+    @Prop({
+        type: String,
+        required: true
+    }) readonly name!: string
+
+    @ModelSync('checked', 'change', { type: Boolean })
+    readonly check!: boolean
+
+    error: boolean
+    focus: boolean
+    text: {
+        error: string
+    }
+
+    constructor () {
+        super()
+        this.error = false
+        this.focus = false
+        this.text = {
+            error: 'Required field'
         }
     }
-}
 
+    change (value: boolean): void {
+        this.validate()
+        this.$emit('change', value)
+    }
+
+    validate (): void {
+        this.error = this.required && !this.check
+    }
+}
 </script>
 
 <style lang="scss">
